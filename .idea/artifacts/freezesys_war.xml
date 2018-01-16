@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="freezesys:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="jianshu.war">
+      <element id="artifact" artifact-name="freezesys:war exploded" />
+    </root>
+  </artifact>
+</component>
