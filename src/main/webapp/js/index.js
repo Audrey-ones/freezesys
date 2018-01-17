@@ -75,7 +75,9 @@ layui.config({
 	        id: 'LAY_layuipro', //设定一个id，防止重复弹出
 	        btn: ['火速围观'],
 	        moveType: 1, //拖拽模式，0或者1
-	        content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;"><p>最近偶然发现贤心大神的layui框架，瞬间被他的完美样式所吸引，虽然功能不算强大，但毕竟是一个刚刚出现的框架，后面会慢慢完善的。很早之前就想做一套后台模版，但是感觉bootstrop代码的冗余太大，不是非常喜欢，自己写又太累，所以一直闲置了下来。直到遇到了layui我才又燃起了制作一套后台模版的斗志。由于本人只是纯前端，所以页面只是单纯的实现了效果，没有做服务器端的一些处理，可能后期技术跟上了会更新的，如果有什么问题欢迎大家指导。谢谢大家。</p><p>在此特别感谢Beginner和Paco，他们写的框架给了我很好的启发和借鉴。希望有时间可以多多请教。</p></div>',
+	        content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;">' +
+			'<p>液氮罐冷冻管理系统为了解决无法准确了解液氮罐冷冻位置信息、人工分配位置标准不一、效率低下等问题而诞生。</p>' +
+			'<p>如在使用中遇到问题，请联系南京西瑞科技有限公司相关技术人员。</p></div>',
 	        success: function(layero){
 				var btn = layero.find('.layui-layer-btn');
 				btn.css('text-align', 'center');
@@ -142,13 +144,10 @@ function addTab(_this){
 //捐赠弹窗
 function donation(){
 	layer.tab({
-		area : ['260px', '367px'],
+		area : ['320px', '380px'],
 		tab : [{
-			title : "微信",
-			content : "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/wechat.jpg'></div>"
-		},{
-			title : "支付宝",
-			content : "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/alipay.jpg'></div>"
+			title : "关注微信公众号",
+			content : "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/njserywx.jpg'></div>"
 		}]
 	})
 }

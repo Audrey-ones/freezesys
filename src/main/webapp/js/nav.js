@@ -6,7 +6,7 @@ var navs = [{
 },{
 	"title" : "麦管存储管理",
 	"icon" : "icon-text",
-	"href" : "page/news/newsList.html",
+	"href" : "page/strawInfo/strawList.html",
 	"spread" : false
 },{
 	"title" : "液氮罐管理",
