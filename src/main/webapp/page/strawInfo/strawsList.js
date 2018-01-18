@@ -8,7 +8,7 @@ layui.config({
 
 	//加载页面数据
 	var newsData = '';
-	$.get("../../json/strawList.json", function(data){
+	$.get("../../json/strawsList.json", function(data){
 		var newArray = [];
 		//单击首页“待审核文章”加载的信息
 		if($(".top_tab li.layui-this cite",parent.document).text() == "待审核文章"){
@@ -43,7 +43,7 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
             	$.ajax({
-					url : "../../json/strawList.json",
+					url : "../../json/strawsList.json",
 					type : "get",
 					dataType : "json",
 					success : function(data){
@@ -70,27 +70,27 @@ layui.config({
 		            				return dataStr;
 		            			}
 		            		}
-		            		//文章标题
+		            		//病历号
 		            		if(newsStr.medicalRecord.indexOf(selectStr) > -1){
 			            		newsStr["medicalRecord"] = changeStr(newsStr.medicalRecord);
 		            		}
-		            		//发布人
+		            		//女方姓名
 		            		if(newsStr.femaleName.indexOf(selectStr) > -1){
 			            		newsStr["femaleName"] = changeStr(newsStr.femaleName);
 		            		}
-		            		//审核状态
+		            		//样品类型
 		            		if(newsStr.sampleType.indexOf(selectStr) > -1){
 			            		newsStr["sampleType"] = changeStr(newsStr.sampleType);
 		            		}
-		            		//浏览权限
+		            		//冷冻时间
 		            		if(newsStr.freezeTime.indexOf(selectStr) > -1){
 			            		newsStr["freezeTime"] = changeStr(newsStr.freezeTime);
 		            		}
-		            		//发布时间
+		            		//到期时间
 		            		if(newsStr.expireTime.indexOf(selectStr) > -1){
 			            		newsStr["expireTime"] = changeStr(newsStr.expireTime);
 		            		}
-                            //发布时间
+                            //冷冻状态
                             if(newsStr.freezeStatus.indexOf(selectStr) > -1){
                                 newsStr["freezeStatus"] = changeStr(newsStr.freezeStatus);
                             }
@@ -119,9 +119,9 @@ layui.config({
 			type : 2,
 			content : "strawAdd.html",
 			success : function(layero, index){
-				layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
+				/*layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
-				});
+				});*/
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
@@ -281,11 +281,12 @@ layui.config({
 					+'<td>'+currData[i].drivepipeNum+'</td>'
 					+'<td>'+currData[i].freezeTime+'</td>'
 					+'<td>'+currData[i].expireTime+'</td>'
-					+'<td>'
-					+  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].newsId+'"><i class="layui-icon">&#xe640;</i> 解冻</a>'
-					+'</td>'
 					+'<td>'+currData[i].freezeStatus+'</td>'
 					+'<td>'+currData[i].opName+'</td>'
+                    +'<td>'
+                    +  '<a class="layui-btn layui-btn-mini news_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
+                    +  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].newsId+'"><i class="iconfont icon-edit"></i> 解冻</a>'
+                    +'</td>'
 			    	+'</tr>';
 				}
 			}else{

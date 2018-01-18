@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>麦管存储管理--液氮罐冷冻管理系统</title>
+	<title>文章列表--layui后台管理模板</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -22,63 +22,45 @@
 		    <a class="layui-btn search_btn">查询</a>
 		</div>
 		<div class="layui-inline">
-			<a class="layui-btn layui-btn-normal newsAdd_btn">历史存储录入</a>
-		</div>
-		<!--<div class="layui-inline">
-			<a class="layui-btn recommend" style="background-color:#5FB878">推荐文章</a>
-		</div>-->
-		<div class="layui-inline">
-			<a class="layui-btn audit_btn">审核文章</a>
+			<a class="layui-btn linksAdd_btn" style="background-color:#5FB878">添加液氮罐</a>
 		</div>
 		<div class="layui-inline">
-			<a class="layui-btn layui-btn-danger batchDel">批量解冻</a>
+			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
 		</div>
 		<div class="layui-inline">
-			<div class="layui-form-mid layui-word-aux">本页面刷新后除新添加的文章外所有操作无效，关闭页面所有数据重置</div>
+			<div class="layui-form-mid layui-word-aux">本页面刷新后除新添加的链接外所有操作无效，关闭页面所有数据重置</div>
 		</div>
 	</blockquote>
-	<div class="layui-form news_list">
+	<div class="layui-form links_list">
 	  	<table class="layui-table">
-		    <colgroup>
+		    <!--<colgroup>
 				<col width="50">
-				<col width="7%">
-				<col width="8%">
-				<col width="8%">
-				<col width="7%">
-				<col width="7%">
-				<col width="8%">
-				<col width="7%">
-				<col width="7%">
-				<col width="10%">
-				<col width="10%">
-				<col width="7%">
-				<col width="8%">
-				<col width="8%">
-		    </colgroup>
+				<col width="30%">
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col width="13%">
+		    </colgroup>-->
 		    <thead>
 				<tr>
 					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-					<!--<th style="text-align:left;">序号</th>-->
-					<th style="text-align:left;">麦管编号</th>
-					<th>病历号</th>
-					<th>女方姓名</th>
-					<th>样本类型</th>
-					<th>样本数量</th>
 					<th>液氮罐编号</th>
-					<th>吊桶编号</th>
-					<th>套管编号</th>
-					<th>冷冻时间</th>
-					<th>到期时间</th>
+					<th>型号</th>
+					<th>抗体类型</th>
+					<th>状态</th>
+					<th>吊桶数量</th>
+					<th>套管数量</th>
+					<th>麦管数量</th>
 					<th>操作</th>
-					<th>解冻状态</th>
-					<th>解冻者</th>
 				</tr> 
 		    </thead>
-		    <tbody class="news_content"></tbody>
+		    <tbody class="links_content"></tbody>
 		</table>
 	</div>
 	<div id="page"></div>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="strawList.js"></script>
+	<script type="text/javascript" src="nitList.js"></script>
 </body>
 </html>

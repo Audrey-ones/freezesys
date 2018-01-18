@@ -13,6 +13,7 @@
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="layui/css/layui.css" media="all" />
     <link rel="stylesheet" href="css/main.css" media="all" />
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css"/>
 </head>
 <body class="main_body">
 <div class="layui-layout layui-layout-admin">
@@ -50,7 +51,7 @@
             <!-- 顶部右侧菜单 -->
             <ul class="layui-nav top_menu">
                 <li class="layui-nav-item showNotice" id="showNotice">
-                    <a href="javascript:;"><i class="iconfont icon-gonggao"></i><cite>系统公告</cite></a>
+                    <a href="javascript:;"><i class="fa fa-bell-o fa-1g"></i><cite>系统公告</cite></a>
                 </li>
                 <li class="layui-nav-item" mobile>
                     <a href="javascript:;" data-url="page/user/changePwd.html">
@@ -62,7 +63,7 @@
                     <a href="javascript:;"><i class="iconfont icon-loginout"></i> 退出</a>
                 </li>
                 <li class="layui-nav-item lockcms" pc>
-                    <a href="javascript:;"><i class="iconfont icon-lock1"></i><cite>锁屏</cite></a>
+                    <a href="javascript:;"><i class="fa fa-unlock-alt fa-1g"></i><cite>锁屏</cite></a>
                 </li>
                 <li class="layui-nav-item" pc>
                     <a href="javascript:;">
@@ -90,7 +91,7 @@
     <div class="layui-body layui-form">
         <div class="layui-tab marg0" lay-filter="bodyTab">
             <ul class="layui-tab-title top_tab">
-                <li class="layui-this" lay-id=""><i class="iconfont icon-computer"></i> <cite>首页</cite></li>
+                <li class="layui-this" lay-id=""><i class="fa fa-home fa-1g"></i> <cite>首页</cite></li>
             </ul>
             <div class="layui-tab-content clildFrame">
                 <div class="layui-tab-item layui-show">
@@ -115,7 +116,7 @@
         <input type="password" class="admin-header-lock-input layui-input" placeholder="请输入密码解锁.." name="lockPwd" id="lockPwd" />
         <button class="layui-btn" id="unlock">解锁</button>
     </div>
-    <p style="color: #009688">请输入“123456”，否则不会解锁成功哦！！！！</p>
+    <p style="color: #269f42">请输入“123456”，否则不会解锁成功哦！！！！</p>
 </div>
 <!-- 移动导航 -->
 <div class="site-tree-mobile layui-hide"><i class="layui-icon">&#xe602;</i></div>

@@ -141,7 +141,7 @@ function addTab(_this){
 	tab.tabAdd(_this);
 }
 
-//捐赠弹窗
+//详情显示公众号弹框
 function donation(){
 	layer.tab({
 		area : ['320px', '380px'],

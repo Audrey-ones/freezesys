@@ -1,29 +1,29 @@
 var navs = [{
 	"title" : "首页",
-	"icon" : "icon-computer",
+	"icon" : "icon-text",
 	"href" : "page/main.html",
 	"spread" : false
 },{
 	"title" : "麦管存储管理",
 	"icon" : "icon-text",
-	"href" : "page/strawInfo/strawList.html",
+	"href" : "page/strawInfo/strawsList.html",
 	"spread" : false
 },{
 	"title" : "液氮罐管理",
 	"icon" : "icon-text",
-	"href" : "page/links/linksList.html",
+	"href" : "page/nitInfo/nitList.html",
 	"spread" : false
+},{
+    "title" : "病人信息管理",
+    "icon" : "icon-text",
+    "href" : "page/systemParameter/systemParameter.html",
+    "spread" : false
 },{
 	"title" : "404页面",
 	"icon" : "&#xe61c;",
 	"href" : "page/404.html",
 	"spread" : false
-},{
-	"title" : "系统基本参数",
-	"icon" : "&#xe631;",
-	"href" : "page/systemParameter/systemParameter.html",
-	"spread" : false
-},{
+}/*,{
 	"title" : "二级菜单演示",
 	"icon" : "&#xe61c;",
 	"href" : "",
@@ -42,4 +42,4 @@ var navs = [{
 			"spread" : false
 		}
 	]
-}]
+}*/]
