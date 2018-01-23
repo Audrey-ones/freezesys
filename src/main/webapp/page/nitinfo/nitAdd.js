@@ -19,26 +19,20 @@ layui.config({
         /*var isShow = data.field.show=="on" ? "checked" : "",
             newsStatus = data.field.shenhe=="on" ? "审核通过" : "待审核";*/
 
-        addNews = '{"medicalRecord":"'+$(".medicalRecord").val()+'",';  //病历号
-        addNews += '"freezeTime":"'+$(".freezeTime").val()+'",';	 //冷冻时间
-        addNews += '"femaleName":"'+$(".femaleName").val()+'",'; //发布时间
-        addNews += '"maleName":"'+$(".maleName").val()+'",';
-        addNews += '"expireTime":"'+$(".expireTime").val()+'",';
-        addNews += '"sampleType":"'+$(".sampleType option").eq($(".sampleType").val()).text()+'",'; //开放浏览
-        addNews += '"sampleAmount":"'+$(".sampleAmount").val()+'",';
-        addNews += '"nitNum":"'+$(".nitNum").val()+'",';
-        addNews += '"tubNum":"'+$(".tubNum").val()+'",';
-        addNews += '"drivepipeNum":"'+$(".drivepipeNum").val()+'",';
-        addNews += '"freezeStatus":"'+"未解冻"+'",';
-        addNews += '"opName":"'+"无"+'",';
-        addNews += '"strawNum":"'+$(".strawNum").val()+'"}';
+        addNews = '{"nitNum":"'+$(".nitNum").val()+'",';  //文章名称
+        addNews += '"version":"'+$(".version").val()+'",'; //发布时间
+        addNews += '"antibodyType":"'+$(".antibodyType").val()+'",';
+        addNews += '"status":"'+"未启用"+'",';
+        addNews += '"tubAmount":"'+$(".tubAmount").val()+'",';
+        addNews += '"drivepipeAmount":"'+$(".drivepipeAmount").val()+'",';
+        addNews += '"strawAmount":"'+$(".strawAmount").val()+'"}';
         addNewsArray.unshift(JSON.parse(addNews));
         window.sessionStorage.setItem("addNews",JSON.stringify(addNewsArray));
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         setTimeout(function(){
             top.layer.close(index);
-            top.layer.msg("历史存储录入成功！");
+            top.layer.msg("添加液氮罐成功！");
             layer.closeAll("iframe");
             //刷新父页面
             parent.location.reload();

@@ -1,25 +1,25 @@
 [{
-    "nitNum" : "dfdf",
-    "version" : "45",
-    "antibodyType" : "http://www.layui.com",
-    "status" : "xianxin@layui.com",
-    "tubAmount" : "2017-05-14",
-    "drivepipeAmount" : "首页",
-    "strawAmount" : "首页"
-},{
     "nitNum" : "1",
-    "version" : "444",
-    "antibodyType" : "http://www.layui.com",
-    "status" : "xianxin@layui.com",
-    "tubAmount" : "2017-05-14",
-    "drivepipeAmount" : "首页",
-    "strawAmount" : "首页"
+    "version" : "MVE47-11-10",
+    "antibodyType" : "无",
+    "status" : "已启用",
+    "tubAmount" : "10",
+    "drivepipeAmount" : "31",
+    "strawAmount" : "7"
 },{
-    "nitNum" : "1",
-    "version" : "144",
-    "antibodyType" : "http://www.layui.com",
-    "status" : "xianxin@layui.com",
-    "tubAmount" : "2017-05-14",
-    "drivepipeAmount" : "首页",
-    "strawAmount" : "首页"
+    "nitNum" : "2",
+    "version" : "MVE47-11-10",
+    "antibodyType" : "梅毒",
+    "status" : "已启用",
+    "tubAmount" : "10",
+    "drivepipeAmount" : "31",
+    "strawAmount" : "7"
+},{
+    "nitNum" : "3",
+    "version" : "MVE47-11-10",
+    "antibodyType" : "无",
+    "status" : "已启用",
+    "tubAmount" : "10",
+    "drivepipeAmount" : "31",
+    "strawAmount" : "7"
 }]

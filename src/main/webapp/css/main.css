@@ -57,7 +57,7 @@
 .clildFrame.layui-tab-content iframe{ width: 100%; height: 100%; border:none; min-width: 320px; }
 /*main.html*/
 .row,.col,.panel_word,.panel_icon{ box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box;}
-.row{ margin-left:-10px; overflow:hidden;}
+.row{ margin-left:20px; overflow:hidden;margin-top: 40px}
 .col{ padding-left:15px;}
 .panel{float: left; text-align: center; width:16.666%; min-width:210px; margin-bottom: 10px;}
 .panel_box a{display:block; background-color:#f2f2f2; border-radius:5px; overflow:hidden; }

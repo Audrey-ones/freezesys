@@ -14,7 +14,7 @@
 </head>
 <body class="childrenBody">
 <form class="layui-form">
-	<div class="layui-form-item" style="margin-left: 150px;">
+	<div class="layui-form-item">
 		<div class="layui-inline">
 			<label class="layui-form-label">病历号&nbsp;&nbsp;&nbsp;&nbsp;</label>
 			<div class="layui-input-inline">
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="layui-form-item" style="margin-left: 150px;">
+	<div class="layui-form-item">
 		<div class="layui-inline">
 			<label class="layui-form-label">样本类型&nbsp;&nbsp;</label>
 			<div class="layui-input-inline">
@@ -51,14 +51,22 @@
 				<input type="text" class="layui-input sampleAmount" lay-verify="required" placeholder="请输入样本数量">
 			</div>
 		</div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">冷冻时间&nbsp;&nbsp;</label>
+			<div class="layui-input-inline">
+				<input type="text" class="layui-input freezeTime" lay-verify="date" onclick="layui.laydate({elem:this})" placeholder="请输入冷冻时间">
+			</div>
+		</div>
 		<div class="layui-inline">
 			<label class="layui-form-label">到期时间</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input expireTime" lay-verify="date" onclick="layui.laydate({elem:this})">
+				<input type="text" class="layui-input expireTime" lay-verify="date" onclick="layui.laydate({elem:this})" placeholder="请输入到期时间">
 			</div>
 		</div>
 	</div>
-	<div class="layui-form-item" style="margin-left: 150px;">
+	<div class="layui-form-item">
 		<div class="layui-inline">
 			<label class="layui-form-label">液氮罐编号</label>
 			<div class="layui-input-inline">
@@ -71,24 +79,24 @@
 				<input type="text" class="layui-input tubNum" lay-verify="required" placeholder="请输入吊桶编号">
 			</div>
 		</div>
+
+	</div>
+	<div class="layui-form-item">
 		<div class="layui-inline">
-			<label class="layui-form-label">套管编号</label>
+			<label class="layui-form-label">套管编号&nbsp;&nbsp;</label>
 			<div class="layui-input-inline">
 				<input type="text" class="layui-input drivepipeNum" lay-verify="required" placeholder="请输入套管编号">
 			</div>
 		</div>
-
-	</div>
-	<div class="layui-form-item" style="margin-left: 150px;">
 		<div class="layui-inline">
-			<label class="layui-form-label">麦管编号&nbsp;&nbsp;</label>
+			<label class="layui-form-label">麦管编号</label>
 			<div class="layui-input-inline">
 				<input type="text" class="layui-input strawNum" lay-verify="required" placeholder="请输入麦管编号">
 			</div>
 		</div>
 
 	</div>
-	<div class="layui-form-item" style="margin-left: 500px;">
+	<div class="layui-form-item">
 		<div class="layui-input-block">
 			<button class="layui-btn" lay-submit="" lay-filter="addNews">立即提交</button>
 			<button type="reset" class="layui-btn layui-btn-primary">重置</button>

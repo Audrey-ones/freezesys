@@ -11,19 +11,19 @@ var navs = [{
 },{
 	"title" : "液氮罐管理",
 	"icon" : "icon-text",
-	"href" : "page/nitInfo/nitList.html",
+	"href" : "page/nitInfo/nitsList.html",
 	"spread" : false
 },{
     "title" : "病人信息管理",
     "icon" : "icon-text",
-    "href" : "page/systemParameter/systemParameter.html",
+    "href" : "page/patientInfo/patientsList.html",
     "spread" : false
-},{
+}/*,{
 	"title" : "404页面",
 	"icon" : "&#xe61c;",
 	"href" : "page/404.html",
 	"spread" : false
-}/*,{
+},{
 	"title" : "二级菜单演示",
 	"icon" : "&#xe61c;",
 	"href" : "",
