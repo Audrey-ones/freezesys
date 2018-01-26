@@ -53,6 +53,10 @@ layui.config({
 		            				return dataStr;
 		            			}
 		            		}
+                            //病历号
+                            if(newsStr.freezeNum.indexOf(selectStr) > -1){
+                                newsStr["freezeNum"] = changeStr(newsStr.freezeNum);
+                            }
 		            		//病历号
 		            		if(newsStr.medicalRecord.indexOf(selectStr) > -1){
 			            		newsStr["medicalRecord"] = changeStr(newsStr.medicalRecord);
@@ -77,9 +81,10 @@ layui.config({
                             if(newsStr.freezeStatus.indexOf(selectStr) > -1){
                                 newsStr["freezeStatus"] = changeStr(newsStr.freezeStatus);
                             }
-		            		if(newsStr.medicalRecord.indexOf(selectStr)>-1 || newsStr.femaleName.indexOf(selectStr)>-1
-								|| newsStr.sampleType.indexOf(selectStr)>-1 || newsStr.freezeTime.indexOf(selectStr)>-1
-								|| newsStr.expireTime.indexOf(selectStr)>-1 || newsStr.freezeStatus.indexOf(selectStr)>-1){
+		            		if(newsStr.freezeNum.indexOf(selectStr)>-1 || newsStr.medicalRecord.indexOf(selectStr)>-1
+								|| newsStr.femaleName.indexOf(selectStr)>-1 || newsStr.sampleType.indexOf(selectStr)>-1
+								|| newsStr.freezeTime.indexOf(selectStr)>-1 || newsStr.expireTime.indexOf(selectStr)>-1
+								|| newsStr.freezeStatus.indexOf(selectStr)>-1){
 		            			newArray.push(newsStr);
 		            		}
 		            	}
@@ -254,14 +259,12 @@ layui.config({
 				for(var i=0;i<currData.length;i++){
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
-			    	+'<td>'+currData[i].strawNum+'</td>'
+			    	+'<td>'+currData[i].strawNum+'管'+currData[i].nitNum+'-'+currData[i].tubNum+'-'+currData[i].drivepipeNum+'</td>'
+					+'<td>'+currData[i].freezeNum+'</td>'
 			    	+'<td>'+currData[i].medicalRecord+'</td>'
 					+'<td>'+currData[i].femaleName+'</td>'
 					+'<td>'+currData[i].sampleType+'</td>'
 					+'<td>'+currData[i].sampleAmount+'</td>'
-					+'<td>'+currData[i].nitNum+'</td>'
-					+'<td>'+currData[i].tubNum+'</td>'
-					+'<td>'+currData[i].drivepipeNum+'</td>'
 					+'<td>'+currData[i].freezeTime+'</td>'
 					+'<td>'+currData[i].expireTime+'</td>'
 					+'<td>'+currData[i].freezeStatus+'</td>'

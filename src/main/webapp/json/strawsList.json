@@ -1,5 +1,6 @@
 [{
     "strawNum" : "b",
+    "freezeNum":"1825",
     "medicalRecord" : "2018011702",
     "femaleName" : "张大梅",
     "sampleType" : "胚胎",
@@ -13,6 +14,7 @@
     "opName" : "无"
 },{
     "strawNum" : "a",
+    "freezeNum":"1825",
     "medicalRecord" : "2018011701",
     "femaleName" : "林夕心",
     "sampleType" : "胚胎",
@@ -26,6 +28,7 @@
     "opName" : "无"
 },{
     "strawNum" : "d",
+    "freezeNum":"1825",
     "medicalRecord" : "2018011101",
     "femaleName" : "蔡玲玉",
     "sampleType" : "卵子",
@@ -39,6 +42,7 @@
     "opName" : "无"
 },{
     "strawNum" : "f",
+    "freezeNum":"1825",
     "medicalRecord" : "2018010901",
     "femaleName" : "蔡瑶",
     "sampleType" : "胚胎",
@@ -52,6 +56,7 @@
     "opName" : "无"
 },{
     "strawNum" : "a",
+    "freezeNum":"1825",
     "medicalRecord" : "2018010401",
     "femaleName" : "曹冬梅",
     "sampleType" : "胚胎",
@@ -65,6 +70,7 @@
     "opName" : "无"
 },{
     "strawNum" : "d",
+    "freezeNum":"1825",
     "medicalRecord" : "2018010101",
     "femaleName" : "曹敏",
     "sampleType" : "胚胎",
@@ -78,6 +84,7 @@
     "opName" : "无"
 },{
     "strawNum" : "c",
+    "freezeNum":"1825",
     "medicalRecord" : "2017122501",
     "femaleName" : "柴发菊",
     "sampleType" : "胚胎",
@@ -91,6 +98,7 @@
     "opName" : "无"
 },{
     "strawNum" : "e",
+    "freezeNum":"1825",
     "medicalRecord" : "2017122001",
     "femaleName" : "车奕潇",
     "sampleType" : "胚胎",
@@ -104,6 +112,7 @@
     "opName" : "董欢"
 },{
     "strawNum" : "b",
+    "freezeNum":"1825",
     "medicalRecord" : "2017121601",
     "femaleName" : "陈碧玉",
     "sampleType" : "胚胎",
@@ -117,6 +126,7 @@
     "opName" : "无"
 },{
     "strawNum" : "a",
+    "freezeNum":"1825",
     "medicalRecord" : "2017120301",
     "femaleName" : "陈如梦",
     "sampleType" : "胚胎",
@@ -130,6 +140,7 @@
     "opName" : "无"
 },{
     "strawNum" : "d",
+    "freezeNum":"1825",
     "medicalRecord" : "2017113001",
     "femaleName" : "陈舒婷",
     "sampleType" : "胚胎",
@@ -143,6 +154,7 @@
     "opName" : "无"
 },{
     "strawNum" : "e",
+    "freezeNum":"1825",
     "medicalRecord" : "02159634",
     "femaleName" : "陈滢琦",
     "sampleType" : "胚胎",
@@ -156,6 +168,7 @@
     "opName" : "Demon"
 },{
     "strawNum" : "a",
+    "freezeNum":"1825",
     "medicalRecord" : "02159634",
     "femaleName" : "程凤",
     "sampleType" : "胚胎",
@@ -169,6 +182,7 @@
     "opName" : "Demon"
 },{
     "strawNum" : "c",
+    "freezeNum":"1825",
     "medicalRecord" : "02159634",
     "femaleName" : "代雯",
     "sampleType" : "胚胎",
@@ -182,6 +196,7 @@
     "opName" : "无"
 },{
     "strawNum" : "d",
+    "freezeNum":"1825",
     "medicalRecord" : "02159634",
     "femaleName" : "邓艾瑾",
     "sampleType" : "胚胎",
@@ -195,6 +210,7 @@
     "opName" : "Demon"
 },{
     "strawNum" : "e",
+    "freezeNum":"1825",
     "medicalRecord" : "02159634",
     "femaleName" : "邓国莉",
     "sampleType" : "胚胎",
@@ -208,6 +224,7 @@
     "opName" : "Demon"
 },{
     "strawNum" : "c",
+    "freezeNum":"1022",
     "medicalRecord" : "2017060401",
     "femaleName" : "邓茹兰",
     "sampleType" : "胚胎",
@@ -221,6 +238,7 @@
     "opName" : "董欢"
 },{
     "strawNum" : "b",
+    "freezeNum":"1825",
     "medicalRecord" : "2017060202",
     "femaleName" : "林信梅",
     "sampleType" : "胚胎",
@@ -234,6 +252,7 @@
     "opName" : "无"
 },{
     "strawNum" : "a",
+    "freezeNum":"1825",
     "medicalRecord" : "2017060201",
     "femaleName" : "白子琪",
     "sampleType" : "胚胎",
