@@ -9,25 +9,25 @@ layui.config({
 
     //创建一个编辑器
     //var editIndex = layedit.build('news_content');
-    var addNewsArray = [],addNews;
-    form.on("submit(addNews)",function(data){
+    var addNitsArray = [],addNits;
+    form.on("submit(addNits)",function(data){
         //是否添加过信息
-        if(window.sessionStorage.getItem("addNews")){
-            addNewsArray = JSON.parse(window.sessionStorage.getItem("addNews"));
+        if(window.sessionStorage.getItem("addNits")){
+            addNitsArray = JSON.parse(window.sessionStorage.getItem("addNits"));
         }
         //显示、审核状态
         /*var isShow = data.field.show=="on" ? "checked" : "",
             newsStatus = data.field.shenhe=="on" ? "审核通过" : "待审核";*/
 
-        addNews = '{"nitNum":"'+$(".nitNum").val()+'",';  //文章名称
-        addNews += '"version":"'+$(".version").val()+'",'; //发布时间
-        addNews += '"antibodyType":"'+$(".antibodyType").val()+'",';
-        addNews += '"status":"'+"未启用"+'",';
-        addNews += '"tubAmount":"'+$(".tubAmount").val()+'",';
-        addNews += '"drivepipeAmount":"'+$(".drivepipeAmount").val()+'",';
-        addNews += '"strawAmount":"'+$(".strawAmount").val()+'"}';
-        addNewsArray.unshift(JSON.parse(addNews));
-        window.sessionStorage.setItem("addNews",JSON.stringify(addNewsArray));
+        addNits = '{"nitNum":"'+$(".nitNum").val()+'",';  //文章名称
+        addNits += '"version":"'+$(".version").val()+'",'; //发布时间
+        addNits += '"antibodyType":"'+$(".antibodyType").val()+'",';
+        addNits += '"status":"'+"未启用"+'",';
+        addNits += '"tubAmount":"'+$(".tubAmount").val()+'",';
+        addNits += '"drivepipeAmount":"'+$(".drivepipeAmount").val()+'",';
+        addNits += '"strawAmount":"'+$(".strawAmount").val()+'"}';
+        addNitsArray.unshift(JSON.parse(addNits));
+        window.sessionStorage.setItem("addNits",JSON.stringify(addNitsArray));
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         setTimeout(function(){

@@ -7,21 +7,21 @@ layui.config({
 		$ = layui.jquery;
 
 	//加载页面数据
-	var newsData = '';
+	var strawsData = '';
 	$.get("../../json/strawsList.json", function(data){
         //正常加载信息
-        newsData = data;
-        if(window.sessionStorage.getItem("addNews")){
-            var addNews = window.sessionStorage.getItem("addNews");
-            newsData = JSON.parse(addNews).concat(newsData);
+        strawsData = data;
+        if(window.sessionStorage.getItem("addStraws")){
+            var addStraws = window.sessionStorage.getItem("addStraws");
+            strawsData = JSON.parse(addStraws).concat(strawsData);
         }
         //执行加载数据的方法
-        newsList();
+        strawsList();
 	})
 
 	//查询
 	$(".search_btn").click(function(){
-		var newArray = [];
+		var strawArray = [];
 		if($(".search_input").val() != ''){
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
@@ -30,14 +30,14 @@ layui.config({
 					type : "get",
 					dataType : "json",
 					success : function(data){
-						if(window.sessionStorage.getItem("addNews")){
-							var addNews = window.sessionStorage.getItem("addNews");
-							newsData = JSON.parse(addNews).concat(data);
+						if(window.sessionStorage.getItem("addStraws")){
+							var addStraws = window.sessionStorage.getItem("addStraws");
+                            strawsData = JSON.parse(addStraws).concat(data);
 						}else{
-							newsData = data;
+                            strawsData = data;
 						}
-						for(var i=0;i<newsData.length;i++){
-							var newsStr = newsData[i];
+						for(var i=0;i<strawsData.length;i++){
+							var strawsStr = strawsData[i];
 							var selectStr = $(".search_input").val();
 		            		function changeStr(data){
 		            			var dataStr = '';
@@ -54,42 +54,42 @@ layui.config({
 		            			}
 		            		}
                             //病历号
-                            if(newsStr.freezeNum.indexOf(selectStr) > -1){
-                                newsStr["freezeNum"] = changeStr(newsStr.freezeNum);
+                            if(strawsStr.freezeNum.indexOf(selectStr) > -1){
+                                strawsStr["freezeNum"] = changeStr(strawsStr.freezeNum);
                             }
 		            		//病历号
-		            		if(newsStr.medicalRecord.indexOf(selectStr) > -1){
-			            		newsStr["medicalRecord"] = changeStr(newsStr.medicalRecord);
+		            		if(strawsStr.medicalRecord.indexOf(selectStr) > -1){
+                                strawsStr["medicalRecord"] = changeStr(strawsStr.medicalRecord);
 		            		}
 		            		//女方姓名
-		            		if(newsStr.femaleName.indexOf(selectStr) > -1){
-			            		newsStr["femaleName"] = changeStr(newsStr.femaleName);
+		            		if(strawsStr.femaleName.indexOf(selectStr) > -1){
+                                strawsStr["femaleName"] = changeStr(strawsStr.femaleName);
 		            		}
 		            		//样品类型
-		            		if(newsStr.sampleType.indexOf(selectStr) > -1){
-			            		newsStr["sampleType"] = changeStr(newsStr.sampleType);
+		            		if(strawsStr.sampleType.indexOf(selectStr) > -1){
+                                strawsStr["sampleType"] = changeStr(strawsStr.sampleType);
 		            		}
 		            		//冷冻时间
-		            		if(newsStr.freezeTime.indexOf(selectStr) > -1){
-			            		newsStr["freezeTime"] = changeStr(newsStr.freezeTime);
+		            		if(strawsStr.freezeTime.indexOf(selectStr) > -1){
+                                strawsStr["freezeTime"] = changeStr(strawsStr.freezeTime);
 		            		}
 		            		//到期时间
-		            		if(newsStr.expireTime.indexOf(selectStr) > -1){
-			            		newsStr["expireTime"] = changeStr(newsStr.expireTime);
+		            		if(strawsStr.expireTime.indexOf(selectStr) > -1){
+                                strawsStr["expireTime"] = changeStr(strawsStr.expireTime);
 		            		}
                             //冷冻状态
-                            if(newsStr.freezeStatus.indexOf(selectStr) > -1){
-                                newsStr["freezeStatus"] = changeStr(newsStr.freezeStatus);
+                            if(strawsStr.freezeStatus.indexOf(selectStr) > -1){
+                                strawsStr["freezeStatus"] = changeStr(strawsStr.freezeStatus);
                             }
-		            		if(newsStr.freezeNum.indexOf(selectStr)>-1 || newsStr.medicalRecord.indexOf(selectStr)>-1
-								|| newsStr.femaleName.indexOf(selectStr)>-1 || newsStr.sampleType.indexOf(selectStr)>-1
-								|| newsStr.freezeTime.indexOf(selectStr)>-1 || newsStr.expireTime.indexOf(selectStr)>-1
-								|| newsStr.freezeStatus.indexOf(selectStr)>-1){
-		            			newArray.push(newsStr);
+		            		if(strawsStr.freezeNum.indexOf(selectStr)>-1 || strawsStr.medicalRecord.indexOf(selectStr)>-1
+								|| strawsStr.femaleName.indexOf(selectStr)>-1 || strawsStr.sampleType.indexOf(selectStr)>-1
+								|| strawsStr.freezeTime.indexOf(selectStr)>-1 || strawsStr.expireTime.indexOf(selectStr)>-1
+								|| strawsStr.freezeStatus.indexOf(selectStr)>-1){
+                                strawArray.push(strawsStr);
 		            		}
 		            	}
-		            	newsData = newArray;
-		            	newsList(newsData);
+                        strawsData = strawArray;
+		            	strawsList(strawsData);
 					}
 				})
             	
@@ -135,8 +135,8 @@ layui.config({
 
 	//审核文章
 	$(".audit_btn").click(function(){
-		var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
-		var $checked = $('.news_list tbody input[type="checkbox"][name="checked"]:checked');
+		var $checkbox = $('.straws_list tbody input[type="checkbox"][name="checked"]');
+		var $checked = $('.straws_list tbody input[type="checkbox"][name="checked"]:checked');
 		if($checkbox.is(":checked")){
 			var index = layer.msg('审核中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
@@ -161,22 +161,22 @@ layui.config({
 
 	//批量删除
 	$(".batchDel").click(function(){
-		var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
-		var $checked = $('.news_list tbody input[type="checkbox"][name="checked"]:checked');
+		var $checkbox = $('.straws_list tbody input[type="checkbox"][name="checked"]');
+		var $checked = $('.straws_list tbody input[type="checkbox"][name="checked"]:checked');
 		if($checkbox.is(":checked")){
 			layer.confirm('确定删除选中的信息？',{icon:3, title:'提示信息'},function(index){
 				var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
 	            setTimeout(function(){
 	            	//删除数据
 	            	for(var j=0;j<$checked.length;j++){
-	            		for(var i=0;i<newsData.length;i++){
-							if(newsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
-								newsData.splice(i,1);
-								newsList(newsData);
+	            		for(var i=0;i<strawsData.length;i++){
+							if(strawsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
+                                strawsData.splice(i,1);
+								strawsList(strawsData);
 							}
 						}
 	            	}
-	            	$('.news_list thead input[type="checkbox"]').prop("checked",false);
+	            	$('.straws_list thead input[type="checkbox"]').prop("checked",false);
 	            	form.render();
 	                layer.close(index);
 					layer.msg("删除成功");
@@ -218,7 +218,7 @@ layui.config({
 	})
  
 	//操作
-	$("body").on("click",".news_edit",function(){  //编辑
+	$("body").on("click",".straws_edit",function(){  //编辑
 		layer.alert('您点击了文章编辑按钮，由于是纯静态页面，所以暂时不存在编辑内容，后期会添加，敬请谅解。。。',{icon:6, title:'文章编辑'});
 	})
 
@@ -236,22 +236,22 @@ layui.config({
 		var _this = $(this);
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			//_this.parents("tr").remove();
-			for(var i=0;i<newsData.length;i++){
-				if(newsData[i].newsId == _this.attr("data-id")){
-					newsData.splice(i,1);
-					newsList(newsData);
+			for(var i=0;i<strawsData.length;i++){
+				if(strawsData[i].newsId == _this.attr("data-id")){
+                    strawsData.splice(i,1);
+					strawsList(strawsData);
 				}
 			}
 			layer.close(index);
 		});
 	})
 
-	function newsList(that){
+	function strawsList(that){
 		//渲染数据
 		function renderDate(data,curr){
 			var dataHtml = '';
 			if(!that){
-				currData = newsData.concat().splice(curr*nums-nums, nums);
+				currData = strawsData.concat().splice(curr*nums-nums, nums);
 			}else{
 				currData = that.concat().splice(curr*nums-nums, nums);
 			}
@@ -270,7 +270,7 @@ layui.config({
 					+'<td>'+currData[i].freezeStatus+'</td>'
 					+'<td>'+currData[i].opName+'</td>'
                     +'<td>'
-                    +  '<a class="layui-btn layui-btn-mini news_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
+                    +  '<a class="layui-btn layui-btn-mini straws_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
                     +  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].newsId+'"><i class="iconfont icon-edit"></i> 解冻</a>'
                     +'</td>'
 			    	+'</tr>';
@@ -284,14 +284,14 @@ layui.config({
 		//分页
 		var nums = 10; //每页出现的数据量
 		if(that){
-			newsData = that;
+            strawsData = that;
 		}
 		laypage({
 			cont : "page",
-			pages : Math.ceil(newsData.length/nums),
+			pages : Math.ceil(strawsData.length/nums),
 			jump : function(obj){
-				$(".news_content").html(renderDate(newsData,obj.curr));
-				$('.news_list thead input[type="checkbox"]').prop("checked",false);
+				$(".straws_content").html(renderDate(strawsData,obj.curr));
+				$('.straws_list thead input[type="checkbox"]').prop("checked",false);
 		    	form.render();
 			}
 		})

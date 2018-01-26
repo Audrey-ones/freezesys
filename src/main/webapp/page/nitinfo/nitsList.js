@@ -7,38 +7,22 @@ layui.config({
         $ = layui.jquery;
 
     //加载页面数据
-    var newsData = '';
+    var nitsData = '';
     $.get("../../json/nitsList.json", function(data){
-        var newArray = [];
-        //单击首页“待审核文章”加载的信息
-        if($(".top_tab li.layui-this cite",parent.document).text() == "待审核文章"){
-            if(window.sessionStorage.getItem("addNews")){
-                var addNews = window.sessionStorage.getItem("addNews");
-                newsData = JSON.parse(addNews).concat(data);
-            }else{
-                newsData = data;
-            }
-            for(var i=0;i<newsData.length;i++){
-                if(newsData[i].newsStatus == "待审核"){
-                    newArray.push(newsData[i]);
-                }
-            }
-            newsData = newArray;
-            nitsList(newsData);
-        }else{    //正常加载信息
-            newsData = data;
-            if(window.sessionStorage.getItem("addNews")){
-                var addNews = window.sessionStorage.getItem("addNews");
-                newsData = JSON.parse(addNews).concat(newsData);
-            }
-            //执行加载数据的方法
-            nitsList();
+      //正常加载信息
+        nitsData = data;
+        if(window.sessionStorage.getItem("addNits")){
+            var addNits = window.sessionStorage.getItem("addNits");
+            nitsData = JSON.parse(addNits).concat(nitsData);
         }
+        //执行加载数据的方法
+        nitsList();
+
     })
 
     //查询
     $(".search_btn").click(function(){
-        var newArray = [];
+        var nitArray = [];
         if($(".search_input").val() != ''){
             var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
@@ -47,14 +31,14 @@ layui.config({
                     type : "get",
                     dataType : "json",
                     success : function(data){
-                        if(window.sessionStorage.getItem("addNews")){
-                            var addNews = window.sessionStorage.getItem("addNews");
-                            newsData = JSON.parse(addNews).concat(data);
+                        if(window.sessionStorage.getItem("addNits")){
+                            var addNits = window.sessionStorage.getItem("addNits");
+                            nitsData = JSON.parse(addNits).concat(data);
                         }else{
-                            newsData = data;
+                            nitsData = data;
                         }
-                        for(var i=0;i<newsData.length;i++){
-                            var newsStr = newsData[i];
+                        for(var i=0;i<nitsData.length;i++){
+                            var nitsStr = nitsData[i];
                             var selectStr = $(".search_input").val();
                             function changeStr(data){
                                 var dataStr = '';
@@ -71,28 +55,28 @@ layui.config({
                                 }
                             }
                             //液氮罐编号
-                            if(newsStr.nitNum.indexOf(selectStr) > -1){
-                                newsStr["nitNum"] = changeStr(newsStr.nitNum);
+                            if(nitsStr.nitNum.indexOf(selectStr) > -1){
+                                nitsStr["nitNum"] = changeStr(nitsStr.nitNum);
                             }
                             //液氮罐型号
-                            if(newsStr.version.indexOf(selectStr) > -1){
-                                newsStr["version"] = changeStr(newsStr.version);
+                            if(nitsStr.version.indexOf(selectStr) > -1){
+                                nitsStr["version"] = changeStr(nitsStr.version);
                             }
                             //抗体类型
-                            if(newsStr.antibodyType.indexOf(selectStr) > -1){
-                                newsStr["antibodyType"] = changeStr(newsStr.antibodyType);
+                            if(nitsStr.antibodyType.indexOf(selectStr) > -1){
+                                nitsStr["antibodyType"] = changeStr(nitsStr.antibodyType);
                             }
                             //液氮罐状态
-                            if(newsStr.status.indexOf(selectStr) > -1){
-                                newsStr["status"] = changeStr(newsStr.status);
+                            if(nitsStr.status.indexOf(selectStr) > -1){
+                                nitsStr["status"] = changeStr(nitsStr.status);
                             }
-                            if(newsStr.nitNum.indexOf(selectStr)>-1 || newsStr.version.indexOf(selectStr)>-1
-                                || newsStr.antibodyType.indexOf(selectStr)>-1 || newsStr.status.indexOf(selectStr)>-1){
-                                newArray.push(newsStr);
+                            if(nitsStr.nitNum.indexOf(selectStr)>-1 || nitsStr.version.indexOf(selectStr)>-1
+                                || nitsStr.antibodyType.indexOf(selectStr)>-1 || nitsStr.status.indexOf(selectStr)>-1){
+                                nitArray.push(nitsStr);
                             }
                         }
-                        newsData = newArray;
-                        nitsList(newsData);
+                        nitsData = nitArray;
+                        nitsList(nitsData);
                     }
                 })
 
@@ -172,10 +156,10 @@ layui.config({
                 setTimeout(function(){
                     //删除数据
                     for(var j=0;j<$checked.length;j++){
-                        for(var i=0;i<newsData.length;i++){
-                            if(newsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
-                                newsData.splice(i,1);
-                                newsList(newsData);
+                        for(var i=0;i<nitsData.length;i++){
+                            if(nitsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
+                                nitsData.splice(i,1);
+                                nitsList(nitsData);
                             }
                         }
                     }
@@ -254,7 +238,7 @@ layui.config({
         function renderDate(data,curr){
             var dataHtml = '';
             if(!that){
-                currData = newsData.concat().splice(curr*nums-nums, nums);
+                currData = nitsData.concat().splice(curr*nums-nums, nums);
             }else{
                 currData = that.concat().splice(curr*nums-nums, nums);
             }
@@ -284,13 +268,13 @@ layui.config({
         //分页
         var nums = 10; //每页出现的数据量
         if(that){
-            newsData = that;
+            nitsData = that;
         }
         laypage({
             cont : "page",
-            pages : Math.ceil(newsData.length/nums),
+            pages : Math.ceil(nitsData.length/nums),
             jump : function(obj){
-                $(".nits_content").html(renderDate(newsData,obj.curr));
+                $(".nits_content").html(renderDate(nitsData,obj.curr));
                 $('.nits_list thead input[type="checkbox"]').prop("checked",false);
                 form.render();
             }
