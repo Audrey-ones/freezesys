@@ -16,30 +16,71 @@
 <form class="layui-form">
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">病历号</label>
+            <label class="layui-form-label">病历号&nbsp;&nbsp;&nbsp;</label>
             <div class="layui-input-inline">
-                <input class="layui-input" lay-verify="required" placeholder="请输入病历号">
+                <input class="layui-input medicalRecord" lay-verify="required" placeholder="请输入病历号">
             </div>
         </div>
+    </div>
+    <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">女方姓名</label>
+            <label class="layui-form-label">女方姓名&nbsp;&nbsp;</label>
             <div class="layui-input-inline">
-                <input class="layui-input" lay-verify="required" placeholder="请输入女方姓名">
+                <input class="layui-input femaleName" lay-verify="required" placeholder="请输入女方姓名">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">男方姓名</label>
             <div class="layui-input-inline">
-                <input class="layui-input" lay-verify="required" placeholder="请输入男方姓名">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">病历号</label>
-            <div class="layui-input-inline">
-                <input class="layui-input" lay-verify="required" placeholder="请输入病历号">
+                <input class="layui-input maleName" lay-verify="required" placeholder="请输入男方姓名">
             </div>
         </div>
     </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">男方身份证</label>
+            <div class="layui-input-inline">
+                <input class="layui-input femaleIdNum" lay-verify="required" placeholder="请输入男方身份证号码"/>
+            </div>
+        </div>
+        <div class="layui-inline" >
+            <label class="layui-form-label">女方身份证</label>
+            <div class="layui-input-inline" >
+                <input class="layui-input maleIdNum" lay-verify="required" placeholder="请输入女方身份证号码"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">家庭地址&nbsp;&nbsp;</label>
+            <div class="layui-input-inline">
+                <input class="layui-input address" lay-verify="required" placeholder="请输入家庭住址"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">手机号码</label>
+            <div class="layui-input-inline">
+                <input class="layui-input phone" lay-verify="required" placeholder="请输入手机号码"/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">备注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <div class="layui-input-inline">
+                <input class="layui-input remark" lay-verify="required" placeholder="请输入备注信息"/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="addPatient">立即提交</button>
+            <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+        </div>
+    </div>
 </form>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="patientAdd.js"></script>
 </body>
 </html>
