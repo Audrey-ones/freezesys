@@ -7,6 +7,7 @@ import java.util.Date;
 public class Straw {
     private Integer strawId;
     private String strawNum;
+    private String barcodeNum;
     private Integer patientId;
     private Integer divepipeId;
     private String sampleType;
@@ -34,6 +35,15 @@ public class Straw {
 
     public void setStrawNum(String strawNum) {
         this.strawNum = strawNum;
+    }
+
+    @Column(name = "barcode_num")
+    public String getBarcodeNum() {
+        return barcodeNum;
+    }
+
+    public void setBarcodeNum(String barcodeNum) {
+        this.barcodeNum = barcodeNum;
     }
 
     @Column(name = "patient_id")
@@ -117,11 +127,12 @@ public class Straw {
         this.remark = remark;
     }
 
-    public Straw(Integer strawId, String strawNum, Integer patientId, Integer divepipeId,
-                 String sampleType, Integer sampleAmount, Date freezeTime, Date expireTime,
-                 String freezeStatus, String operator, String remark) {
+    public Straw(Integer strawId, String strawNum, String barcodeNum, Integer patientId,
+                 Integer divepipeId, String sampleType, Integer sampleAmount, Date freezeTime,
+                 Date expireTime, String freezeStatus, String operator, String remark) {
         this.strawId = strawId;
         this.strawNum = strawNum;
+        this.barcodeNum = barcodeNum;
         this.patientId = patientId;
         this.divepipeId = divepipeId;
         this.sampleType = sampleType;
@@ -141,6 +152,7 @@ public class Straw {
         return "Straw{" +
                 "strawId=" + strawId +
                 ", strawNum='" + strawNum + '\'' +
+                ", barcodeNum='" + barcodeNum + '\'' +
                 ", patientId=" + patientId +
                 ", divepipeId=" + divepipeId +
                 ", sampleType='" + sampleType + '\'' +

@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Table(name = "tb_user")
 public class User {
     private Integer userId;
-    private String username;
+    private String account;
     private String nickname;
     private String password;
 
@@ -19,13 +19,13 @@ public class User {
         this.userId = userId;
     }
 
-    @Column(name = "username")
-    public String getUsername() {
-        return username;
+    @Column(name = "account")
+    public String getAccount() {
+        return account;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     @Column(name = "nickname")
@@ -46,9 +46,9 @@ public class User {
         this.password = password;
     }
 
-    public User(Integer userId, String username, String nickname, String password) {
+    public User(Integer userId, String account, String nickname, String password) {
         this.userId = userId;
-        this.username = username;
+        this.account = account;
         this.nickname = nickname;
         this.password = password;
     }
@@ -60,7 +60,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", username='" + username + '\'' +
+                ", account='" + account + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", password='" + password + '\'' +
                 '}';

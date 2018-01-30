@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTO Mapper 3.0"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sery.freezesys.dao.NitMapper">
+    <!--液氮罐结果集-->
+    <resultMap id="nitInfo" type="com.sery.freezesys.model.Nit">
+        <id column="id" property="nitId" jdbcType="INTEGER"></id>
+        <result column="num" property="nitNum" jdbcType="VARCHAR"></result>
+        <result column="version" property="version" jdbcType="VARCHAR"></result>
+        <result column="antibody_type" property="antibodyType" jdbcType="VARCHAR"></result>
+        <result column="status" property="status" jdbcType="VARCHAR"></result>
+        <result column="tub_amount" property="tubAmount" jdbcType="INTEGER"></result>
+        <result column="divepipe_amount" property="divepipeAmount" jdbcType="INTEGER"></result>
+        <result column="straw_amount" property="strawAmount" jdbcType="INTEGER"></result>
+        <result column="remark" property="remark" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <!--查询所有的液氮罐-->
+    <select id="selectAllNits" resultMap="nitInfo">
+        SELECT * FROM
+        tb_nit
+    </select>
+
+    <!--根据Id查询一条液氮罐记录-->
+    <select id="selectNitById" parameterType="java.lang.Integer" resultMap="nitInfo">
+        SELECT * FROM
+        tb_nit
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--新增液氮罐-->
+    <insert id="insertNit" parameterType="com.sery.freezesys.model.Nit">
+        INSERT INTO tb_nit (num, version, antibody_type, status, tub_amount, divepipe_amount, straw_amount, remark)
+        VALUES (#{nitNum,jdbcType=VARCHAR},#{version,jdbcType=VARCHAR},#{antibodyType,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},
+        #{tubAmount,jdbcType=INTEGER},#{divepipeAmount,jdbcType=INTEGER},#{strawAmount,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR})
+    </insert>
+
+    <!--更新一条液氮罐记录-->
+    <update id="updateNit" parameterType="com.sery.freezesys.model.Nit">
+        UPDATE tb_nit
+        <set>
+            <if test="nitNum != null">
+                num = #{nitNum,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="antibodyType != null">
+                antibody_type = #{antibodyType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="tubAmount != null">
+                tub_amount = #{tubAmount,jdbcType=INTEGER},
+            </if>
+            <if test="divepipeAmount != null">
+                divepipe_amount = #{divepipeAmount,jdbcType=INTEGER},
+            </if>
+            <if test="strawAmount != null">
+                straw_amount = #{strawAmount,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        WHERE id = #{nitId,jdbcType=INTEGER}
+    </update>
+
+</mapper>

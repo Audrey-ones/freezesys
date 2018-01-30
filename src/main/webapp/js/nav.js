@@ -11,12 +11,12 @@ var navs = [{
 },{
 	"title" : "液氮罐管理",
 	"icon" : "icon-text",
-	"href" : "page/nitInfo/nitsList.html",
+	"href" : "page/nit/nitsList.html",
 	"spread" : false
 },{
     "title" : "病人信息管理",
     "icon" : "icon-text",
-    "href" : "page/patientInfo/patientsList.html",
+    "href" : "page/patient/patientsList.html",
     "spread" : false
 }/*,{
 	"title" : "404页面",
