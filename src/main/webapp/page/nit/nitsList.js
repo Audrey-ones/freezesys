@@ -219,14 +219,24 @@ layui.config({
         }
     })
 
-    $("body").on("click",".news_del",function(){  //删除
+    //删除液氮罐
+    $("body").on("click",".nit_del",function(){
         var _this = $(this);
-        layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
+        layer.confirm('小主，你真的要删除我吗？',{icon:3, title:'提示信息'},function(index){
             //_this.parents("tr").remove();
-            for(var i=0;i<newsData.length;i++){
-                if(newsData[i].newsId == _this.attr("data-id")){
-                    newsData.splice(i,1);
-                    nitsList(newsData);
+            for(var i=0;i<nitsData.length;i++){
+                if(nitsData[i].nitId == _this.attr("data-id")){
+                    $.ajax({
+                        url : "http://localhost:8080/nits/" + nitsData[i].nitId,
+                        type : "post",
+                        dataType : "json",
+                        success : function (data) {
+                            layer.msg("删除成功！");
+                        }
+                    });
+                    //同时在表格中移除被删除的信息
+                    nitsData.splice(i,1);
+                    nitsList(nitsData);
                 }
             }
             layer.close(index);
@@ -255,7 +265,7 @@ layui.config({
                         +'<td>'+currData[i].strawAmount+'</td>'
                         +'<td>'
                         +  '<a class="layui-btn layui-btn-mini links_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
-                        +  '<a class="layui-btn layui-btn-danger layui-btn-mini links_del" data-id="'+data[i].linksId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
+                        +  '<a class="layui-btn layui-btn-danger layui-btn-mini nit_del" data-id="'+data[i].nitId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
                         +'</td>'
                         +'</tr>';
                 }

@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTO Mapper 3.0"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sery.freezesys.dao.PatientMapper">
+    <!--病人信息结果集-->
+    <resultMap id="patientInfo" type="com.sery.freezesys.model.Patient">
+        <id column="id" property="patientId" jdbcType="INTEGER"></id>
+        <result column="medical_record" property="medicalRecord" jdbcType="VARCHAR"></result>
+        <result column="female_name" property="femaleName" jdbcType="VARCHAR"></result>
+        <result column="male_name" property="maleName" jdbcType="VARCHAR"></result>
+        <result column="female_id_num" property="femaleIdNum" jdbcType="VARCHAR"></result>
+        <result column="male_id_num" property="maleIdNum" jdbcType="VARCHAR"></result>
+        <result column="address" property="address" jdbcType="VARCHAR"></result>
+        <result column="phone" property="phone" jdbcType="VARCHAR"></result>
+        <result column="remark" property="remark" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <!--插入一条病人信息-->
+    <insert id="insertPatient" parameterType="com.sery.freezesys.model.Patient">
+        INSERT INTO tb_patient(medical_record, female_name, male_name, female_id_num, male_id_num, address, phone, remark)
+        VALUES (#{medicalRecord,jdbcType=VARCHAR},#{femaleName,jdbcType=VARCHAR},#{maleName,jdbcType=VARCHAR},
+        #{femaleIdNum,jdbcType=VARCHAR},#{maleIdNum,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
+    </insert>
+
+    <!--查询所有的病人信息-->
+    <select id="selectAllPatient" resultMap="patientInfo">
+        SELECT * FROM tb_patient
+    </select>
+
+    <!--更新一条病人信息-->
+    <update id="updatePatient" parameterType="com.sery.freezesys.model.Patient">
+        UPDATE tb_patient
+        <set>
+            <if test="medicalRecord != null">
+                medical_record = #{medicalRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="femaleName != null">
+                female_name = #{femaleName,jdbcType=VARCHAR}
+            </if>
+            <if test="maleName != null">
+                male_name = #{maleName,jdbcType=VARCHAR}
+            </if>
+            <if test="femaleIdNum != null">
+                female_id_num = #{femaleIdNum,jdbcType=VARCHAR}
+            </if>
+            <if test="maleIdNum != null">
+                male_id_num = #{maleIdNum,jdbcType=VARCHAR}
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR}
+            </if>
+        </set>
+    </update>
+
+</mapper>

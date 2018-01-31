@@ -7,7 +7,7 @@ layui.config({
         $ = layui.jquery;
 
     var patientData = '';
-    $.get("../../json/patientsList.json",function(data){
+    $.get("http://localhost:8080/patients",function(data){
         //正常加载病人信息
         patientData = data;
         if (window.sessionStorage.getItem("addPatient")){
@@ -25,7 +25,7 @@ layui.config({
             var index = layer.msg('查询中，请稍后',{icon: 16, time: false, shade: 0.8});
             setTimeout(function () {
                $.ajax({
-                   url : "../../json/patientsList.json",
+                   url : "http://localhost:8080/patients",
                    type : "get",
                    dataType : "json",
                    success : function (data) {
@@ -125,7 +125,7 @@ layui.config({
             if (currData.length != 0){
                 for (var i=0; i<currData.length; i++){
                     dataHtml += '<tr>'
-                    + '<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>>'
+                    /*+ '<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>>'*/
                     + '<td>' + currData[i].medicalRecord + '</td>>'
                     + '<td>' + currData[i].femaleName + '</td>'
                     + '<td>' + currData[i].maleName + '</td>'

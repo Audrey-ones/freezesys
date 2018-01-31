@@ -68,4 +68,10 @@
         WHERE id = #{nitId,jdbcType=INTEGER}
     </update>
 
+    <!--根据液氮罐Id删除一条液氮罐信息-->
+    <delete id="deleteNit" parameterType="java.lang.Integer">
+        DELETE FROM tb_nit
+        WHERE id = #{nitId,jdbcType=INTEGER}
+    </delete>
+
 </mapper>

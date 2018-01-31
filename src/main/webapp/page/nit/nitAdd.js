@@ -7,36 +7,61 @@ layui.config({
         laydate = layui.laydate,
         $ = layui.jquery;
 
-    //创建一个编辑器
-    //var editIndex = layedit.build('news_content');
     var addNitsArray = [],addNits;
     form.on("submit(addNits)",function(data){
         //是否添加过信息
         if(window.sessionStorage.getItem("addNits")){
             addNitsArray = JSON.parse(window.sessionStorage.getItem("addNits"));
         }
-        //显示、审核状态
-        /*var isShow = data.field.show=="on" ? "checked" : "",
-            newsStatus = data.field.shenhe=="on" ? "审核通过" : "待审核";*/
 
-        addNits = '{"nitNum":"'+$(".nitNum").val()+'",';  //文章名称
-        addNits += '"version":"'+$(".version").val()+'",'; //发布时间
-        addNits += '"antibodyType":"'+$(".antibodyType").val()+'",';
-        addNits += '"status":"'+"未启用"+'",';
+        /*var nit = {
+            "nitNum": $(".nitNum").val(),
+            "version": $(".version").val(),
+            "antibodyType": $(".antibodyType").val(),
+            "status": "未使用",
+            "tubAmount": parseInt($(".tubAmount").val()),
+            "divepipeAmount": parseInt($(".drivepipeAmount").val()),
+            "strawAmount": parseInt($(".strawAmount").val()),
+            "strawAmount": "无"
+        }*/
+        $.ajax({
+            url : "http://localhost:8080/nits",
+            type : 'POST',
+            dataType : "json",
+            data : {
+                'nitNum': $(".nitNum").val(),
+                'version': $(".version").val(),
+                'antibodyType': $(".antibodyType").val(),
+                'status': '未使用',
+                'tubAmount': $(".tubAmount").val(),
+                'divepipeAmount': $(".drivepipeAmount").val(),
+                'strawAmount': $(".strawAmount").val(),
+                'remark': '无'
+            },
+            success : function (data) {
+                //弹出loading
+                var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+                setTimeout(function(){
+                    top.layer.close(index);
+                    top.layer.msg("添加液氮罐成功！");
+                    layer.closeAll("iframe");
+                    //刷新父页面
+                    parent.location.reload();
+                },2000);
+            }
+
+        })
+
+        addNits = '{"nitNum":"'+$(".nitNum").val()+'",';  //液氮罐编号
+        addNits += '"version":"'+$(".version").val()+'",'; //液氮罐型号
+        addNits += '"antibodyType":"'+$(".antibodyType").val()+'",';//抗体类型
+        addNits += '"status":"'+"未启用"+'",';//液氮罐状态
         addNits += '"tubAmount":"'+$(".tubAmount").val()+'",';
-        addNits += '"drivepipeAmount":"'+$(".drivepipeAmount").val()+'",';
+        addNits += '"divepipeAmount":"'+$(".divepipeAmount").val()+'",';
         addNits += '"strawAmount":"'+$(".strawAmount").val()+'"}';
         addNitsArray.unshift(JSON.parse(addNits));
         window.sessionStorage.setItem("addNits",JSON.stringify(addNitsArray));
-        //弹出loading
-        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
-        setTimeout(function(){
-            top.layer.close(index);
-            top.layer.msg("添加液氮罐成功！");
-            layer.closeAll("iframe");
-            //刷新父页面
-            parent.location.reload();
-        },2000);
+
         return false;
     })
 

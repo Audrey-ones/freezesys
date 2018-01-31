@@ -33,4 +33,11 @@ public interface NitMapper{
      */
     int updateNit(Nit nit);
 
+    /**
+     * 根据液氮罐Id删除一条液氮罐信息
+     * @param nitId
+     * @return
+     */
+    int deleteNit(int nitId);
+
 }

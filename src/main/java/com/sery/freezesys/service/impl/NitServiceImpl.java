@@ -32,4 +32,10 @@ public class NitServiceImpl implements NitService {
         int result = nitMapper.updateNit(nit);
         return result;
     }
+
+    @Override
+    public int deleteNit(int nitId) {
+        int result = nitMapper.deleteNit(nitId);
+        return result;
+    }
 }

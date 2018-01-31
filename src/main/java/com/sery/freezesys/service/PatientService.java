@@ -1,22 +1,22 @@
-package com.sery.freezesys.dao;
+package com.sery.freezesys.service;
 
 import com.sery.freezesys.model.Patient;
 
 import java.util.List;
 
-public interface PatientMapper {
+public interface PatientService {
     /**
-     * 插入一条病人信息
+     * 增加一条病人信息
      * @param patient
      * @return
      */
-    int insertPatient(Patient patient);
+    int addPatient(Patient patient);
 
     /**
      * 查询所有的病人信息
      * @return
      */
-    List<Patient> selectAllPatient();
+    List<Patient> getPatientList();
 
     /**
      * 更新病人信息

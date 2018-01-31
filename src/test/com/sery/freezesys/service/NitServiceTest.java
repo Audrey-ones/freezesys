@@ -28,7 +28,7 @@ public class NitServiceTest {
     @Test
     public void addNit() {
         Nit nit = new Nit();
-        nit.setNitNum("D");
+        nit.setNitNum("C");
         nit.setVersion("MVE47-11-10");
         nit.setAntibodyType("无");
         nit.setStatus("未使用");
@@ -43,9 +43,15 @@ public class NitServiceTest {
     @Test
     public void updateNit() {
         Nit nit = new Nit();
-        nit.setNitId(2);
+        nit.setNitId(3);
         nit.setRemark("修改过");
         int result = nitService.updateNit(nit);
+        System.out.println(result);
+    }
+
+    @Test
+    public void deleteNit() {
+        int result = nitService.deleteNit(4);
         System.out.println(result);
     }
 }
