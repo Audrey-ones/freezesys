@@ -16,7 +16,7 @@
     </resultMap>
 
     <!--插入一条病人信息-->
-    <insert id="insertPatient" parameterType="com.sery.freezesys.model.Patient">
+    <insert id="insertPatient" parameterType="com.sery.freezesys.model.Patient" keyProperty="patientId" useGeneratedKeys="true">
         INSERT INTO tb_patient(medical_record, female_name, male_name, female_id_num, male_id_num, address, phone, remark)
         VALUES (#{medicalRecord,jdbcType=VARCHAR},#{femaleName,jdbcType=VARCHAR},#{maleName,jdbcType=VARCHAR},
         #{femaleIdNum,jdbcType=VARCHAR},#{maleIdNum,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
@@ -26,6 +26,14 @@
     <!--查询所有的病人信息-->
     <select id="selectAllPatient" resultMap="patientInfo">
         SELECT * FROM tb_patient
+    </select>
+
+    <!--根据病历号和女方姓名查找一条病人记录-->
+    <select id="selectPatient" resultMap="patientInfo" parameterType="java.util.Map">
+        SELECT *
+        FROM tb_patient
+        WHERE
+        medical_record = #{medicalRecord,jdbcType=VARCHAR} AND female_name = #{femaleName,jdbcType=VARCHAR}
     </select>
 
     <!--更新一条病人信息-->

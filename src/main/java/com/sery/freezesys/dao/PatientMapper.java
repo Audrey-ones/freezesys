@@ -3,6 +3,7 @@ package com.sery.freezesys.dao;
 import com.sery.freezesys.model.Patient;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PatientMapper {
     /**
@@ -17,6 +18,13 @@ public interface PatientMapper {
      * @return
      */
     List<Patient> selectAllPatient();
+
+    /**
+     * 根据病历号和女方姓名查找一条病人记录
+     * @param map
+     * @return
+     */
+    Patient selectPatient(Map map);
 
     /**
      * 更新病人信息

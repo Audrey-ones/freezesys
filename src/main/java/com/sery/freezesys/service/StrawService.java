@@ -11,4 +11,11 @@ public interface StrawService {
      * @return
      */
     List<StrawDTO> getStrawList();
+
+    /**
+     * 新增一条麦管记录
+     * @param strawDTO
+     * @return
+     */
+    int addStraw(StrawDTO strawDTO);
 }

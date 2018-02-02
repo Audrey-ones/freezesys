@@ -5,6 +5,7 @@ import com.sery.freezesys.model.Nit;
 import com.sery.freezesys.model.Tub;
 
 import java.util.List;
+import java.util.Map;
 
 public interface NitMapper{
 
@@ -27,6 +28,13 @@ public interface NitMapper{
      * @return
      */
     List<Tub> selectAllTubsByNitId(int nitId);
+
+    /**
+     * 根据液氮罐编号，吊桶编号，套管编号查询套管Id
+     * @param map
+     * @return
+     */
+    Divepipe selectDivepipeId(Map map);
 
     /**
      * 插入一条液氮罐记录

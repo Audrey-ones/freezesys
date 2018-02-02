@@ -246,6 +246,16 @@ layui.config({
 		});
 	})
 
+    function timestampToTime(timestamp) {
+        var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()+1) + ' ';
+        h = date.getHours() + ':';
+        m = date.getMinutes() ;
+        return Y+M+D+h+m;
+    }
+
 	function strawsList(that){
 		//渲染数据
 		function renderDate(data,curr){
@@ -257,6 +267,9 @@ layui.config({
 			}
 			if(currData.length != 0){
 				for(var i=0;i<currData.length;i++){
+				    var freezeTime = timestampToTime(currData[i].freezeTime);
+
+				    console.log(freezeTime)
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
 			    	+'<td>'+currData[i].strawNum+'管'+currData[i].nitNum+'-'+currData[i].tubNum+'-'+currData[i].divepipeNum+'</td>'
@@ -265,7 +278,7 @@ layui.config({
 					+'<td>'+currData[i].femaleName+'</td>'
 					+'<td>'+currData[i].sampleType+'</td>'
 					+'<td>'+currData[i].sampleAmount+'</td>'
-					+'<td>'+currData[i].freezeTime+'</td>'
+					+'<td>'+freezeTime+'</td>'
 					+'<td>'+currData[i].expireTime+'</td>'
 					+'<td>'+currData[i].freezeStatus+'</td>'
 					+'<td>'+currData[i].operator+'</td>'

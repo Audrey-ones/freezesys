@@ -13,8 +13,8 @@ public class Straw {
     private Integer divepipeId;
     private String sampleType;
     private Integer sampleAmount;
-    private Date freezeTime;
-    private Date expireTime;
+    private String freezeTime;
+    private String expireTime;
     private String freezeStatus;
     private String operator;
     private String remark;
@@ -93,20 +93,20 @@ public class Straw {
     }
 
     @Column(name = "freeze_time")
-    public Date getFreezeTime() {
+    public String getFreezeTime() {
         return freezeTime;
     }
 
-    public void setFreezeTime(Date freezeTime) {
+    public void setFreezeTime(String freezeTime) {
         this.freezeTime = freezeTime;
     }
 
     @Column(name = "expire_time")
-    public Date getExpireTime() {
+    public String getExpireTime() {
         return expireTime;
     }
 
-    public void setExpireTime(Date expireTime) {
+    public void setExpireTime(String expireTime) {
         this.expireTime = expireTime;
     }
 
@@ -139,7 +139,7 @@ public class Straw {
 
     public Straw(Integer strawId, String strawNum, String freezeNum, String barcodeNum,
                  Integer patientId, Integer divepipeId, String sampleType, Integer sampleAmount,
-                 Date freezeTime, Date expireTime, String freezeStatus, String operator, String remark) {
+                 String freezeTime, String expireTime, String freezeStatus, String operator, String remark) {
         this.strawId = strawId;
         this.strawNum = strawNum;
         this.freezeNum = freezeNum;

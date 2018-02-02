@@ -9,13 +9,14 @@ public class StrawDTO {
     private String barcodeNum;
     private String medicalRecord;
     private String femaleName;
+    private String maleName;
     private String nitNum;
     private String tubNum;
     private String divepipeNum;
     private String sampleType;
     private Integer sampleAmount;
-    private Date freezeTime;
-    private Date expireTime;
+    private String freezeTime;
+    private String expireTime;
     private String freezeStatus;
     private String operator;
     private String remark;
@@ -68,6 +69,14 @@ public class StrawDTO {
         this.femaleName = femaleName;
     }
 
+    public String getMaleName() {
+        return maleName;
+    }
+
+    public void setMaleName(String maleName) {
+        this.maleName = maleName;
+    }
+
     public String getNitNum() {
         return nitNum;
     }
@@ -108,19 +117,19 @@ public class StrawDTO {
         this.sampleAmount = sampleAmount;
     }
 
-    public Date getFreezeTime() {
+    public String getFreezeTime() {
         return freezeTime;
     }
 
-    public void setFreezeTime(Date freezeTime) {
+    public void setFreezeTime(String freezeTime) {
         this.freezeTime = freezeTime;
     }
 
-    public Date getExpireTime() {
+    public String getExpireTime() {
         return expireTime;
     }
 
-    public void setExpireTime(Date expireTime) {
+    public void setExpireTime(String expireTime) {
         this.expireTime = expireTime;
     }
 
@@ -157,6 +166,7 @@ public class StrawDTO {
                 ", barcodeNum='" + barcodeNum + '\'' +
                 ", medicalRecord='" + medicalRecord + '\'' +
                 ", femaleName='" + femaleName + '\'' +
+                ", maleName='" + maleName + '\'' +
                 ", nitNum='" + nitNum + '\'' +
                 ", tubNum='" + tubNum + '\'' +
                 ", divepipeNum='" + divepipeNum + '\'' +

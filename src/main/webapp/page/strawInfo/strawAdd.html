@@ -30,7 +30,7 @@
 		<div class="layui-inline">
 			<label class="layui-form-label"> 男方姓名</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input maleName" lay-verify="required" placeholder="选填">
+				<input type="text" class="layui-input maleName" lay-verify="required" placeholder="请输入男方姓名">
 			</div>
 		</div>
 	</div>
@@ -54,15 +54,21 @@
 	</div>
 	<div class="layui-form-item">
 		<div class="layui-inline">
+			<label class="layui-form-label">冷冻编号&nbsp;&nbsp;</label>
+			<div class="layui-input-inline">
+				<input type="text" class="layui-input freezeNum" lay-verify="required" placeholder="请输入冷冻编号">
+			</div>
+		</div>
+		<div class="layui-inline">
 			<label class="layui-form-label">冷冻时间&nbsp;&nbsp;</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input freezeTime" lay-verify="date" onclick="layui.laydate({elem:this})" placeholder="请输入冷冻时间">
+				<input type="text" class="layui-input freezeTime" placeholder="请输入冷冻时间">
 			</div>
 		</div>
 		<div class="layui-inline">
 			<label class="layui-form-label">到期时间</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input expireTime" lay-verify="date" onclick="layui.laydate({elem:this})" placeholder="请输入到期时间">
+				<input type="text" class="layui-input expireTime" placeholder="请输入到期时间">
 			</div>
 		</div>
 	</div>
@@ -85,7 +91,7 @@
 		<div class="layui-inline">
 			<label class="layui-form-label">套管编号&nbsp;&nbsp;</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input drivepipeNum" lay-verify="required" placeholder="请输入套管编号">
+				<input type="text" class="layui-input divepipeNum" lay-verify="required" placeholder="请输入套管编号">
 			</div>
 		</div>
 		<div class="layui-inline">
@@ -103,7 +109,20 @@
 		</div>
 	</div>
 </form>
+<script src="../../layui/laydate/laydate.js"></script>
 <script type="text/javascript" src="../../layui/layui.js"></script>
 <script type="text/javascript" src="strawAdd.js"></script>
+<script>
+    //执行一个laydate实例
+    laydate.render({
+        elem: '.freezeTime', //指定元素 冷冻时间
+        type: 'datetime'
+    });
+    laydate.render({
+        elem: '.expireTime', //指定元素 到期时间
+        type: 'datetime'
+    });
+
+</script>
 </body>
 </html>

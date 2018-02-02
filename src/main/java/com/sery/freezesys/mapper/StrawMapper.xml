@@ -10,13 +10,14 @@
         <result column="barcode_num" property="barcodeNum" jdbcType="VARCHAR"></result>
         <result column="medical_record" property="medicalRecord" jdbcType="VARCHAR"></result>
         <result column="female_name" property="femaleName" jdbcType="VARCHAR"></result>
+        <result column="male_name" property="maleName" jdbcType="VARCHAR"></result>
         <result column="num" property="nitNum" jdbcType="VARCHAR"></result>
         <result column="tub_num" property="tubNum" jdbcType="VARCHAR"></result>
         <result column="divepipe_num" property="divepipeNum" jdbcType="VARCHAR"></result>
         <result column="sample_type" property="sampleType" jdbcType="VARCHAR"></result>
         <result column="sample_amount" property="sampleAmount" jdbcType="INTEGER"></result>
-        <result column="freeze_time" property="freezeTime" jdbcType="TIMESTAMP"></result>
-        <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP"></result>
+        <result column="freeze_time" property="freezeTime" jdbcType="VARCHAR"></result>
+        <result column="expire_time" property="expireTime" jdbcType="VARCHAR"></result>
         <result column="freeze_status" property="freezeStatus" jdbcType="VARCHAR"></result>
         <result column="operator" property="operator" jdbcType="VARCHAR"></result>
         <result column="remark" property="remark" jdbcType="VARCHAR"></result>
@@ -25,7 +26,7 @@
     <!--查询所有的麦管记录-->
     <select id="selectAllStraw" resultMap="strawInfo">
         SELECT
-        s.id,s.straw_num,s.freeze_num,s.barcode_num,p.medical_record,p.female_name,n.num,t.tub_num,d.divepipe_num,
+        s.id,s.straw_num,s.freeze_num,s.barcode_num,p.medical_record,p.female_name,p.male_name,n.num,t.tub_num,d.divepipe_num,
         s.sample_type,s.sample_amount,s.freeze_time,s.expire_time,s.freeze_status,s.operator,s.remark
         FROM
         tb_straw s, tb_nit n, tb_tub t, tb_divepipe d, tb_patient p
@@ -34,5 +35,14 @@
         AND n.id = t.nit_id
         AND t.id = d.tub_id
     </select>
+
+    <insert id="insertStraw" parameterType="com.sery.freezesys.model.Straw">
+        INSERT INTO tb_straw (straw_num, freeze_num, barcode_num, patient_id, divepipe_id,
+        sample_type, sample_amount, freeze_time, expire_time, freeze_status, operator, remark)
+        VALUES (#{strawNum,jdbcType=VARCHAR},#{freezeNum,jdbcType=VARCHAR},#{barcodeNum,jdbcType=VARCHAR},
+        #{patientId,jdbcType=VARCHAR},#{divepipeId,jdbcType=VARCHAR},#{sampleType,jdbcType=VARCHAR},
+        #{sampleAmount,jdbcType=INTEGER},#{freezeTime,jdbcType=VARCHAR},#{expireTime,jdbcType=VARCHAR},
+        #{freezeStatus,jdbcType=VARCHAR},#{operator,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
+    </insert>
 
 </mapper>
