@@ -46,4 +46,10 @@ public class PatientServiceTest {
         int result = patientService.updatePatient(patient);
         System.out.println(result);
     }
+
+    @Test
+    public void deletePatient() {
+        int result = patientService.deletePatient(1);
+        System.out.println(result);
+    }
 }

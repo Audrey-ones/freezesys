@@ -10,6 +10,7 @@ layui.config({
     $.get("http://localhost:8080/patients",function(data){
         //正常加载病人信息
         patientData = data;
+        console.log(patientData)
         if (window.sessionStorage.getItem("addPatient")){
             var addPatient = window.sessionStorage.getItem("addPatient");
             patientData = JSON.parse(addPatient).concat(patientData);
@@ -111,6 +112,30 @@ layui.config({
         })
         layui.layer.full(index);
     })
+
+    //删除病人信息
+    $("body").on("click",".patient_del",function () {
+        var _this = $(this);
+        console.log(_this)
+        layer.confirm("确认删除该条病人记录？",{icon: 3,title:'提示信息'},function (index) {
+            for (var i=0; i<patientData.length; i++){
+                if (patientData[i].patientId == _this.attr("data-id")){
+                    $.ajax({
+                        url : "http://localhost:8080/patients/" + patientData[i].patientId,
+                        type : "post",
+                        dataType : "json",
+                        success : function (data) {
+                            layer.msg("删除成功！");
+                        }
+                    });
+                    patientData.splice(i,1);
+                    patientsList(patientData);
+                }
+            }
+            layer.close(index);
+        });
+    });
+
 
     //加载数据
     function patientsList(that) {

@@ -8,13 +8,13 @@ layui.config({
 
 	//加载页面数据
 	var strawsData = '';
-	$.get("../../json/strawsList.json", function(data){
+	$.get("http://localhost:8080/straws", function(data){
         //正常加载信息
         strawsData = data;
-        if(window.sessionStorage.getItem("addStraws")){
+        /*if(window.sessionStorage.getItem("addStraws")){
             var addStraws = window.sessionStorage.getItem("addStraws");
             strawsData = JSON.parse(addStraws).concat(strawsData);
-        }
+        }*/
         //执行加载数据的方法
         strawsList();
 	})
@@ -26,7 +26,7 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
             	$.ajax({
-					url : "../../json/strawsList.json",
+					url : "http://localhost:8080/straws",
 					type : "get",
 					dataType : "json",
 					success : function(data){
@@ -259,7 +259,7 @@ layui.config({
 				for(var i=0;i<currData.length;i++){
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
-			    	+'<td>'+currData[i].strawNum+'管'+currData[i].nitNum+'-'+currData[i].tubNum+'-'+currData[i].drivepipeNum+'</td>'
+			    	+'<td>'+currData[i].strawNum+'管'+currData[i].nitNum+'-'+currData[i].tubNum+'-'+currData[i].divepipeNum+'</td>'
 					+'<td>'+currData[i].freezeNum+'</td>'
 			    	+'<td>'+currData[i].medicalRecord+'</td>'
 					+'<td>'+currData[i].femaleName+'</td>'
@@ -268,7 +268,7 @@ layui.config({
 					+'<td>'+currData[i].freezeTime+'</td>'
 					+'<td>'+currData[i].expireTime+'</td>'
 					+'<td>'+currData[i].freezeStatus+'</td>'
-					+'<td>'+currData[i].opName+'</td>'
+					+'<td>'+currData[i].operator+'</td>'
                     +'<td>'
                     +  '<a class="layui-btn layui-btn-mini straws_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
                     +  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].newsId+'"><i class="iconfont icon-edit"></i> 解冻</a>'

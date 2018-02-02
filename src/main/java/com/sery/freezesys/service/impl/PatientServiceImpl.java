@@ -30,4 +30,10 @@ public class PatientServiceImpl implements PatientService {
         int result = patientMapper.updatePatient(patient);
         return result;
     }
+
+    @Override
+    public int deletePatient(int patientId) {
+        int result = patientMapper.deletePatient(patientId);
+        return result;
+    }
 }

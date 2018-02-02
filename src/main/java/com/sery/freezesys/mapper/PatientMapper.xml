@@ -59,4 +59,11 @@
         </set>
     </update>
 
+    <!--根据病人Id删除一个病人信息-->
+    <delete id="deletePatient" parameterType="java.lang.Integer">
+        DELETE FROM
+        tb_patient
+        WHERE id = #{patientId,jdbcType=INTEGER}
+    </delete>
+
 </mapper>

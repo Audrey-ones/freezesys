@@ -20,6 +20,23 @@ public interface NitService {
     int addNit(Nit nit);
 
     /**
+     * 根据一个液氮罐初始化新增吊桶
+     * @param nitNum
+     * @param tubAmount
+     * @param divepipeAmount
+     * @param strawAmount
+     */
+    void addTub(int nitId,int tubAmount, int divepipeAmount, int strawAmount);
+
+    /**
+     * 根据每个套管初始化新增麦管
+     * @param divepipeAmount
+     * @param strawAmount
+     * @param tubId
+     */
+    void addDivepipe(int divepipeAmount, int strawAmount, int tubId);
+
+    /**
      * 根据ID编辑液氮罐
      * @param nit
      * @return

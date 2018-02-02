@@ -24,4 +24,11 @@ public interface PatientService {
      * @return
      */
     int updatePatient(Patient patient);
+
+    /**
+     * 根据病人Id删除一个病人信息
+     * @param patientId
+     * @return
+     */
+    int deletePatient(int patientId);
 }

@@ -1,0 +1,38 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTO Mapper 3.0"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sery.freezesys.dao.StrawMapper">
+
+    <resultMap id="strawInfo" type="com.sery.freezesys.model.StrawDTO">
+        <id column="id" property="strawId" jdbcType="INTEGER"></id>
+        <result column="straw_num" property="strawNum" jdbcType="VARCHAR"></result>
+        <result column="freeze_num" property="freezeNum" jdbcType="VARCHAR"></result>
+        <result column="barcode_num" property="barcodeNum" jdbcType="VARCHAR"></result>
+        <result column="medical_record" property="medicalRecord" jdbcType="VARCHAR"></result>
+        <result column="female_name" property="femaleName" jdbcType="VARCHAR"></result>
+        <result column="num" property="nitNum" jdbcType="VARCHAR"></result>
+        <result column="tub_num" property="tubNum" jdbcType="VARCHAR"></result>
+        <result column="divepipe_num" property="divepipeNum" jdbcType="VARCHAR"></result>
+        <result column="sample_type" property="sampleType" jdbcType="VARCHAR"></result>
+        <result column="sample_amount" property="sampleAmount" jdbcType="INTEGER"></result>
+        <result column="freeze_time" property="freezeTime" jdbcType="TIMESTAMP"></result>
+        <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP"></result>
+        <result column="freeze_status" property="freezeStatus" jdbcType="VARCHAR"></result>
+        <result column="operator" property="operator" jdbcType="VARCHAR"></result>
+        <result column="remark" property="remark" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <!--查询所有的麦管记录-->
+    <select id="selectAllStraw" resultMap="strawInfo">
+        SELECT
+        s.id,s.straw_num,s.freeze_num,s.barcode_num,p.medical_record,p.female_name,n.num,t.tub_num,d.divepipe_num,
+        s.sample_type,s.sample_amount,s.freeze_time,s.expire_time,s.freeze_status,s.operator,s.remark
+        FROM
+        tb_straw s, tb_nit n, tb_tub t, tb_divepipe d, tb_patient p
+        WHERE s.patient_id = p.id
+        AND s.divepipe_id = d.id
+        AND n.id = t.nit_id
+        AND t.id = d.tub_id
+    </select>
+
+</mapper>

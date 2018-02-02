@@ -15,6 +15,12 @@
         <result column="remark" property="remark" jdbcType="VARCHAR"></result>
     </resultMap>
 
+    <resultMap id="tubInfo" type="com.sery.freezesys.model.Tub">
+        <id column="id" property="tubId" jdbcType="INTEGER"></id>
+        <result column="tub_num" property="tubNum" jdbcType="VARCHAR"></result>
+        <result column="nit_id" property="nitId" jdbcType="INTEGER"></result>
+    </resultMap>
+
     <!--查询所有的液氮罐-->
     <select id="selectAllNits" resultMap="nitInfo">
         SELECT * FROM
@@ -28,11 +34,30 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </select>
 
+    <!--根据液氮罐编号查询和该液氮罐关联的所有吊桶-->
+    <select id="selectAllTubsByNitId" parameterType="java.lang.Integer" resultMap="tubInfo">
+        SELECT * FROM
+        tb_tub
+        WHERE nit_id = #{nitId,jdbcType=INTEGER}
+    </select>
+
     <!--新增液氮罐-->
-    <insert id="insertNit" parameterType="com.sery.freezesys.model.Nit">
+    <insert id="insertNit" parameterType="com.sery.freezesys.model.Nit" keyProperty="nitId" useGeneratedKeys="true">
         INSERT INTO tb_nit (num, version, antibody_type, status, tub_amount, divepipe_amount, straw_amount, remark)
         VALUES (#{nitNum,jdbcType=VARCHAR},#{version,jdbcType=VARCHAR},#{antibodyType,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},
         #{tubAmount,jdbcType=INTEGER},#{divepipeAmount,jdbcType=INTEGER},#{strawAmount,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR})
+    </insert>
+
+    <!--插入一条吊桶记录-->
+    <insert id="insertTub" parameterType="com.sery.freezesys.model.Tub" keyProperty="tubId" useGeneratedKeys="true">
+        INSERT INTO tb_tub (tub_num, nit_id)
+        VALUES (#{tubNum,jdbcType=VARCHAR},#{nitId,jdbcType=INTEGER})
+    </insert>
+
+    <!--插入一条套管记录-->
+    <insert id="insertDivepipe" parameterType="com.sery.freezesys.model.Divepipe">
+        INSERT INTO tb_divepipe (divepipe_num, flag_num, tub_id)
+        VALUES (#{divepipeNum,jdbcType=VARCHAR},#{flagNum,jdbcType=INTEGER},#{tubId,jdbcType=INTEGER})
     </insert>
 
     <!--更新一条液氮罐记录-->
@@ -72,6 +97,18 @@
     <delete id="deleteNit" parameterType="java.lang.Integer">
         DELETE FROM tb_nit
         WHERE id = #{nitId,jdbcType=INTEGER}
+    </delete>
+
+    <!--根据液氮罐Id删除该液氮罐下的所有吊桶-->
+    <delete id="deleteTub" parameterType="java.lang.Integer">
+        DELETE FROM tb_tub
+        WHERE nit_id = #{nitId,jdbcType=INTEGER}
+    </delete>
+
+    <!--根据吊桶ID删除该吊桶关联的所有套管记录-->
+    <delete id="deleteDivepipe" parameterType="java.lang.Integer">
+        DELETE FROM tb_divepipe
+        WHERE tub_id = #{tubId,jdbcType=INTEGER}
     </delete>
 
 </mapper>

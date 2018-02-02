@@ -10,9 +10,9 @@ layui.config({
     var addNitsArray = [],addNits;
     form.on("submit(addNits)",function(data){
         //是否添加过信息
-        if(window.sessionStorage.getItem("addNits")){
+        /*if(window.sessionStorage.getItem("addNits")){
             addNitsArray = JSON.parse(window.sessionStorage.getItem("addNits"));
-        }
+        }*/
 
         /*var nit = {
             "nitNum": $(".nitNum").val(),
@@ -20,13 +20,13 @@ layui.config({
             "antibodyType": $(".antibodyType").val(),
             "status": "未使用",
             "tubAmount": parseInt($(".tubAmount").val()),
-            "divepipeAmount": parseInt($(".drivepipeAmount").val()),
+            "divepipeAmount": parseInt($(".divepipeAmount").val()),
             "strawAmount": parseInt($(".strawAmount").val()),
             "strawAmount": "无"
         }*/
         $.ajax({
             url : "http://localhost:8080/nits",
-            type : 'POST',
+            type : 'post',
             dataType : "json",
             data : {
                 'nitNum': $(".nitNum").val(),
@@ -34,7 +34,7 @@ layui.config({
                 'antibodyType': $(".antibodyType").val(),
                 'status': '未使用',
                 'tubAmount': $(".tubAmount").val(),
-                'divepipeAmount': $(".drivepipeAmount").val(),
+                'divepipeAmount': $(".divepipeAmount").val(),
                 'strawAmount': $(".strawAmount").val(),
                 'remark': '无'
             },
@@ -52,7 +52,7 @@ layui.config({
 
         })
 
-        addNits = '{"nitNum":"'+$(".nitNum").val()+'",';  //液氮罐编号
+        /*addNits = '{"nitNum":"'+$(".nitNum").val()+'",';  //液氮罐编号
         addNits += '"version":"'+$(".version").val()+'",'; //液氮罐型号
         addNits += '"antibodyType":"'+$(".antibodyType").val()+'",';//抗体类型
         addNits += '"status":"'+"未启用"+'",';//液氮罐状态
@@ -60,7 +60,7 @@ layui.config({
         addNits += '"divepipeAmount":"'+$(".divepipeAmount").val()+'",';
         addNits += '"strawAmount":"'+$(".strawAmount").val()+'"}';
         addNitsArray.unshift(JSON.parse(addNits));
-        window.sessionStorage.setItem("addNits",JSON.stringify(addNitsArray));
+        window.sessionStorage.setItem("addNits",JSON.stringify(addNitsArray));*/
 
         return false;
     })

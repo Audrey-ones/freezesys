@@ -1,16 +1,17 @@
 package com.sery.freezesys.model;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Table(name = "tb_straw")
-public class Straw {
+public class StrawDTO {
     private Integer strawId;
     private String strawNum;
     private String freezeNum;
     private String barcodeNum;
-    private Integer patientId;
-    private Integer divepipeId;
+    private String medicalRecord;
+    private String femaleName;
+    private String nitNum;
+    private String tubNum;
+    private String divepipeNum;
     private String sampleType;
     private Integer sampleAmount;
     private Date freezeTime;
@@ -19,8 +20,6 @@ public class Straw {
     private String operator;
     private String remark;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getStrawId() {
         return strawId;
     }
@@ -29,12 +28,10 @@ public class Straw {
         this.strawId = strawId;
     }
 
-    @Column(name = "straw_num")
     public String getStrawNum() {
         return strawNum;
     }
 
-    @Column(name = "freeze_num")
     public void setStrawNum(String strawNum) {
         this.strawNum = strawNum;
     }
@@ -47,7 +44,6 @@ public class Straw {
         this.freezeNum = freezeNum;
     }
 
-    @Column(name = "barcode_num")
     public String getBarcodeNum() {
         return barcodeNum;
     }
@@ -56,25 +52,46 @@ public class Straw {
         this.barcodeNum = barcodeNum;
     }
 
-    @Column(name = "patient_id")
-    public Integer getPatientId() {
-        return patientId;
+    public String getMedicalRecord() {
+        return medicalRecord;
     }
 
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
+    public void setMedicalRecord(String medicalRecord) {
+        this.medicalRecord = medicalRecord;
     }
 
-    @Column(name = "divepipe_id")
-    public Integer getDivepipeId() {
-        return divepipeId;
+    public String getFemaleName() {
+        return femaleName;
     }
 
-    public void setDivepipeId(Integer divepipeId) {
-        this.divepipeId = divepipeId;
+    public void setFemaleName(String femaleName) {
+        this.femaleName = femaleName;
     }
 
-    @Column(name = "sample_type")
+    public String getNitNum() {
+        return nitNum;
+    }
+
+    public void setNitNum(String nitNum) {
+        this.nitNum = nitNum;
+    }
+
+    public String getTubNum() {
+        return tubNum;
+    }
+
+    public void setTubNum(String tubNum) {
+        this.tubNum = tubNum;
+    }
+
+    public String getDivepipeNum() {
+        return divepipeNum;
+    }
+
+    public void setDivepipeNum(String divepipeNum) {
+        this.divepipeNum = divepipeNum;
+    }
+
     public String getSampleType() {
         return sampleType;
     }
@@ -83,7 +100,6 @@ public class Straw {
         this.sampleType = sampleType;
     }
 
-    @Column(name = "sample_amount")
     public Integer getSampleAmount() {
         return sampleAmount;
     }
@@ -92,7 +108,6 @@ public class Straw {
         this.sampleAmount = sampleAmount;
     }
 
-    @Column(name = "freeze_time")
     public Date getFreezeTime() {
         return freezeTime;
     }
@@ -101,7 +116,6 @@ public class Straw {
         this.freezeTime = freezeTime;
     }
 
-    @Column(name = "expire_time")
     public Date getExpireTime() {
         return expireTime;
     }
@@ -110,7 +124,6 @@ public class Straw {
         this.expireTime = expireTime;
     }
 
-    @Column(name = "freeze_status")
     public String getFreezeStatus() {
         return freezeStatus;
     }
@@ -119,7 +132,6 @@ public class Straw {
         this.freezeStatus = freezeStatus;
     }
 
-    @Column(name = "operator")
     public String getOperator() {
         return operator;
     }
@@ -128,7 +140,6 @@ public class Straw {
         this.operator = operator;
     }
 
-    @Column(name = "remark")
     public String getRemark() {
         return remark;
     }
@@ -137,36 +148,18 @@ public class Straw {
         this.remark = remark;
     }
 
-    public Straw(Integer strawId, String strawNum, String freezeNum, String barcodeNum,
-                 Integer patientId, Integer divepipeId, String sampleType, Integer sampleAmount,
-                 Date freezeTime, Date expireTime, String freezeStatus, String operator, String remark) {
-        this.strawId = strawId;
-        this.strawNum = strawNum;
-        this.freezeNum = freezeNum;
-        this.barcodeNum = barcodeNum;
-        this.patientId = patientId;
-        this.divepipeId = divepipeId;
-        this.sampleType = sampleType;
-        this.sampleAmount = sampleAmount;
-        this.freezeTime = freezeTime;
-        this.expireTime = expireTime;
-        this.freezeStatus = freezeStatus;
-        this.operator = operator;
-        this.remark = remark;
-    }
-
-    public Straw() {
-    }
-
     @Override
     public String toString() {
-        return "Straw{" +
+        return "StrawDTO{" +
                 "strawId=" + strawId +
                 ", strawNum='" + strawNum + '\'' +
                 ", freezeNum='" + freezeNum + '\'' +
                 ", barcodeNum='" + barcodeNum + '\'' +
-                ", patientId=" + patientId +
-                ", divepipeId=" + divepipeId +
+                ", medicalRecord='" + medicalRecord + '\'' +
+                ", femaleName='" + femaleName + '\'' +
+                ", nitNum='" + nitNum + '\'' +
+                ", tubNum='" + tubNum + '\'' +
+                ", divepipeNum='" + divepipeNum + '\'' +
                 ", sampleType='" + sampleType + '\'' +
                 ", sampleAmount=" + sampleAmount +
                 ", freezeTime=" + freezeTime +

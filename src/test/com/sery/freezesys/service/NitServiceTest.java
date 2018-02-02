@@ -1,6 +1,8 @@
 package com.sery.freezesys.service;
 
+import com.sery.freezesys.dao.NitMapper;
 import com.sery.freezesys.model.Nit;
+import com.sery.freezesys.model.Tub;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class NitServiceTest {
     @Autowired
     private NitService nitService;
 
+    @Autowired
+    private NitMapper nitMapper;
+
     @Test
     public void getNitList() {
         List<Nit> nitList=nitService.getNitList();
@@ -28,7 +33,7 @@ public class NitServiceTest {
     @Test
     public void addNit() {
         Nit nit = new Nit();
-        nit.setNitNum("C");
+        nit.setNitNum("P");
         nit.setVersion("MVE47-11-10");
         nit.setAntibodyType("无");
         nit.setStatus("未使用");
@@ -51,7 +56,12 @@ public class NitServiceTest {
 
     @Test
     public void deleteNit() {
-        int result = nitService.deleteNit(4);
-        System.out.println(result);
+        //int result = nitService.deleteNit(43);
+        //System.out.println(result);
+        //int result = nitMapper.deleteTub("P");
+        //System.out.println(result);
+        List<Tub> tub = nitMapper.selectAllTubsByNitId(47);
+        System.out.println(tub);
     }
+
 }

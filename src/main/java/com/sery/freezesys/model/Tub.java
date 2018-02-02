@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Tub {
     private Integer tubId;
     private String tubNum;
-    private String nitNum;
+    private Integer nitId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,19 +27,19 @@ public class Tub {
         this.tubNum = tubNum;
     }
 
-    @Column(name = "nit_num")
-    public String getNitNum() {
-        return nitNum;
+    @Column(name = "nit_id")
+    public Integer getNitId() {
+        return nitId;
     }
 
-    public void setNitNum(String nitNum) {
-        this.nitNum = nitNum;
+    public void setNitId(Integer nitId) {
+        this.nitId = nitId;
     }
 
-    public Tub(Integer tubId, String tubNum, String nitNum) {
+    public Tub(Integer tubId, String tubNum, Integer nitId) {
         this.tubId = tubId;
         this.tubNum = tubNum;
-        this.nitNum = nitNum;
+        this.nitId = nitId;
     }
 
     public Tub() {
@@ -50,7 +50,7 @@ public class Tub {
         return "Tub{" +
                 "tubId=" + tubId +
                 ", tubNum='" + tubNum + '\'' +
-                ", nitNum='" + nitNum + '\'' +
+                ", nitId=" + nitId +
                 '}';
     }
 }
