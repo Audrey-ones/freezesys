@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTO Mapper 3.0"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sery.freezesys.dao.UserMapper">
+    <!--用户结果集-->
+    <resultMap id="userInfo" type="com.sery.freezesys.model.User">
+        <id column="id" property="userId" jdbcType="INTEGER"></id>
+        <result column="account" property="account" jdbcType="VARCHAR"></result>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"></result>
+        <result column="password" property="password" jdbcType="VARCHAR"></result>
+        <result column="remark" property="remark" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <!--用户登录-->
+    <select id="getUserByUser" parameterType="User" resultMap="userInfo">
+        SELECT * FROM
+        tb_user
+        WHERE
+        account = #{account,jdbcType=VARCHAR} AND password = #{password,jdbcType=VARCHAR}
+    </select>
+
+    <!--用户修改密码-->
+    <update id="updatePassword" parameterType="java.util.Map">
+        UPDATE tb_user
+        <set>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE id = #{userId,jdbcType=INTEGER}
+    </update>
+
+    <!--用户注册-->
+    <insert id="insertUser" parameterType="com.sery.freezesys.model.User">
+        INSERT INTO
+        tb_user(account,nickname,password,remark)
+        VALUES (account,nickname,password,remark)
+    </insert>
+
+    <select id="getUserByAccount" parameterType="java.lang.String" resultMap="userInfo">
+        SELECT * FROM
+        tb_user
+        WHERE account = #{account,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

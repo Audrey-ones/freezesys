@@ -8,6 +8,22 @@ layui.config({
 		$ = layui.jquery;
 		tab = layui.bodyTab();
 
+		//主页获取保存在cookie里的用户昵称
+    if (getCookie('user')){
+        var user=JSON.parse(getCookie('user'));
+        $(".userName").text(user.nickname);
+    }
+
+    //读取cookies
+    function getCookie(name) {
+        var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr=document.cookie.match(reg)){
+            return arr[2];
+        }else {
+            return null;
+        }
+    }
+
 	//锁屏
 	function lockPage(){
 		layer.open({
@@ -94,6 +110,7 @@ layui.config({
 	        }
 	    });
 	}
+
 	//判断是否处于锁屏状态(如果关闭以后则未关闭浏览器之前不再显示)
 	/*if(window.sessionStorage.getItem("lockcms") != "true" && window.sessionStorage.getItem("showNotice") != "true"){
 		showNotice();

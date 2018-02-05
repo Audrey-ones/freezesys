@@ -1,0 +1,94 @@
+.beg-register-bg {
+	background: url(../images/login.jpg) no-repeat fixed;
+}
+
+.beg-register-box {
+	width: 450px;
+	height: 420px;
+	margin: 10% auto;
+	background-color: #cccccc;
+	border-radius: 10px;
+	opacity: 0.8;
+	color: black;
+}
+
+.beg-register-box header {
+	background-color: #1AA094;
+	border-radius: 10px;
+	height: 39px;
+	padding: 10px;
+	border-bottom: 1px solid aliceblue;
+}
+
+.beg-register-box header h1 {
+	color: aliceblue;
+	font-size: 22px;
+	line-height: 40px;
+}
+
+.beg-register-box .beg-register-main {
+	height: 185px;
+	padding: 30px 90px 0;
+}
+
+.beg-register-main .layui-form-item {
+	position: relative;
+}
+
+.beg-register-main .layui-form-item .beg-register-icon {
+	position: absolute;
+	color: #cccccc;
+	top: 10px;
+	left: 10px;
+}
+
+.beg-register-main .layui-form-item input {
+	padding-left: 34px;
+}
+
+.beg-register-box footer {
+	height: 35px;
+	padding: 10px 10px 0 10px;
+}
+
+.beg-register-box footer p {
+	line-height: 35px;
+	text-align: center;
+}
+
+.beg-pull-left {
+	float: left !important;
+}
+
+.beg-pull-right {
+	float: right !important;
+}
+
+.beg-clear {
+	clear: both;
+}
+
+.beg-register-remember {
+	line-height: 38px;
+}
+
+.beg-register-remember .layui-form-switch {
+	margin-top: 0px;
+}
+
+.beg-register-code-box {
+	position: relative;
+	padding: 10px;
+}
+
+.beg-register-code-box input {
+	position: absolute;
+	width: 100px;
+}
+
+.beg-register-code-box img {
+	cursor: pointer;
+	position: absolute;
+	left: 115px;
+	height: 38px;
+}

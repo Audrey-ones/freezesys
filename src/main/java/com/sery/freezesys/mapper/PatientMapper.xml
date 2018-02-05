@@ -65,6 +65,7 @@
                 remark = #{remark,jdbcType=VARCHAR}
             </if>
         </set>
+        WHERE id = #{patientId,jdbcType=INTEGER}
     </update>
 
     <!--根据病人Id删除一个病人信息-->

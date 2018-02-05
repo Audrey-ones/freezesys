@@ -1,36 +1,35 @@
-package com.sery.freezesys.dao;
+package com.sery.freezesys.service;
 
 import com.sery.freezesys.model.User;
 
-import java.util.List;
 import java.util.Map;
 
-public interface UserMapper {
+public interface UserService {
     /**
-     * 根据用户名密码实现用户登录
+     * 用户登录
      * @param user
      * @return
      */
-    User getUserByUser(User user);
+    Map signIn(User user);
 
     /**
      * 用户修改密码
      * @param map
      * @return
      */
-    int updatePassword(Map map);
+    int changePwd(Map map);
 
     /**
      * 用户注册
      * @param user
      * @return
      */
-    int insertUser(User user);
+    int register(User user);
 
     /**
-     * 根据用户名查找用户
+     * 根究用户名查找用户
      * @param account
      * @return
      */
-    List<User> getUserByAccount(String account);
+    int getUserByAccount(String account);
 }

@@ -48,7 +48,7 @@ public class NitServiceTest {
     @Test
     public void updateNit() {
         Nit nit = new Nit();
-        nit.setNitId(3);
+        nit.setNitId(47);
         nit.setRemark("修改过");
         int result = nitService.updateNit(nit);
         System.out.println(result);

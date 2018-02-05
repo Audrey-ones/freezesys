@@ -8,6 +8,7 @@ public class User {
     private String account;
     private String nickname;
     private String password;
+    private String remark;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,11 +47,21 @@ public class User {
         this.password = password;
     }
 
-    public User(Integer userId, String account, String nickname, String password) {
+    @Column(name = "remark")
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public User(Integer userId, String account, String nickname, String password, String remark) {
         this.userId = userId;
         this.account = account;
         this.nickname = nickname;
         this.password = password;
+        this.remark = remark;
     }
 
     public User() {
@@ -63,6 +74,7 @@ public class User {
                 ", account='" + account + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", password='" + password + '\'' +
+                ", remark='" + remark + '\'' +
                 '}';
     }
 }
