@@ -31,4 +31,6 @@ public interface PatientService {
      * @return
      */
     int deletePatient(int patientId);
+
+    Patient getPatientById(int patientId);
 }

@@ -17,9 +17,10 @@ layui.config({
     }
 
     //获取用户登录存在cookie的信息
-    var user;
     if (getCookie('user')){
-        user = JSON.parse(getCookie('user'));
+        var user=JSON.parse(getCookie('user'));
+        $("#account").val(user.account);
+        $("#nickname").val(user.nickname);
     }
 
     //添加验证规则

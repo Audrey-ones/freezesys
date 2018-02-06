@@ -8,7 +8,7 @@ layui.config({
 
     //加载页面数据
     var nitsData = '';
-    $.get("http://localhost:8080/nits", function(data){
+    $.get("/nits", function(data){
       //正常加载信息
         nitsData = data;
         if(window.sessionStorage.getItem("addNits")){
@@ -27,7 +27,7 @@ layui.config({
             var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
                 $.ajax({
-                    url : "http://localhost:8080/nits",
+                    url : "/nits",
                     type : "get",
                     dataType : "json",
                     success : function(data){
@@ -227,7 +227,7 @@ layui.config({
             for(var i=0;i<nitsData.length;i++){
                 if(nitsData[i].nitId == _this.attr("data-id")){
                     $.ajax({
-                        url : "http://localhost:8080/nits/" + nitsData[i].nitId,
+                        url : "/nits/" + nitsData[i].nitId,
                         type : "post",
                         dataType : "json",
                         success : function (data) {

@@ -42,16 +42,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int register(User user) {
-        int result = userMapper.insertUser(user);
+        int result;
+        List<User> userList = userMapper.getUserByAccount(user.getAccount());
+        if (userList.size() != 0){
+            result =0;
+        }else {
+            result = userMapper.insertUser(user);
+        }
         return result;
     }
 
-    @Override
-    public int getUserByAccount(String account) {
-        List<User> userList = userMapper.getUserByAccount(account);
-        if (userList.size() != 0){
-            return 0;
-        }
-        return 1;
-    }
 }

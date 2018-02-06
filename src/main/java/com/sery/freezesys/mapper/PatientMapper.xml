@@ -36,6 +36,13 @@
         medical_record = #{medicalRecord,jdbcType=VARCHAR} AND female_name = #{femaleName,jdbcType=VARCHAR}
     </select>
 
+    <select id="selectPatientById" parameterType="java.lang.Integer" resultMap="patientInfo">
+        SELECT * FROM
+        tb_patient
+        WHERE
+        id = #{patientId,jdbcType=INTEGER}
+    </select>
+
     <!--更新一条病人信息-->
     <update id="updatePatient" parameterType="com.sery.freezesys.model.Patient">
         UPDATE tb_patient

@@ -34,7 +34,8 @@
     <insert id="insertUser" parameterType="com.sery.freezesys.model.User">
         INSERT INTO
         tb_user(account,nickname,password,remark)
-        VALUES (account,nickname,password,remark)
+        VALUES (#{account,jdbcType=VARCHAR},#{nickname,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
     </insert>
 
     <select id="getUserByAccount" parameterType="java.lang.String" resultMap="userInfo">

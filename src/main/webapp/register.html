@@ -23,25 +23,25 @@
 						<label class="beg-register-icon">
 							<i class="layui-icon">&#xe612;</i>
 						</label>
-						<input type="text" id="account" lay-verify="required|account" placeholder="请输入用户名" class="layui-input">
+						<input type="text" id="account" lay-verify="required|account" placeholder="请输入用户名(长度3位以上未存在)" class="layui-input">
 					</div>
 					<div class="layui-form-item">
 						<label class="beg-register-icon">
 							<i class="layui-icon">&#xe612;</i>
 						</label>
-						<input type="text" id="nickname" lay-verify="required|nickname" placeholder="请输入用户昵称" class="layui-input">
+						<input type="text" id="nickname" lay-verify="required|nickname" placeholder="请输入用户昵称(长度2位以上)" class="layui-input">
 					</div>
 					<div class="layui-form-item">
 						<label class="beg-register-icon">
 							<i class="fa fa-key" aria-hidden="true"></i>
                     	</label>
-						<input type="password" id="password" lay-verify="required|password" placeholder="请输入密码" class="layui-input">
+						<input type="password" id="password" lay-verify="required|password" placeholder="请输入密码(不少于6位)" class="layui-input">
 					</div>
 					<div class="layui-form-item">
 						<label class="beg-register-icon">
 							<i class="fa fa-key" aria-hidden="true"></i>
 						</label>
-						<input type="password" lay-verify="required|confirmPwd" placeholder="请确认密码" class="layui-input">
+						<input type="password" id="confirmPwd" lay-verify="required|confirmPwd" placeholder="请确认密码(不少于6位)" class="layui-input">
 					</div>
 					<div class="layui-form-item">
 						<button class="layui-btn" style="width: 100%;border-radius: 10px" lay-submit="" lay-filter="register">

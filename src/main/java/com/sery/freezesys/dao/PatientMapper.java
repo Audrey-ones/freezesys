@@ -27,6 +27,13 @@ public interface PatientMapper {
     Patient selectPatient(Map map);
 
     /**
+     * 根据病人ID查找一条病人记录
+     * @param patientId
+     * @return
+     */
+    Patient selectPatientById(int patientId);
+
+    /**
      * 更新病人信息
      * @param patient
      * @return

@@ -40,4 +40,10 @@ public class PatientController {
         int result = patientService.addPatient(patient);
         return result;
     }
+
+    @RequestMapping(value = "patients/{patientId}",method = RequestMethod.GET)
+    public @ResponseBody Patient getPatientById(@PathVariable("patientId") int patientId){
+        Patient patient = patientService.getPatientById(patientId);
+        return patient;
+    }
 }

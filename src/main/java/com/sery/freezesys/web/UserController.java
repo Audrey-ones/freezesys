@@ -44,10 +44,10 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping(value = "user",method = RequestMethod.GET)
+    /*@RequestMapping(value = "user",method = RequestMethod.GET)
     public int checkUser(HttpServletRequest request){
         int result = userService.getUserByAccount(request.getParameter("account"));
         return result;
-    }
+    }*/
 
 }

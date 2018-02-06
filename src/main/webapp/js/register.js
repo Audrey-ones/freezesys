@@ -8,19 +8,9 @@ layui.config({
     //添加验证规则
     form.verify({
         account : function(value, item){
-            $.ajax({
-                url : "http://localhost:8080/user",
-                type : "get",
-                dataType : "json",
-                data : {
-                    "account" : value
-                },
-                success : function (data) {
-                    if(data != 1){
-                        return "用户名已存在，请重新输入！";
-                    }
-                }
-            });
+            if(value.length < 3){
+                return "用户名长度不能小于3位";
+            }
 
         },
         nickname : function(value, item){
@@ -44,7 +34,7 @@ layui.config({
     form.on("submit(register)",function (data) {
 
         $.ajax({
-            url : "http://localhost:8080/user",
+            url : "/user",
             type : "post",
             dataType : "json",
             data : {
@@ -54,15 +44,21 @@ layui.config({
                 "remark" : "无"
             },
             success : function (data) {
-                //弹出loading
-                var index = top.layer.msg('数据提交中，请稍后',{icon: 16,time: false,shade: 0.8});
-                setTimeout(function () {
-                    top.layer.close(index);
-                    top.layer.msg("添加病人信息成功！");
-                    layer.closeAll("iframe");
-                    //刷新父页面
-                    parent.location.reload();
-                },2000);
+                if (data == 1){
+                    //弹出loading
+                    //var index = top.layer.msg('数据提交中，请稍后',{icon: 16,time: false,shade: 0.8});
+                    layer.msg("注册成功！");
+                    setTimeout(function () {
+                        //跳转到登录界面
+                        location.href='login.html';
+                    },2000);
+                }else{
+                    layer.msg("用户名已存在，请重新输入！");
+                    $("#account").val("");
+                    $("#password").val("");
+                    $("#confirmPwd").val("");
+                }
+
             }
         })
 

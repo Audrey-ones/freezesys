@@ -7,10 +7,10 @@ layui.config({
         $ = layui.jquery;
 
     var patientData = '';
-    $.get("http://localhost:8080/patients",function(data){
+    $.get("/patients",function(data){
         //正常加载病人信息
         patientData = data;
-        console.log(patientData)
+        //console.log(patientData)
         if (window.sessionStorage.getItem("addPatient")){
             var addPatient = window.sessionStorage.getItem("addPatient");
             patientData = JSON.parse(addPatient).concat(patientData);
@@ -26,7 +26,7 @@ layui.config({
             var index = layer.msg('查询中，请稍后',{icon: 16, time: false, shade: 0.8});
             setTimeout(function () {
                $.ajax({
-                   url : "http://localhost:8080/patients",
+                   url : "/patients",
                    type : "get",
                    dataType : "json",
                    success : function (data) {
@@ -113,15 +113,65 @@ layui.config({
         layui.layer.full(index);
     })
 
+    function getPatientId() {
+        var patientId = $(this).attr("data-id");
+        return patientId;
+    }
+
+    //编辑病人信息
+    $("body").on("click",".patient_edit",function () {
+        //获取当前点击的病人ID
+        //var patientId = $(this).attr("data-id");
+        console.log($("#td_patientId").text())
+        //console.log(patientId)
+        //console.log(data);
+        var index = layui.layer.open({
+            title : "编辑病人信息",
+            type : 2,
+            content : "patientEdit.html",
+            success : function (layero,index) {
+
+            }
+        })
+        //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+        $(window).resize(function () {
+            layui.layer.full(index);
+        })
+        layui.layer.full(index);
+        /*$.ajax({
+            url : "/patients/"+patientId,
+            type : "get",
+            dataType : "json",
+            success : function (data) {
+
+                /!*var index = layui.layer.open({
+                    title : "编辑病人信息",
+                    type : 2,
+                    content : "patientEdit.html",
+                    success : function (layero,index) {
+
+                    }
+                })
+                //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+                $(window).resize(function(){
+                    layui.layer.full(index);
+                })
+                layui.layer.full(index);*!/
+            }
+        });*/
+
+
+    })
+
     //删除病人信息
     $("body").on("click",".patient_del",function () {
         var _this = $(this);
-        console.log(_this)
+        //console.log(_this.attr("data-id"))
         layer.confirm("确认删除该条病人记录？",{icon: 3,title:'提示信息'},function (index) {
             for (var i=0; i<patientData.length; i++){
                 if (patientData[i].patientId == _this.attr("data-id")){
                     $.ajax({
-                        url : "http://localhost:8080/patients/" + patientData[i].patientId,
+                        url : "/patients/" + patientData[i].patientId,
                         type : "post",
                         dataType : "json",
                         success : function (data) {
@@ -151,6 +201,7 @@ layui.config({
                 for (var i=0; i<currData.length; i++){
                     dataHtml += '<tr>'
                     /*+ '<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>>'*/
+                    + '<td id="td_patientId" style="display: none">' + currData[i].patientId + '</td>>'
                     + '<td>' + currData[i].medicalRecord + '</td>>'
                     + '<td>' + currData[i].femaleName + '</td>'
                     + '<td>' + currData[i].maleName + '</td>'
@@ -160,7 +211,7 @@ layui.config({
                     + '<td>' + currData[i].phone + '</td>'
                     + '<td>' + currData[i].remark + '</td>'
                     + '<td>'
-                    +   '<a class="layui-btn layui-btn-mini patient_edit"><i class="iconfont icon-edit"></i>编辑 </a>'
+                    +   '<a class="layui-btn layui-btn-mini patient_edit" data-id="'+data[i].patientId+'"><i class="iconfont icon-edit patient_edit"></i>编辑 </a>'
                     +   '<a class="layui-btn layui-btn-danger layui-btn-mini patient_del" data-id="'+data[i].patientId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
                     + '</td>'
                     + '</tr>>';

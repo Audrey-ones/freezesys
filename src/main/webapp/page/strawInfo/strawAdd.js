@@ -37,7 +37,7 @@ layui.config({
         }*/
 
         $.ajax({
-            url : "http://localhost:8080/straw",
+            url : "/straw",
             type : "post",
             dataType : "json",
             data : {

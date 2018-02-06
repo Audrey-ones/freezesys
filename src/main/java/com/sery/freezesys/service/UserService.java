@@ -26,10 +26,4 @@ public interface UserService {
      */
     int register(User user);
 
-    /**
-     * 根究用户名查找用户
-     * @param account
-     * @return
-     */
-    int getUserByAccount(String account);
 }

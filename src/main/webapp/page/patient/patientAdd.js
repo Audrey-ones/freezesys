@@ -8,7 +8,7 @@ layui.config({
     form.on("submit(addPatient)",function (data) {
 
         $.ajax({
-            url : "http://localhost:8080/patients",
+            url : "/patients",
             type : "post",
             dataType : "json",
             data : {

@@ -36,4 +36,10 @@ public class PatientServiceImpl implements PatientService {
         int result = patientMapper.deletePatient(patientId);
         return result;
     }
+
+    @Override
+    public Patient getPatientById(int patientId) {
+        Patient patient = patientMapper.selectPatientById(patientId);
+        return patient;
+    }
 }

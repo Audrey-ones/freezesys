@@ -25,7 +25,7 @@ layui.config({
             "strawAmount": "无"
         }*/
         $.ajax({
-            url : "http://localhost:8080/nits",
+            url : "/nits",
             type : 'post',
             dataType : "json",
             data : {

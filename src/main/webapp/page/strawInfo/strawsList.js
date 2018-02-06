@@ -8,7 +8,7 @@ layui.config({
 
 	//加载页面数据
 	var strawsData = '';
-	$.get("http://localhost:8080/straws", function(data){
+	$.get("/straws", function(data){
         //正常加载信息
         strawsData = data;
         /*if(window.sessionStorage.getItem("addStraws")){
@@ -26,7 +26,7 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
             	$.ajax({
-					url : "http://localhost:8080/straws",
+					url : "/straws",
 					type : "get",
 					dataType : "json",
 					success : function(data){
