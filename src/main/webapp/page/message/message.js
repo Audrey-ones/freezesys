@@ -133,7 +133,7 @@ layui.config({
         layui.layer.full(index);
     })
 
-    //提交回复
+   /* //提交回复
     var message = [];
     $(".send_msg").click(function(){
         if(layedit.getContent(editIndex) != ''){
@@ -154,7 +154,7 @@ layui.config({
         }else{
             layer.msg("请输入回复信息");
         }
-    })
+    })*/
 })
 
 

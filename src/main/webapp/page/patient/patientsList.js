@@ -113,53 +113,45 @@ layui.config({
         layui.layer.full(index);
     })
 
-    function getPatientId() {
-        var patientId = $(this).attr("data-id");
-        return patientId;
-    }
-
     //编辑病人信息
     $("body").on("click",".patient_edit",function () {
-        //获取当前点击的病人ID
-        //var patientId = $(this).attr("data-id");
-        console.log($("#td_patientId").text())
-        //console.log(patientId)
-        //console.log(data);
-        var index = layui.layer.open({
-            title : "编辑病人信息",
-            type : 2,
-            content : "patientEdit.html",
-            success : function (layero,index) {
-
-            }
-        })
-        //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-        $(window).resize(function () {
-            layui.layer.full(index);
-        })
-        layui.layer.full(index);
-        /*$.ajax({
-            url : "/patients/"+patientId,
-            type : "get",
-            dataType : "json",
-            success : function (data) {
-
-                /!*var index = layui.layer.open({
+        var _this = $(this);
+        for(var i=0; i<patientData.length; i++){
+            if (patientData[i].patientId == _this.attr("data-id")){
+                //获取当前点击的病人ID
+                var patientId = patientData[i].patientId;
+                var index = layui.layer.open({
                     title : "编辑病人信息",
                     type : 2,
                     content : "patientEdit.html",
                     success : function (layero,index) {
-
+                        //获取子页面
+                        var body = layui.layer.getChildFrame('body', index);
+                        body.find("#patientId").val(patientId);
+                        $.ajax({
+                            url : "/patients/"+patientId,
+                            type : "get",
+                            dataType : "json",
+                            success : function (data) {
+                                body.find(".medicalRecord").val(data.medicalRecord);
+                                body.find(".femaleName").val(data.femaleName);
+                                body.find(".maleName").val(data.maleName);
+                                body.find(".femaleIdNum").val(data.femaleIdNum);
+                                body.find(".maleIdNum").val(data.maleIdNum);
+                                body.find(".address").val(data.address);
+                                body.find(".phone").val(data.phone);
+                                body.find(".remark").val(data.remark);
+                            }
+                        })
                     }
                 })
                 //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-                $(window).resize(function(){
+                $(window).resize(function () {
                     layui.layer.full(index);
                 })
-                layui.layer.full(index);*!/
+                layui.layer.full(index);
             }
-        });*/
-
+        }
 
     })
 
@@ -201,7 +193,6 @@ layui.config({
                 for (var i=0; i<currData.length; i++){
                     dataHtml += '<tr>'
                     /*+ '<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>>'*/
-                    + '<td id="td_patientId" style="display: none">' + currData[i].patientId + '</td>>'
                     + '<td>' + currData[i].medicalRecord + '</td>>'
                     + '<td>' + currData[i].femaleName + '</td>'
                     + '<td>' + currData[i].maleName + '</td>'

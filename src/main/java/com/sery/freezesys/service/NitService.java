@@ -21,7 +21,7 @@ public interface NitService {
 
     /**
      * 根据一个液氮罐初始化新增吊桶
-     * @param nitNum
+     * @param nitId
      * @param tubAmount
      * @param divepipeAmount
      * @param strawAmount
@@ -49,5 +49,12 @@ public interface NitService {
      * @return
      */
     int deleteNit(int nitId);
+
+    /**
+     * 根据液氮罐Id获取液氮罐
+     * @param nitId
+     * @return
+     */
+    Nit getNitById(int nitId);
 
 }

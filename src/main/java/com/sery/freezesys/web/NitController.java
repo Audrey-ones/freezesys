@@ -55,4 +55,10 @@ public class NitController {
         int result = nitService.addNit(nit);
         return result;
     }
+
+    @RequestMapping(value = "nits/{nitId}",method = RequestMethod.GET)
+    public @ResponseBody Nit getNitById(@PathVariable("nitId") int nitId){
+        Nit nit = nitService.getNitById(nitId);
+        return nit;
+    }
 }

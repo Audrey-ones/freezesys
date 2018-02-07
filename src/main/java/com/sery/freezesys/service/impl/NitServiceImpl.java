@@ -75,4 +75,10 @@ public class NitServiceImpl implements NitService {
         int result = nitMapper.deleteNit(nitId);
         return result;
     }
+
+    @Override
+    public Nit getNitById(int nitId) {
+        Nit nit = nitMapper.selectNitById(nitId);
+        return nit;
+    }
 }

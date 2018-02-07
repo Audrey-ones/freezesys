@@ -42,4 +42,5 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = patientMapper.selectPatientById(patientId);
         return patient;
     }
+
 }

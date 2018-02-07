@@ -41,8 +41,15 @@ public class PatientServiceTest {
     @Test
     public void updatePatient() {
         Patient patient = new Patient();
-        patient.setPatientId(1);
-        patient.setFemaleName("张雨绮");
+        patient.setPatientId(11);
+        patient.setMedicalRecord("ssfdf");
+        patient.setFemaleName("gfghfh");
+        patient.setMaleName("retfgd");
+        patient.setFemaleIdNum("fgdfg");
+        patient.setMaleIdNum("ghgh");
+        patient.setAddress("hgh");
+        patient.setPhone("ghgh");
+        patient.setRemark("张雨绮");
         int result = patientService.updatePatient(patient);
         System.out.println(result);
     }
@@ -52,4 +59,5 @@ public class PatientServiceTest {
         int result = patientService.deletePatient(1);
         System.out.println(result);
     }
+
 }

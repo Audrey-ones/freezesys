@@ -219,6 +219,48 @@ layui.config({
         }
     })
 
+    //编辑选中的液氮罐信息
+    $("body").on("click",".nit_edit",function () {
+        var _this = $(this);
+        for(var i=0; i<nitsData.length; i++){
+            if (nitsData[i].nitId == _this.attr("data-id")){
+                //获取当前点击的病人ID
+                var nitId = nitsData[i].nitId;
+                console.log(nitId)
+                var index = layui.layer.open({
+                    title : "编辑病人信息",
+                    type : 2,
+                    content : "nitEdit.html",
+                    success : function (layero,index) {
+                        //获取子页面
+                        var body = layui.layer.getChildFrame('body', index);
+                        body.find("#nitId").val(nitId);
+                        $.ajax({
+                            url : "/nits/"+nitId,
+                            type : "get",
+                            dataType : "json",
+                            success : function (data) {
+                                console.log(data)
+                                body.find(".nitNum").val(data.nitNum);
+                                body.find(".version").val(data.version);
+                                /*$(".sampleType option").eq($(".sampleType").val()).text()*/
+                                body.find(".antibodyType").val(data.antibodyType);
+                                body.find(".status option").eq(data.status).text();
+                                body.find(".remark").val(data.remark);
+                            }
+                        })
+                    }
+                })
+                //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+                $(window).resize(function () {
+                    layui.layer.full(index);
+                })
+                layui.layer.full(index);
+            }
+        }
+
+    })
+
     //删除液氮罐
     $("body").on("click",".nit_del",function(){
         var _this = $(this);
@@ -264,7 +306,7 @@ layui.config({
                         +'<td>'+currData[i].divepipeAmount+'</td>'
                         +'<td>'+currData[i].strawAmount+'</td>'
                         +'<td>'
-                        +  '<a class="layui-btn layui-btn-mini links_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
+                        +  '<a class="layui-btn layui-btn-mini nit_edit" data-id="'+data[i].nitId+'"><i class="iconfont icon-edit"></i> 编辑</a>'
                         +  '<a class="layui-btn layui-btn-danger layui-btn-mini nit_del" data-id="'+data[i].nitId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
                         +'</td>'
                         +'</tr>';

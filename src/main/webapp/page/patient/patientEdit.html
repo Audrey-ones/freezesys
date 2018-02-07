@@ -15,6 +15,7 @@
 <body class="childrenBody">
 <form class="layui-form">
     <div class="layui-form-item">
+        <input type="hidden" id="patientId"/>
         <div class="layui-inline">
             <label class="layui-form-label">病历号&nbsp;&nbsp;&nbsp;</label>
             <div class="layui-input-inline">
@@ -81,7 +82,6 @@
     </div>
 </form>
 <script type="text/javascript" src="../../layui/layui.js"></script>
-<!--<script type="text/javascript" src="patientsList.js"></script>-->
 <script>
 
     layui.use(['layer', 'form','jquery'], function() {
@@ -89,9 +89,49 @@
             $ = layui.jquery,
             form = layui.form();
 
-        var index = parent.layer.getFrameIndex(window.name);
-        var patientId = parent.getPatientId();
-        console.log(patientId+"skdksd")
+        console.log("获取当前病人ID："+$("#patientId").val())
+        /*var patient = {
+            patientId : $("#patientId").val(),
+            medicalRecord : $(".medicalRecord").val(),
+            femaleName : $(".femaleName").val(),
+            maleName : $(".maleName").val(),
+            femaleIdNum : $(".femaleIdNum").val(),
+            maleIdNum : $(".maleIdNum").val(),
+            address : $(".address").val(),
+            phone : $(".phone").val(),
+            remark : $(".remark").val()
+        }*/
+        form.on("submit(addPatient)",function (data) {
+            console.log("获取当前病人ID："+$("#patientId").val())
+            $.ajax({
+                url : "/patientEdit",
+                type : "post",
+                dataType : "json",
+                data : {
+                    "patientId" : $("#patientId").val(),
+                    "medicalRecord" : $(".medicalRecord").val(),
+                    "femaleName" : $(".femaleName").val(),
+                    "maleName" : $(".maleName").val(),
+                    "femaleIdNum" : $(".femaleIdNum").val(),
+                    "maleIdNum" : $(".maleIdNum").val(),
+                    "address" : $(".address").val(),
+                    "phone" : $(".phone").val(),
+                    "remark" : $(".remark").val()
+                },
+                success : function (data) {
+                    //弹出loading
+                    var index = top.layer.msg('数据提交中，请稍后',{icon: 16,time: false,shade: 0.8});
+                    setTimeout(function () {
+                        top.layer.close(index);
+                        top.layer.msg("修改病人信息成功！");
+                        layer.closeAll("iframe");
+                        //刷新父页面
+                        parent.location.reload();
+                    },2000);
+                }
+            })
+            return false;
+        })
     });
 </script>
 

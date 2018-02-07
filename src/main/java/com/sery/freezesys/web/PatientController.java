@@ -46,4 +46,20 @@ public class PatientController {
         Patient patient = patientService.getPatientById(patientId);
         return patient;
     }
+
+    @RequestMapping(value = "patientEdit",method = RequestMethod.POST)
+    public int editPatient(HttpServletRequest httpServletRequest){
+        Patient patient = new Patient();
+        patient.setPatientId(Integer.parseInt(httpServletRequest.getParameter("patientId")));
+        patient.setMedicalRecord(httpServletRequest.getParameter("medicalRecord"));
+        patient.setFemaleName(httpServletRequest.getParameter("femaleName"));
+        patient.setMaleName(httpServletRequest.getParameter("maleName"));
+        patient.setFemaleIdNum(httpServletRequest.getParameter("femaleIdNum"));
+        patient.setMaleIdNum(httpServletRequest.getParameter("maleIdNum"));
+        patient.setAddress(httpServletRequest.getParameter("address"));
+        patient.setPhone(httpServletRequest.getParameter("phone"));
+        patient.setRemark(httpServletRequest.getParameter("remark"));
+        int result = patientService.updatePatient(patient) ;
+        return result;
+    }
 }

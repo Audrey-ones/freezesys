@@ -48,25 +48,25 @@
         UPDATE tb_patient
         <set>
             <if test="medicalRecord != null">
-                medical_record = #{medicalRecord,jdbcType=VARCHAR}
+                medical_record = #{medicalRecord,jdbcType=VARCHAR},
             </if>
             <if test="femaleName != null">
-                female_name = #{femaleName,jdbcType=VARCHAR}
+                female_name = #{femaleName,jdbcType=VARCHAR},
             </if>
             <if test="maleName != null">
-                male_name = #{maleName,jdbcType=VARCHAR}
+                male_name = #{maleName,jdbcType=VARCHAR},
             </if>
             <if test="femaleIdNum != null">
-                female_id_num = #{femaleIdNum,jdbcType=VARCHAR}
+                female_id_num = #{femaleIdNum,jdbcType=VARCHAR},
             </if>
             <if test="maleIdNum != null">
-                male_id_num = #{maleIdNum,jdbcType=VARCHAR}
+                male_id_num = #{maleIdNum,jdbcType=VARCHAR},
             </if>
             <if test="address != null">
-                address = #{address,jdbcType=VARCHAR}
+                address = #{address,jdbcType=VARCHAR},
             </if>
             <if test="phone != null">
-                phone = #{phone,jdbcType=VARCHAR}
+                phone = #{phone,jdbcType=VARCHAR},
             </if>
             <if test="remark != null">
                 remark = #{remark,jdbcType=VARCHAR}

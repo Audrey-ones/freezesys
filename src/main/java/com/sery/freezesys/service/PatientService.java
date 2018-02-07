@@ -32,5 +32,11 @@ public interface PatientService {
      */
     int deletePatient(int patientId);
 
+    /**
+     * 根据病人ID获取病人信息
+     * @param patientId
+     * @return
+     */
     Patient getPatientById(int patientId);
+
 }
