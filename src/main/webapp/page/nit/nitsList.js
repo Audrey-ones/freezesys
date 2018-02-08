@@ -146,34 +146,6 @@ layui.config({
         }
     })
 
-    //批量删除
-    $(".batchDel").click(function(){
-        var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
-        var $checked = $('.news_list tbody input[type="checkbox"][name="checked"]:checked');
-        if($checkbox.is(":checked")){
-            layer.confirm('确定删除选中的信息？',{icon:3, title:'提示信息'},function(index){
-                var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
-                setTimeout(function(){
-                    //删除数据
-                    for(var j=0;j<$checked.length;j++){
-                        for(var i=0;i<nitsData.length;i++){
-                            if(nitsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
-                                nitsData.splice(i,1);
-                                nitsList(nitsData);
-                            }
-                        }
-                    }
-                    $('.news_list thead input[type="checkbox"]').prop("checked",false);
-                    form.render();
-                    layer.close(index);
-                    layer.msg("删除成功");
-                },2000);
-            })
-        }else{
-            layer.msg("请选择需要删除的文章");
-        }
-    })
-
     //全选
     form.on('checkbox(allChoose)', function(data){
         var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
@@ -243,9 +215,8 @@ layui.config({
                                 console.log(data)
                                 body.find(".nitNum").val(data.nitNum);
                                 body.find(".version").val(data.version);
-                                /*$(".sampleType option").eq($(".sampleType").val()).text()*/
                                 body.find(".antibodyType").val(data.antibodyType);
-                                body.find(".status option").eq(data.status).text();
+                                /*body.find(".status option").eq($(".status").val(1)).text(data.status);*/
                                 body.find(".remark").val(data.remark);
                             }
                         })
@@ -259,6 +230,42 @@ layui.config({
             }
         }
 
+    })
+
+    //批量删除液氮罐
+    $(".batchDel").click(function(){
+        var $checkbox = $('.nits_list tbody input[type="checkbox"][name="checked"]');
+        var $checked = $('.nits_list tbody input[type="checkbox"][name="checked"]:checked');
+        if($checkbox.is(":checked")){
+            layer.confirm('确定删除选中的液氮罐？',{icon:3, title:'提示信息'},function(index){
+                var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
+                setTimeout(function(){
+                    //删除数据
+                    for(var j=0;j<$checked.length;j++){
+                        for(var i=0;i<nitsData.length;i++){
+                            if(nitsData[i].nitId == $checked.eq(j).parents("tr").find(".nit_del").attr("data-id")){
+                                $.ajax({
+                                    url : "/nits/" + nitsData[i].nitId,
+                                    type : "post",
+                                    dataType : "json",
+                                    success : function (data) {
+                                        //layer.msg("删除成功！");
+                                    }
+                                });
+                                nitsData.splice(i,1);
+                                nitsList(nitsData);
+                            }
+                        }
+                    }
+                    $('.nits_list thead input[type="checkbox"]').prop("checked",false);
+                    form.render();
+                    layer.close(index);
+                    layer.msg("删除成功");
+                },2000);
+            })
+        }else{
+            layer.msg("请选择需要删除的液氮罐");
+        }
     })
 
     //删除液氮罐

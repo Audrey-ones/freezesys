@@ -44,10 +44,11 @@ public class UserController {
         return result;
     }
 
-    /*@RequestMapping(value = "user",method = RequestMethod.GET)
-    public int checkUser(HttpServletRequest request){
-        int result = userService.getUserByAccount(request.getParameter("account"));
-        return result;
-    }*/
+    @RequestMapping(value = "getPwd/{userId}",method = RequestMethod.GET)
+    public String getPasswordById(@PathVariable("userId") int userId){
+        User user = userService.getUserById(userId);
+        String password = user.getPassword();
+        return password;
+    }
 
 }

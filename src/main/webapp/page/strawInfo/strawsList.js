@@ -100,8 +100,8 @@ layui.config({
 		}
 	})
 
-	//添加文章
-	$(".newsAdd_btn").click(function(){
+	//添加麦管信息
+	$(".strawAdd_btn").click(function(){
 		var index = layui.layer.open({
 			title : "历史存储录入",
 			type : 2,
@@ -119,19 +119,6 @@ layui.config({
 		layui.layer.full(index);
 	})
 
-	//推荐文章
-	/*$(".recommend").click(function(){
-		var $checkbox = $(".news_list").find('tbody input[type="checkbox"]:not([name="show"])');
-		if($checkbox.is(":checked")){
-			var index = layer.msg('推荐中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-                layer.close(index);
-				layer.msg("推荐成功");
-            },2000);
-		}else{
-			layer.msg("请选择需要推荐的文章");
-		}
-	})*/
 
 	//审核文章
 	$(".audit_btn").click(function(){
@@ -167,10 +154,10 @@ layui.config({
 			layer.confirm('确定删除选中的信息？',{icon:3, title:'提示信息'},function(index){
 				var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
 	            setTimeout(function(){
-	            	//删除数据
+	            	//更改解冻状态
 	            	for(var j=0;j<$checked.length;j++){
 	            		for(var i=0;i<strawsData.length;i++){
-							if(strawsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
+							if(strawsData[i].strawId == $checked.eq(j).parents("tr").find(".straw_del").attr("data-id")){
                                 strawsData.splice(i,1);
 								strawsList(strawsData);
 							}
@@ -179,11 +166,11 @@ layui.config({
 	            	$('.straws_list thead input[type="checkbox"]').prop("checked",false);
 	            	form.render();
 	                layer.close(index);
-					layer.msg("删除成功");
+					layer.msg("解冻成功");
 	            },2000);
 	        })
 		}else{
-			layer.msg("请选择需要删除的文章");
+			layer.msg("请选择需要解冻的麦管");
 		}
 	})
 
@@ -268,8 +255,7 @@ layui.config({
 			if(currData.length != 0){
 				for(var i=0;i<currData.length;i++){
 				    var freezeTime = timestampToTime(currData[i].freezeTime);
-
-				    console.log(freezeTime)
+				    console.log(data)
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
 			    	+'<td>'+currData[i].strawNum+'管'+currData[i].nitNum+'-'+currData[i].tubNum+'-'+currData[i].divepipeNum+'</td>'
@@ -284,7 +270,7 @@ layui.config({
 					+'<td>'+currData[i].operator+'</td>'
                     +'<td>'
                     +  '<a class="layui-btn layui-btn-mini straws_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
-                    +  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].newsId+'"><i class="iconfont icon-edit"></i> 解冻</a>'
+                    +  '<a class="layui-btn layui-btn-danger layui-btn-mini straw_del" data-id="'+data[i].strawId+'"><i class="fa fa-times"></i> 解冻</a>'
                     +'</td>'
 			    	+'</tr>';
 				}

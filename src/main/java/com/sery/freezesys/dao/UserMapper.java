@@ -33,4 +33,11 @@ public interface UserMapper {
      * @return
      */
     List<User> getUserByAccount(String account);
+
+    /**
+     * 根据用户ID查找用户
+     * @param userId
+     * @return
+     */
+    User getUserById(int userId);
 }

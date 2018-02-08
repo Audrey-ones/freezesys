@@ -26,4 +26,11 @@ public interface UserService {
      */
     int register(User user);
 
+    /**
+     * 根据用户ID查找用户
+     * @param userId
+     * @return
+     */
+    User getUserById(int userId);
+
 }

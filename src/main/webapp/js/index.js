@@ -8,11 +8,24 @@ layui.config({
 		$ = layui.jquery;
 		tab = layui.bodyTab();
 
-		//主页获取保存在cookie里的用户昵称
+    //主页获取保存在cookie里的用户昵称
+    var user;
     if (getCookie('user')){
-        var user=JSON.parse(getCookie('user'));
+    	user=JSON.parse(getCookie('user'));
         $(".userName").text(user.nickname);
+        $(".lockUserName").text(user.nickname);
     }
+
+    //获取用户密码，用于锁屏
+    /*var password;
+    $.ajax({
+        url : "/getPwd/"+user.userId,
+        type : "get",
+        dataType : "json",
+        success : function (data) {
+        	password = data;
+        }
+    });*/
 
     //读取cookies
     function getCookie(name) {
@@ -47,13 +60,13 @@ layui.config({
 		if($(this).siblings(".admin-header-lock-input").val() == ''){
 			layer.msg("请输入解锁密码！");
 		}else{
-			if($(this).siblings(".admin-header-lock-input").val() == "123456"){
-				window.sessionStorage.setItem("lockcms",false);
-				$(this).siblings(".admin-header-lock-input").val('');
-				layer.closeAll("page");
-			}else{
-				layer.msg("密码错误，请重新输入！");
-			}
+            if($(this).siblings(".admin-header-lock-input").val() == user.password){
+                window.sessionStorage.setItem("lockcms",false);
+                $(this).siblings(".admin-header-lock-input").val('');
+                layer.closeAll("page");
+            }else{
+                layer.msg("密码错误，请重新输入！");
+            }
 		}
 	});
 	$(document).on('keydown', function() {

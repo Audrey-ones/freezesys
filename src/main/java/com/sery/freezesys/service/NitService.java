@@ -11,7 +11,6 @@ public interface NitService {
      */
     List<Nit> getNitList();
 
-
     /**
      * 新增一个液氮罐
      * @param nit

@@ -71,20 +71,18 @@
         console.log("获取当前液氮罐ID："+$("#nitId").val())
         /*$(".status option[text='已使用']").attr("selected",true);*/
         form.on("submit(addNits)",function (data) {
-            /*console.log($(".status option[value='2']").attr("selected",true));*/
-            /*$.ajax({
-                url : "/patientEdit",
+            //$(".status option").eq($(".status").val(1)).text(data.status);
+            //console.log($(".status option[value='2']").attr("selected",true));
+            $.ajax({
+                url : "/nitEdit",
                 type : "post",
                 dataType : "json",
                 data : {
-                    "patientId" : $("#patientId").val(),
-                    "medicalRecord" : $(".medicalRecord").val(),
-                    "femaleName" : $(".femaleName").val(),
-                    "maleName" : $(".maleName").val(),
-                    "femaleIdNum" : $(".femaleIdNum").val(),
-                    "maleIdNum" : $(".maleIdNum").val(),
-                    "address" : $(".address").val(),
-                    "phone" : $(".phone").val(),
+                    "nitId" : $("#nitId").val(),
+                    'nitNum': $(".nitNum").val(),
+                    'version': $(".version").val(),
+                    'antibodyType': $(".antibodyType").val(),
+                    'status': $(".status option").eq($(".status").val()).text(),
                     "remark" : $(".remark").val()
                 },
                 success : function (data) {
@@ -92,13 +90,13 @@
                     var index = top.layer.msg('数据提交中，请稍后',{icon: 16,time: false,shade: 0.8});
                     setTimeout(function () {
                         top.layer.close(index);
-                        top.layer.msg("修改病人信息成功！");
+                        top.layer.msg("修改液氮罐信息成功！");
                         layer.closeAll("iframe");
                         //刷新父页面
                         parent.location.reload();
                     },2000);
                 }
-            })*/
+            })
             return false;
         })
     });

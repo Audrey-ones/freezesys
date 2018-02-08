@@ -56,9 +56,27 @@ public class NitController {
         return result;
     }
 
+    /**
+     *根据液氮罐ID查找液氮罐
+     * @param nitId
+     * @return
+     */
     @RequestMapping(value = "nits/{nitId}",method = RequestMethod.GET)
     public @ResponseBody Nit getNitById(@PathVariable("nitId") int nitId){
         Nit nit = nitService.getNitById(nitId);
         return nit;
+    }
+
+    @RequestMapping(value = "nitEdit",method = RequestMethod.POST)
+    public int editNit(HttpServletRequest httpServletRequest){
+        Nit nit = new Nit();
+        nit.setNitId(Integer.parseInt(httpServletRequest.getParameter("nitId")));
+        nit.setNitNum(httpServletRequest.getParameter("nitNum"));
+        nit.setVersion(httpServletRequest.getParameter("version"));
+        nit.setAntibodyType(httpServletRequest.getParameter("antibodyType"));
+        nit.setStatus(httpServletRequest.getParameter("status"));
+        nit.setRemark(httpServletRequest.getParameter("remark"));
+        int result = nitService.updateNit(nit);
+        return result;
     }
 }

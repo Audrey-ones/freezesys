@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,13 +14,13 @@
 	<body class="beg-login-bg">
 		<div class="beg-login-box">
 			<header>
-				<h1>液氮罐冷冻管理系统登录</h1>
+				<h1>液氮罐冷冻管理系统</h1>
 			</header>
 			<div class="beg-login-main">
 				<form class="layui-form">
 					<div class="layui-form-item">
 						<label class="beg-login-icon">
-                        <i class="layui-icon">&#xe612;</i>
+							<i class="fa fa-user-circle" aria-hidden="true"></i>
                     	</label>
 						<input type="text" id="account" lay-verify="required" autocomplete="off" placeholder="请输入用户名" class="layui-input">
 					</div>
@@ -39,7 +38,7 @@
 						<div class="beg-pull-right">
 							<a href="register.html" style="font-size: 12px;color: #f7b824d6;">还没注册？</a>
 						</div>
-						<button class="layui-btn layui-btn-primary" style="width: 100%;margin-top: 10px;border-radius: 10px;" lay-submit="" lay-filter="login">
+						<button class="layui-btn layui-btn-primary" style="width: 100%;margin-top: 10px;border-radius: 10px;color: #1AA094;" lay-submit="" lay-filter="login">
 							登录
 							<i class="fa fa-sign-in" aria-hidden="true"></i>
 						</button>
@@ -72,7 +71,11 @@
                                 setCookie("user",data.user);//用户基本信息计入cookie
                                 setCookie("token",data.token);//令牌token计入cookie
                                 console.log(data)
-                                location.href='index.html';
+                                var index = layer.msg('登录成功！',{icon:1,time:false,shade:0.8});
+                                setTimeout(function(){
+                                    layer.close(index);
+                                    location.href='index.html';
+                                },2000);
 							}else {
                                 layer.msg("用户名或密码错误！");
                                 $("#account").val("");
@@ -93,5 +96,4 @@
 			});
 		</script>
 	</body>
-
 </html>

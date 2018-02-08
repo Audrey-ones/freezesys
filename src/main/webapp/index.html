@@ -45,8 +45,8 @@
                     </a>
                     <dl class="layui-nav-child">
                         <!--<dd><a href="javascript:;" data-url="page/user/userInfo.html"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a></dd>-->
-                        <dd><a href="javascript:;" data-url="page/user/changePwd.html"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
-                        <dd><a href="login.html"><i class="iconfont icon-loginout"></i><cite>退出</cite></a></dd>
+                        <dd><a href="javascript:;" data-url="page/user/changePwd.html"><i class="fa fa-user-circle iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
+                        <dd><a href="login.html"><i class="fa fa-sign-out"></i><cite>退出</cite></a></dd>
                     </dl>
                 </li>
             </ul>
@@ -84,12 +84,11 @@
 <!-- 锁屏 -->
 <div class="admin-header-lock" id="lock-box" style="display: none;">
     <div class="admin-header-lock-img"><img src="images/face.jpg"/></div>
-    <div class="admin-header-lock-name" id="lockUserName">Hello World</div>
+    <div class="admin-header-lock-name lockUserName" id="lockUserName"></div>
     <div class="input_btn">
         <input type="password" class="admin-header-lock-input layui-input" placeholder="请输入密码解锁.." name="lockPwd" id="lockPwd" />
         <button class="layui-btn" id="unlock">解锁</button>
     </div>
-    <p style="color: #269f42">请输入“123456”，否则不会解锁成功哦！！！！</p>
 </div>
 <!-- 移动导航 -->
 <div class="site-tree-mobile layui-hide"><i class="layui-icon">&#xe602;</i></div>

@@ -44,4 +44,10 @@
         WHERE account = #{account,jdbcType=VARCHAR}
     </select>
 
+    <select id="getUserById" resultMap="userInfo" parameterType="java.lang.Integer">
+        SELECT * FROM
+        tb_user
+        WHERE id = #{userId,jdbcType=INTEGER}
+    </select>
+
 </mapper>

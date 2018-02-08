@@ -27,6 +27,7 @@ layui.config({
     form.verify({
         oldPwd : function(value, item){
             if (getCookie('user')){
+                console.log(user.password)
                 if(value != user.password){
                     return "密码错误，请重新输入！";
                 }
@@ -39,7 +40,10 @@ layui.config({
             }
         },
         confirmPwd : function(value, item){
-            if(!new RegExp($("#newPwd").val()).test(value)){
+            /*if(!new RegExp($("#newPwd").val()).test(value)){
+                return "两次输入密码不一致，请重新输入！";
+            }*/
+            if($("#newPwd").val() != value){
                 return "两次输入密码不一致，请重新输入！";
             }
         }
@@ -67,7 +71,7 @@ layui.config({
     //修改密码
     form.on("submit(changePwd)",function(data){
         $.ajax({
-            url : "http://localhost:8080/changepwd",
+            url : "/changepwd",
             type : "post",
             dataType : "json",
             data : {
@@ -75,15 +79,14 @@ layui.config({
                 "password" : $("#newPwd").val()
             },
             success : function (data) {
-                var index = layer.msg('提交中，请稍候',{icon: 16,time:false,shade:0.8});
+                var index = layer.msg('密码修改成功，请重新登录！',{icon:6,time:false,shade:0.8});
                 setTimeout(function(){
                     layer.close(index);
-                    layer.msg("密码修改成功！");
-                    $(".pwd").val('');
+                    parent.location.href='../../login.html';
+                    //$(".pwd").val('');
                 },2000);
             }
         })
-
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
     })
 
