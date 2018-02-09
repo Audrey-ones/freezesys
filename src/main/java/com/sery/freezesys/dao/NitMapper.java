@@ -85,4 +85,18 @@ public interface NitMapper{
      */
     int deleteDivepipe(int tubId);
 
+    /**
+     * 当插入一条麦管记录时修改剩余数量
+     * @param map
+     * @return
+     */
+    int updateFlagNum(Map map);
+
+    /**
+     * 根据套管ID查找套管
+     * @param divepipeId
+     * @return
+     */
+    Divepipe selectDivepipeById(int divepipeId);
+
 }

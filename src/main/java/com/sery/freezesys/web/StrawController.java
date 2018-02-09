@@ -1,5 +1,6 @@
 package com.sery.freezesys.web;
 
+import com.sery.freezesys.model.Straw;
 import com.sery.freezesys.model.StrawDTO;
 import com.sery.freezesys.service.StrawService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,15 @@ public class StrawController {
         int result = strawService.addStraw(strawDTO);
         return result;
 
+    }
+
+    @RequestMapping(value = "updateFreezeStatus",method = RequestMethod.POST)
+    public int updateFreezeStatus(HttpServletRequest request){
+        Straw straw = new Straw();
+        straw.setStrawId(Integer.parseInt(request.getParameter("strawId")));
+        straw.setFreezeStatus(request.getParameter("freezeStatus"));
+        straw.setOperator(request.getParameter("operator"));
+        int result = strawService.updateFreezeStatus(straw);
+        return result;
     }
 }

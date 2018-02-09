@@ -4,6 +4,7 @@ import com.sery.freezesys.model.Straw;
 import com.sery.freezesys.model.StrawDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StrawMapper{
 
@@ -19,5 +20,19 @@ public interface StrawMapper{
      * @return
      */
     int insertStraw(Straw straw);
+
+    /**
+     * 更新解冻状态
+     * @param map
+     * @return
+     */
+    int updataFreezeStatus(Map map);
+
+    /**
+     * 根据麦管ID查找麦管记录
+     * @param strawId
+     * @return
+     */
+    Straw getStrawById(int strawId);
 
 }

@@ -23,6 +23,22 @@
         <result column="remark" property="remark" jdbcType="VARCHAR"></result>
     </resultMap>
 
+    <resultMap id="straw" type="com.sery.freezesys.model.Straw">
+        <id column="id" property="strawId" jdbcType="INTEGER"></id>
+        <result column="straw_num" property="strawNum" jdbcType="VARCHAR"></result>
+        <result column="freeze_num" property="freezeNum" jdbcType="VARCHAR"></result>
+        <result column="barcode_num" property="barcodeNum" jdbcType="VARCHAR"></result>
+        <result column="patient_id" property="patientId" jdbcType="INTEGER"></result>
+        <result column="divepipe_id" property="divepipeId" jdbcType="INTEGER"></result>
+        <result column="sample_type" property="sampleType" jdbcType="VARCHAR"></result>
+        <result column="sample_amount" property="sampleAmount" jdbcType="INTEGER"></result>
+        <result column="freeze_time" property="freezeTime" jdbcType="VARCHAR"></result>
+        <result column="expire_time" property="expireTime" jdbcType="VARCHAR"></result>
+        <result column="freeze_status" property="freezeStatus" jdbcType="VARCHAR"></result>
+        <result column="operator" property="operator" jdbcType="VARCHAR"></result>
+        <result column="remark" property="remark" jdbcType="VARCHAR"></result>
+    </resultMap>
+
     <!--查询所有的麦管记录-->
     <select id="selectAllStraw" resultMap="strawInfo">
         SELECT
@@ -44,5 +60,25 @@
         #{sampleAmount,jdbcType=INTEGER},#{freezeTime,jdbcType=VARCHAR},#{expireTime,jdbcType=VARCHAR},
         #{freezeStatus,jdbcType=VARCHAR},#{operator,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
     </insert>
+
+    <!--更新解冻状态-->
+    <update id="updataFreezeStatus" parameterType="java.util.Map">
+        UPDATE tb_straw
+        <set>
+            <if test="freezeStatus != null">
+                freeze_status = #{freezeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE id = #{strawId,jdbcType=INTEGER}
+    </update>
+
+    <select id="getStrawById" resultMap="straw" parameterType="java.lang.Integer">
+        SELECT *
+        FROM tb_straw
+        WHERE id = #{strawId,jdbcType=INTEGER}
+    </select>
 
 </mapper>

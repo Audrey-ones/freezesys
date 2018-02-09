@@ -32,6 +32,7 @@ public class StrawServiceImpl implements StrawService {
 
     @Override
     public int addStraw(StrawDTO strawDTO) {
+        int result;
         //根据病历号，女方姓名获取病人Id
         Map patientMap = new HashMap();
         patientMap.put("medicalRecord",strawDTO.getMedicalRecord());
@@ -55,20 +56,54 @@ public class StrawServiceImpl implements StrawService {
         nitMap.put("tubNum",strawDTO.getTubNum());
         nitMap.put("divepipeNum",strawDTO.getDivepipeNum());
         Divepipe divepipe = nitMapper.selectDivepipeId(nitMap);
-        Straw straw = new Straw();
-        straw.setStrawNum(strawDTO.getStrawNum());
-        straw.setFreezeNum(strawDTO.getFreezeNum());
-        straw.setBarcodeNum(strawDTO.getBarcodeNum());
-        straw.setPatientId(patientId);
-        straw.setDivepipeId(divepipe.getDivepipeId());
-        straw.setSampleType(strawDTO.getSampleType());
-        straw.setSampleAmount(strawDTO.getSampleAmount());
-        straw.setFreezeTime(strawDTO.getFreezeTime());
-        straw.setExpireTime(strawDTO.getExpireTime());
-        straw.setFreezeStatus(strawDTO.getFreezeStatus());
-        straw.setOperator(strawDTO.getOperator());
-        straw.setRemark(strawDTO.getRemark());
-        int result = strawMapper.insertStraw(straw);
+        //查询套管位置是否满了
+        if (divepipe.getFlagNum() > 0){
+            //每次插入一条麦管信息，套管剩余位置少一个
+            Map map = new HashMap();
+            map.put("divepipeId",divepipe.getDivepipeId());
+            map.put("flagNum",divepipe.getFlagNum()-1);
+            nitMapper.updateFlagNum(map);
+            Straw straw = new Straw();
+            straw.setStrawNum(strawDTO.getStrawNum());
+            straw.setFreezeNum(strawDTO.getFreezeNum());
+            straw.setBarcodeNum(strawDTO.getBarcodeNum());
+            straw.setPatientId(patientId);
+            straw.setDivepipeId(divepipe.getDivepipeId());
+            straw.setSampleType(strawDTO.getSampleType());
+            straw.setSampleAmount(strawDTO.getSampleAmount());
+            straw.setFreezeTime(strawDTO.getFreezeTime());
+            straw.setExpireTime(strawDTO.getExpireTime());
+            straw.setFreezeStatus(strawDTO.getFreezeStatus());
+            straw.setOperator(strawDTO.getOperator());
+            straw.setRemark(strawDTO.getRemark());
+            result = strawMapper.insertStraw(straw);
+        }else {
+            result = 0;
+        }
+
+        return result;
+    }
+
+    @Override
+    public int updateFreezeStatus(Straw straw) {
+        int result;
+        Straw selectStraw = strawMapper.getStrawById(straw.getStrawId());
+        if (selectStraw.getFreezeStatus() != straw.getFreezeStatus()){
+            result = 0;
+        }else {
+            Divepipe divepipe = nitMapper.selectDivepipeById(selectStraw.getDivepipeId());
+            //每次解冻，套管剩余位置+1
+            Map map = new HashMap();
+            map.put("divepipeId",divepipe.getDivepipeId());
+            map.put("flagNum",divepipe.getFlagNum()+1);
+            nitMapper.updateFlagNum(map);
+            Map updateMap = new HashMap();
+            updateMap.put("strawId",straw.getStrawId());
+            updateMap.put("freezeStatus",straw.getFreezeStatus());
+            updateMap.put("operator",straw.getOperator());
+            result = strawMapper.updataFreezeStatus(updateMap);
+        }
+
         return result;
     }
 }

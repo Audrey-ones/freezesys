@@ -59,19 +59,25 @@ layui.config({
                 "remark":"无"
             },
             success : function (data) {
-                //弹出loading
-                var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
-                setTimeout(function(){
-                    top.layer.close(index);
-                    top.layer.msg("历史存储录入成功！");
-                    layer.closeAll("iframe");
-                    //刷新父页面
-                    parent.location.reload();
-                },2000);
+                if (data == 1){
+                    //弹出loading
+                    var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+                    setTimeout(function(){
+                        top.layer.close(index);
+                        top.layer.msg("历史存储录入成功！");
+                        layer.closeAll("iframe");
+                        //刷新父页面
+                        parent.location.reload();
+                    },2000);
+                }else {
+                    layer.msg("套管已存满，请重新选择套管！");
+                    $(".divepipeNum").val("");
+                }
+
             }
         })
 
-       /* addStraws = '{"medicalRecord":"'+$(".medicalRecord").val()+'",';  //病历号
+       /*addStraws = '{"medicalRecord":"'+$(".medicalRecord").val()+'",';  //病历号
         addStraws += '"femaleName":"'+$(".femaleName").val()+'",'; //女方姓名
         addStraws += '"maleName":"'+$(".maleName").val()+'",';//男方姓名
         addStraws += '"sampleType":"'+$(".sampleType option").eq($(".sampleType").val()).text()+'",'; //样本类型

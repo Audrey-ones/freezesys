@@ -1,8 +1,10 @@
 package com.sery.freezesys.service;
 
+import com.sery.freezesys.model.Straw;
 import com.sery.freezesys.model.StrawDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StrawService {
 
@@ -18,4 +20,11 @@ public interface StrawService {
      * @return
      */
     int addStraw(StrawDTO strawDTO);
+
+    /**
+     * 修改解冻状态
+     * @param straws
+     * @return
+     */
+    int updateFreezeStatus(Straw straws);
 }

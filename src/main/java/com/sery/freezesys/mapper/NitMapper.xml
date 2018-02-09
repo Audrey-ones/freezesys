@@ -127,4 +127,20 @@
         WHERE tub_id = #{tubId,jdbcType=INTEGER}
     </delete>
 
+    <!--当插入一条麦管记录时修改剩余数量-->
+    <update id="updateFlagNum" parameterType="java.util.Map">
+        UPDATE tb_divepipe
+        <set>
+            <if test="flagNum != null">
+                flag_num = #{flagNum,jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE id = #{divepipeId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectDivepipeById" resultMap="divepipeInfo" parameterType="java.lang.Integer">
+        SELECT * FROM tb_divepipe
+        WHERE id = #{divepipeId,jdbcType=INTEGER}
+    </select>
+
 </mapper>

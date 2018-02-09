@@ -146,6 +146,16 @@ layui.config({
 		}
 	})
 
+    //读取cookies
+    function getCookie(name) {
+        var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr=document.cookie.match(reg)){
+            return arr[2];
+        }else {
+            return null;
+        }
+    }
+
 	//批量删除
 	$(".batchDel").click(function(){
 		var $checkbox = $('.straws_list tbody input[type="checkbox"][name="checked"]');
@@ -219,14 +229,39 @@ layui.config({
 		}
 	})
 
-	$("body").on("click",".news_del",function(){  //删除
+    //解冻一条记录（逻辑删除）
+	$("body").on("click",".straw_del",function(){
 		var _this = $(this);
-		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
+		layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'提示信息'},function(index){
 			//_this.parents("tr").remove();
 			for(var i=0;i<strawsData.length;i++){
-				if(strawsData[i].newsId == _this.attr("data-id")){
-                    strawsData.splice(i,1);
-					strawsList(strawsData);
+				if(strawsData[i].strawId == _this.attr("data-id")){
+                    //主页获取保存在cookie里的用户昵称
+                    var user;
+                    if (getCookie('user')){
+                        user=JSON.parse(getCookie('user'));
+                    }
+				    $.ajax({
+                        url : "/updateFreezeStatus",
+                        type : "post",
+                        dataType : "json",
+                        data : {
+                            "strawId" : strawsData[i].strawId,
+                            "freezeStatus" : "已解冻",
+                            "operator" : user.nickname
+                        },
+                        success : function (data) {
+                            if (data == 1){
+                                $(_this).text("已解冻");
+                                layer.msg("解冻成功！");
+                            }else {
+                                layer.msg("您已经解冻过该记录，请勿重复解冻！");
+                            }
+
+                        }
+                    })
+                    /*strawsData.splice(i,1);
+					strawsList(strawsData);*/
 				}
 			}
 			layer.close(index);
@@ -266,7 +301,7 @@ layui.config({
 					+'<td>'+currData[i].sampleAmount+'</td>'
 					+'<td>'+freezeTime+'</td>'
 					+'<td>'+currData[i].expireTime+'</td>'
-					+'<td>'+currData[i].freezeStatus+'</td>'
+					+'<td class="freezeStatus">'+currData[i].freezeStatus+'</td>'
 					+'<td>'+currData[i].operator+'</td>'
                     +'<td>'
                     +  '<a class="layui-btn layui-btn-mini straws_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
