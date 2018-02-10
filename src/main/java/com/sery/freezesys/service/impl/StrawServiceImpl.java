@@ -88,7 +88,7 @@ public class StrawServiceImpl implements StrawService {
     public int updateFreezeStatus(Straw straw) {
         int result;
         Straw selectStraw = strawMapper.getStrawById(straw.getStrawId());
-        if (selectStraw.getFreezeStatus() != straw.getFreezeStatus()){
+        if (selectStraw.getFreezeStatus().equals(straw.getFreezeStatus())){
             result = 0;
         }else {
             Divepipe divepipe = nitMapper.selectDivepipeById(selectStraw.getDivepipeId());

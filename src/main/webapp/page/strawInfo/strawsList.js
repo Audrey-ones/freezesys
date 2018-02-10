@@ -146,6 +146,12 @@ layui.config({
 		}
 	})
 
+    //主页获取保存在cookie里的用户昵称
+    var user;
+    if (getCookie('user')){
+        user=JSON.parse(getCookie('user'));
+    }
+
     //读取cookies
     function getCookie(name) {
         var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
@@ -156,20 +162,33 @@ layui.config({
         }
     }
 
-	//批量删除
+	//批量解冻
 	$(".batchDel").click(function(){
 		var $checkbox = $('.straws_list tbody input[type="checkbox"][name="checked"]');
 		var $checked = $('.straws_list tbody input[type="checkbox"][name="checked"]:checked');
 		if($checkbox.is(":checked")){
-			layer.confirm('确定删除选中的信息？',{icon:3, title:'提示信息'},function(index){
-				var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
+			layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'提示信息'},function(index){
+				var index = layer.msg('解冻中，请稍候',{icon: 16,time:false,shade:0.8});
 	            setTimeout(function(){
 	            	//更改解冻状态
 	            	for(var j=0;j<$checked.length;j++){
 	            		for(var i=0;i<strawsData.length;i++){
 							if(strawsData[i].strawId == $checked.eq(j).parents("tr").find(".straw_del").attr("data-id")){
-                                strawsData.splice(i,1);
-								strawsList(strawsData);
+                                /*strawsData.splice(i,1);
+								strawsList(strawsData);*/
+                                $.ajax({
+                                    url : "/updateFreezeStatus",
+                                    type : "post",
+                                    dataType : "json",
+                                    data : {
+                                        "strawId" : strawsData[i].strawId,
+                                        "freezeStatus" : "已解冻",
+                                        "operator" : user.nickname
+                                    },
+                                    success : function (data) {
+
+                                    }
+                                })
 							}
 						}
 	            	}
@@ -236,11 +255,6 @@ layui.config({
 			//_this.parents("tr").remove();
 			for(var i=0;i<strawsData.length;i++){
 				if(strawsData[i].strawId == _this.attr("data-id")){
-                    //主页获取保存在cookie里的用户昵称
-                    var user;
-                    if (getCookie('user')){
-                        user=JSON.parse(getCookie('user'));
-                    }
 				    $.ajax({
                         url : "/updateFreezeStatus",
                         type : "post",
@@ -252,8 +266,11 @@ layui.config({
                         },
                         success : function (data) {
                             if (data == 1){
-                                $(_this).text("已解冻");
                                 layer.msg("解冻成功！");
+                                setTimeout(function(){
+                                    //刷新父页面
+                                    parent.location.reload();
+                                },2000);
                             }else {
                                 layer.msg("您已经解冻过该记录，请勿重复解冻！");
                             }
@@ -301,11 +318,11 @@ layui.config({
 					+'<td>'+currData[i].sampleAmount+'</td>'
 					+'<td>'+freezeTime+'</td>'
 					+'<td>'+currData[i].expireTime+'</td>'
-					+'<td class="freezeStatus">'+currData[i].freezeStatus+'</td>'
+					+'<td>'+currData[i].freezeStatus+'</td>'
 					+'<td>'+currData[i].operator+'</td>'
                     +'<td>'
                     +  '<a class="layui-btn layui-btn-mini straws_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
-                    +  '<a class="layui-btn layui-btn-danger layui-btn-mini straw_del" data-id="'+data[i].strawId+'"><i class="fa fa-times"></i> 解冻</a>'
+                    +  '<a class="layui-btn layui-btn-danger layui-btn-mini straw_del" data-id="'+data[i].strawId+'"><i class="fa fa-snowflake-o"></i> 解冻</a>'
                     +'</td>'
 			    	+'</tr>';
 				}
