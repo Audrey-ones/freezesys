@@ -52,4 +52,10 @@ public class StrawServiceTest {
         int result = strawService.addStraw(straw);
         System.out.println(result);
     }
+
+    @Test
+    public void getStrawById() {
+        Straw straw = strawService.getStrawById(17);
+        System.out.println(straw);
+    }
 }

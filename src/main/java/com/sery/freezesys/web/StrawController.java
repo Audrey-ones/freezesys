@@ -57,4 +57,32 @@ public class StrawController {
         int result = strawService.updateFreezeStatus(straw);
         return result;
     }
+
+    @RequestMapping(value = "straws/{strawId}",method = RequestMethod.GET)
+    public @ResponseBody Straw getStrawById(@PathVariable("strawId") int strawId){
+        Straw straw = strawService.getStrawById(strawId);
+        return straw;
+    }
+
+    @RequestMapping(value = "strawEdit",method = RequestMethod.POST)
+    public int editStraw(HttpServletRequest httpServletRequest){
+        StrawDTO strawDTO = new StrawDTO();
+        strawDTO.setMedicalRecord(httpServletRequest.getParameter("medicalRecord"));
+        strawDTO.setFemaleName(httpServletRequest.getParameter("femaleName"));
+        strawDTO.setMaleName(httpServletRequest.getParameter("maleName"));
+        strawDTO.setSampleType(httpServletRequest.getParameter("sampleType"));
+        strawDTO.setSampleAmount(Integer.parseInt(httpServletRequest.getParameter("sampleAmount")));
+        strawDTO.setFreezeNum(httpServletRequest.getParameter("freezeNum"));
+        //时间的处理
+        strawDTO.setFreezeTime(httpServletRequest.getParameter("freezeTime"));
+        strawDTO.setExpireTime(httpServletRequest.getParameter("expireTime"));
+        strawDTO.setNitNum(httpServletRequest.getParameter("nitNum"));
+        strawDTO.setTubNum(httpServletRequest.getParameter("tubNum"));
+        strawDTO.setDivepipeNum(httpServletRequest.getParameter("divepipeNum"));
+        strawDTO.setStrawNum(httpServletRequest.getParameter("strawNum"));
+        int patientId = Integer.parseInt(httpServletRequest.getParameter("patientId"));
+        int divepipeId = Integer.parseInt(httpServletRequest.getParameter("divepipeId"));
+        int result = strawService.addStraw(strawDTO);
+        return result;
+    }
 }

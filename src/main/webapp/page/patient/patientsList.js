@@ -159,7 +159,7 @@ layui.config({
     $("body").on("click",".patient_del",function () {
         var _this = $(this);
         //console.log(_this.attr("data-id"))
-        layer.confirm("确认删除该条病人记录？",{icon: 3,title:'提示信息'},function (index) {
+        layer.confirm("确认删除该条病人记录？将一并删除该病人所有的麦管记录",{icon: 3,title:'提示信息'},function (index) {
             for (var i=0; i<patientData.length; i++){
                 if (patientData[i].patientId == _this.attr("data-id")){
                     $.ajax({

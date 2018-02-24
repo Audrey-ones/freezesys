@@ -1,6 +1,7 @@
 package com.sery.freezesys.web;
 
 import com.sery.freezesys.model.Nit;
+import com.sery.freezesys.model.NitDTO;
 import com.sery.freezesys.service.NitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -78,5 +79,12 @@ public class NitController {
         nit.setRemark(httpServletRequest.getParameter("remark"));
         int result = nitService.updateNit(nit);
         return result;
+    }
+
+    @RequestMapping(value = "nit/{divepipeId}",method = RequestMethod.GET)
+    public @ResponseBody
+    NitDTO getNumByDivepipeId(@PathVariable("divepipeId") int divepipeId){
+        NitDTO nitDTO = nitService.getNumByDivepipeId(divepipeId);
+        return nitDTO;
     }
 }

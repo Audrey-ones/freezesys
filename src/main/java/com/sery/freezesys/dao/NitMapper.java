@@ -2,6 +2,7 @@ package com.sery.freezesys.dao;
 
 import com.sery.freezesys.model.Divepipe;
 import com.sery.freezesys.model.Nit;
+import com.sery.freezesys.model.NitDTO;
 import com.sery.freezesys.model.Tub;
 
 import java.util.List;
@@ -98,5 +99,12 @@ public interface NitMapper{
      * @return
      */
     Divepipe selectDivepipeById(int divepipeId);
+
+    /**
+     * 根据套管ID获取液氮罐编号，吊桶编号，套管编号
+     * @param divepipeId
+     * @return
+     */
+    NitDTO selectNumByDivepipeId(int divepipeId);
 
 }

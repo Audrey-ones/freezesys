@@ -35,4 +35,11 @@ public interface StrawMapper{
      */
     Straw getStrawById(int strawId);
 
+    /**
+     * 更新麦管信息
+     * @param strawId
+     * @return
+     */
+    int updataStrawInfo(int strawId);
+
 }

@@ -106,4 +106,10 @@ public class StrawServiceImpl implements StrawService {
 
         return result;
     }
+
+    @Override
+    public Straw getStrawById(int strawId) {
+        Straw straw = strawMapper.getStrawById(strawId);
+        return straw;
+    }
 }

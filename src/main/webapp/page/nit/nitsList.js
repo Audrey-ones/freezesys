@@ -237,7 +237,7 @@ layui.config({
         var $checkbox = $('.nits_list tbody input[type="checkbox"][name="checked"]');
         var $checked = $('.nits_list tbody input[type="checkbox"][name="checked"]:checked');
         if($checkbox.is(":checked")){
-            layer.confirm('确定删除选中的液氮罐？',{icon:3, title:'提示信息'},function(index){
+            layer.confirm('确定删除选中的液氮罐？将一并删除该液氮罐中的麦管记录',{icon:3, title:'提示信息'},function(index){
                 var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
                 setTimeout(function(){
                     //删除数据
@@ -271,7 +271,7 @@ layui.config({
     //删除液氮罐
     $("body").on("click",".nit_del",function(){
         var _this = $(this);
-        layer.confirm('小主，你真的要删除我吗？',{icon:3, title:'提示信息'},function(index){
+        layer.confirm('小主，你真的要删除我吗？将一并删除该液氮罐中的麦管记录',{icon:3, title:'提示信息'},function(index){
             //_this.parents("tr").remove();
             for(var i=0;i<nitsData.length;i++){
                 if(nitsData[i].nitId == _this.attr("data-id")){

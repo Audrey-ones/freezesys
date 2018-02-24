@@ -1,6 +1,7 @@
 package com.sery.freezesys.service;
 
 import com.sery.freezesys.model.Nit;
+import com.sery.freezesys.model.NitDTO;
 
 import java.util.List;
 
@@ -55,5 +56,12 @@ public interface NitService {
      * @return
      */
     Nit getNitById(int nitId);
+
+    /**
+     * 根据套管ID获取液氮罐编号，吊桶编号，套管编号
+     * @param divepipeId
+     * @return
+     */
+    NitDTO getNumByDivepipeId(int divepipeId);
 
 }

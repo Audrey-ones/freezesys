@@ -3,6 +3,7 @@ package com.sery.freezesys.service.impl;
 import com.sery.freezesys.dao.NitMapper;
 import com.sery.freezesys.model.Divepipe;
 import com.sery.freezesys.model.Nit;
+import com.sery.freezesys.model.NitDTO;
 import com.sery.freezesys.model.Tub;
 import com.sery.freezesys.service.NitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,5 +81,11 @@ public class NitServiceImpl implements NitService {
     public Nit getNitById(int nitId) {
         Nit nit = nitMapper.selectNitById(nitId);
         return nit;
+    }
+
+    @Override
+    public NitDTO getNumByDivepipeId(int divepipeId) {
+        NitDTO nitDTO = nitMapper.selectNumByDivepipeId(divepipeId);
+        return nitDTO;
     }
 }

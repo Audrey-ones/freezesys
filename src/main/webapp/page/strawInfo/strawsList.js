@@ -233,9 +233,65 @@ layui.config({
         },2000);
 	})
  
-	//操作
+	//编辑麦管信息
 	$("body").on("click",".straws_edit",function(){  //编辑
-		layer.alert('您点击了文章编辑按钮，由于是纯静态页面，所以暂时不存在编辑内容，后期会添加，敬请谅解。。。',{icon:6, title:'文章编辑'});
+        var _this = $(this);
+        for(var i=0; i<strawsData.length; i++){
+            if (strawsData[i].strawId == _this.attr("data-id")){
+                //获取当前点击的病人ID
+                var strawId = strawsData[i].strawId;
+                var index = layui.layer.open({
+                    title : "编辑麦管信息",
+                    type : 2,
+                    content : "strawEdit.html",
+                    success : function (layero,index) {
+                        //获取子页面
+                        var body = layui.layer.getChildFrame('body', index);
+                        body.find("#strawId").val(strawId);
+                        $.ajax({
+                            url : "/straws/"+strawId,
+                            type : "get",
+                            dataType : "json",
+                            success : function (data) {
+                                console.log(data)
+                                body.find(".sampleAmount").val(data.sampleAmount);
+                                body.find(".freezeNum").val(data.freezeNum);
+                                body.find(".freezeTime").val(data.freezeTime);
+                                body.find(".expireTime").val(data.expireTime);
+                                body.find(".strawNum").val(data.strawNum);
+                                var patientId = data.patientId;
+                                var divepipeId = data.divepipeId;
+                                $.ajax({
+									url : "/patients/"+patientId,
+									type : "get",
+									dataType : "json",
+									success : function (patientData) {
+                                        body.find(".medicalRecord").val(patientData.medicalRecord);
+                                        body.find(".femaleName").val(patientData.femaleName);
+                                        body.find(".maleName").val(patientData.maleName);
+                                    }
+								});
+                                $.ajax({
+                                    url : "/nit/"+divepipeId,
+                                    type : "get",
+                                    dataType : "json",
+                                    success : function (numData) {
+                                        body.find(".nitNum").val(numData.nitNum);
+                                        body.find(".tubNum").val(numData.tubNum);
+                                        body.find(".divepipeNum").val(numData.divepipeNum);
+                                    }
+                                });
+                            }
+                        })
+                    }
+                })
+                //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+                $(window).resize(function () {
+                    layui.layer.full(index);
+                })
+                layui.layer.full(index);
+            }
+        }
 	})
 
 	$("body").on("click",".news_collect",function(){  //收藏.
@@ -321,7 +377,7 @@ layui.config({
 					+'<td>'+currData[i].freezeStatus+'</td>'
 					+'<td>'+currData[i].operator+'</td>'
                     +'<td>'
-                    +  '<a class="layui-btn layui-btn-mini straws_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
+                    +  '<a class="layui-btn layui-btn-mini straws_edit" data-id="'+data[i].strawId+'"><i class="iconfont icon-edit"></i> 编辑</a>'
                     +  '<a class="layui-btn layui-btn-danger layui-btn-mini straw_del" data-id="'+data[i].strawId+'"><i class="fa fa-snowflake-o"></i> 解冻</a>'
                     +'</td>'
 			    	+'</tr>';

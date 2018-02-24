@@ -28,6 +28,13 @@
         <result column="tub_id" property="tubId" jdbcType="INTEGER"></result>
     </resultMap>
 
+    <resultMap id="nitDto" type="com.sery.freezesys.model.NitDTO">
+        <id column="id" property="divepipeId" jdbcType="INTEGER"></id>
+        <result column="num" property="nitNum" jdbcType="VARCHAR"></result>
+        <result column="tub_num" property="tubNum" jdbcType="VARCHAR"></result>
+        <result column="divepipe_num" property="divepipeNum" jdbcType="VARCHAR"></result>
+    </resultMap>
+
     <!--查询所有的液氮罐-->
     <select id="selectAllNits" resultMap="nitInfo">
         SELECT * FROM
@@ -141,6 +148,15 @@
     <select id="selectDivepipeById" resultMap="divepipeInfo" parameterType="java.lang.Integer">
         SELECT * FROM tb_divepipe
         WHERE id = #{divepipeId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectNumByDivepipeId" resultMap="nitDto" parameterType="java.lang.Integer">
+        SELECT d.id,n.num,t.tub_num,d.divepipe_num
+        FROM
+        tb_nit n,tb_tub t,tb_divepipe d
+        WHERE
+        d.tub_id = t.id AND t.nit_id = n.id AND
+        d.id = #{divepipeId,jdbcType=INTEGER}
     </select>
 
 </mapper>

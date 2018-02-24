@@ -2,6 +2,7 @@ package com.sery.freezesys.service;
 
 import com.sery.freezesys.dao.NitMapper;
 import com.sery.freezesys.model.Nit;
+import com.sery.freezesys.model.NitDTO;
 import com.sery.freezesys.model.Tub;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,4 +65,9 @@ public class NitServiceTest {
         System.out.println(tub);
     }
 
+    @Test
+    public void getNumByDivepipeId() {
+        NitDTO nitDTO = nitMapper.selectNumByDivepipeId(4031);
+        System.out.println(nitDTO);
+    }
 }

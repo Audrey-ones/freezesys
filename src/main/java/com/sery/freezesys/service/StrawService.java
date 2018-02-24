@@ -27,4 +27,11 @@ public interface StrawService {
      * @return
      */
     int updateFreezeStatus(Straw straws);
+
+    /**
+     * 根据麦管Id查找麦管信息
+     * @param strawId
+     * @return
+     */
+    Straw getStrawById(int strawId);
 }

@@ -81,4 +81,48 @@
         WHERE id = #{strawId,jdbcType=INTEGER}
     </select>
 
+    <!--更新麦管信息-->
+    <update id="updataStrawInfo" parameterType="java.lang.Integer">
+        UPDATE tb_straw
+        <set>
+            <if test="strawNum != null">
+                straw_num = #{strawNum,jdbcType=VARCHAR},
+            </if>
+            <if test="freezeNum != null">
+                freeze_num = #{freezeNum,jdbcType=VARCHAR}
+            </if>
+            <if test="barcodeNum != null">
+                barcode_num = #{barcodeNum,jdbcType=VARCHAR}
+            </if>
+            <if test="patientId != null">
+                patient_id = #{patientId,jdbcType=INTEGER},
+            </if>
+            <if test="divepipeId != null">
+                divepipe_id = #{divepipeId,jdbcType=INTEGER}
+            </if>
+            <if test="sampleType != null">
+                sample_type = #{sampleType,jdbcType=VARCHAR},
+            </if>
+            <if test="sampleAmount != null">
+                sample_amount = #{sampleAmount,jdbcType=INTEGER}
+            </if>
+            <if test="freezeTime != null">
+                freeze_time = #{freezeTime,jdbcType=VARCHAR},
+            </if>
+            <if test="expireTime != null">
+                expire_time = #{expireTime,jdbcType=VARCHAR}
+            </if>
+            <if test="freezeStatus != null">
+                freeze_status = #{freezeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR}
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE id = #{strawId,jdbcType=INTEGER}
+    </update>
+
 </mapper>
