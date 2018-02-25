@@ -67,6 +67,7 @@ public class StrawController {
     @RequestMapping(value = "strawEdit",method = RequestMethod.POST)
     public int editStraw(HttpServletRequest httpServletRequest){
         StrawDTO strawDTO = new StrawDTO();
+        strawDTO.setStrawId(Integer.parseInt(httpServletRequest.getParameter("strawId")));
         strawDTO.setMedicalRecord(httpServletRequest.getParameter("medicalRecord"));
         strawDTO.setFemaleName(httpServletRequest.getParameter("femaleName"));
         strawDTO.setMaleName(httpServletRequest.getParameter("maleName"));
@@ -82,7 +83,8 @@ public class StrawController {
         strawDTO.setStrawNum(httpServletRequest.getParameter("strawNum"));
         int patientId = Integer.parseInt(httpServletRequest.getParameter("patientId"));
         int divepipeId = Integer.parseInt(httpServletRequest.getParameter("divepipeId"));
-        int result = strawService.addStraw(strawDTO);
+        //传递参数，调用
+        int result = strawService.updateStraw(strawDTO,patientId,divepipeId);
         return result;
     }
 }

@@ -22,6 +22,9 @@ public class StrawServiceTest {
     @Autowired
     private StrawService strawService;
 
+    @Autowired
+    private StrawMapper strawMapper;
+
     @Test
     public void getStrawList() throws ParseException {
         //List<StrawDTO> strawDTOList = strawService.getStrawList();
@@ -57,5 +60,29 @@ public class StrawServiceTest {
     public void getStrawById() {
         Straw straw = strawService.getStrawById(17);
         System.out.println(straw);
+    }
+
+    @Test
+    public void updateStraw() {
+        StrawDTO strawDTO = new StrawDTO();
+        strawDTO.setStrawId(17);
+        strawDTO.setMedicalRecord("F2018-01");
+        strawDTO.setFemaleName("张艺馨");
+        strawDTO.setMaleName("白净123");
+        strawDTO.setSampleType("胚胎");
+        strawDTO.setSampleAmount(3);
+        strawDTO.setFreezeNum("201802");
+        //时间的处理
+        strawDTO.setFreezeTime("2018-02-24 12:59:12");
+        strawDTO.setExpireTime("2019-02-28 00:15:00");
+        strawDTO.setNitNum("A");
+        strawDTO.setTubNum("1");
+        strawDTO.setDivepipeNum("1");
+        int result = strawService.updateStraw(strawDTO,32,4031);
+       /*Straw straw = new Straw();
+       straw.setStrawId(17);
+       straw.setSampleAmount(3);
+       int result = strawMapper.updateStrawInfo(straw);*/
+        System.out.println(result);
     }
 }

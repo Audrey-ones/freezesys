@@ -112,4 +112,47 @@ public class StrawServiceImpl implements StrawService {
         Straw straw = strawMapper.getStrawById(strawId);
         return straw;
     }
+
+    @Override
+    public int updateStraw(StrawDTO strawDTO, int patientId, int divepipeId) {
+        Straw straw = new Straw();
+        straw.setStrawId(strawDTO.getStrawId());
+        straw.setStrawNum(strawDTO.getStrawNum());
+        straw.setFreezeNum(strawDTO.getFreezeNum());
+        straw.setSampleType(strawDTO.getSampleType());
+        straw.setSampleAmount(strawDTO.getSampleAmount());
+        straw.setFreezeTime(strawDTO.getFreezeTime());
+        straw.setExpireTime(strawDTO.getExpireTime());
+        //根据液氮罐编号，吊桶编号，套管编号获取套管ID
+        Map nitMap = new HashMap();
+        nitMap.put("nitNum",strawDTO.getNitNum());
+        nitMap.put("tubNum",strawDTO.getTubNum());
+        nitMap.put("divepipeNum",strawDTO.getDivepipeNum());
+        Divepipe divepipe = nitMapper.selectDivepipeId(nitMap);
+        if (divepipeId == divepipe.getDivepipeId()){
+            straw.setDivepipeId(divepipeId);
+        }else {
+            straw.setDivepipeId(divepipe.getDivepipeId());
+            //新的套管位置-1
+            Map newMap = new HashMap();
+            newMap.put("divepipeId",divepipe.getDivepipeId());
+            newMap.put("flagNum",divepipe.getFlagNum()-1);
+            nitMapper.updateFlagNum(newMap);
+            //原来的套管位置+1
+            Map oldMap = new HashMap();
+            oldMap.put("divepipeId",divepipeId);
+            oldMap.put("flagNum",divepipe.getFlagNum()+1);
+            nitMapper.updateFlagNum(oldMap);
+        }
+        //修改病人信息
+        Patient patient = new Patient();
+        patient.setPatientId(patientId);
+        patient.setMedicalRecord(strawDTO.getMedicalRecord());
+        patient.setFemaleName(strawDTO.getFemaleName());
+        patient.setMaleName(strawDTO.getMaleName());
+        patientMapper.updatePatient(patient);
+        straw.setPatientId(patientId);
+        int result = strawMapper.updateStrawInfo(straw);
+        return result;
+    }
 }

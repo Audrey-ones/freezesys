@@ -34,4 +34,13 @@ public interface StrawService {
      * @return
      */
     Straw getStrawById(int strawId);
+
+    /**
+     * 更新麦管信息
+     * @param strawDTO
+     * @param patientId
+     * @param divepipeId
+     * @return
+     */
+    int updateStraw(StrawDTO strawDTO,int patientId,int divepipeId);
 }

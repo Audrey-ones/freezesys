@@ -261,6 +261,8 @@ layui.config({
                                 body.find(".strawNum").val(data.strawNum);
                                 var patientId = data.patientId;
                                 var divepipeId = data.divepipeId;
+                                body.find("#patientId").val(patientId);
+                                body.find("#divepipeId").val(divepipeId);
                                 $.ajax({
 									url : "/patients/"+patientId,
 									type : "get",
