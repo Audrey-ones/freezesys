@@ -5,12 +5,14 @@ public class NitDTO {
     private String nitNum;
     private String tubNum;
     private String divepipeNum;
+    private Integer flagNum;
 
-    public NitDTO(Integer divepipeId, String nitNum, String tubNum, String divepipeNum) {
+    public NitDTO(Integer divepipeId, String nitNum, String tubNum, String divepipeNum, Integer flagNum) {
         this.divepipeId = divepipeId;
         this.nitNum = nitNum;
         this.tubNum = tubNum;
         this.divepipeNum = divepipeNum;
+        this.flagNum = flagNum;
     }
 
     public NitDTO() {
@@ -40,6 +42,14 @@ public class NitDTO {
         this.tubNum = tubNum;
     }
 
+    public Integer getFlagNum() {
+        return flagNum;
+    }
+
+    public void setFlagNum(Integer flagNum) {
+        this.flagNum = flagNum;
+    }
+
     public String getDivepipeNum() {
         return divepipeNum;
     }
@@ -55,6 +65,7 @@ public class NitDTO {
                 ", nitNum='" + nitNum + '\'' +
                 ", tubNum='" + tubNum + '\'' +
                 ", divepipeNum='" + divepipeNum + '\'' +
+                ", flagNum=" + flagNum +
                 '}';
     }
 }

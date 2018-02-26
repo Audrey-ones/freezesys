@@ -42,4 +42,6 @@ public interface StrawMapper{
      */
     int updateStrawInfo(Straw straw);
 
+    int selectStrawCount();
+
 }

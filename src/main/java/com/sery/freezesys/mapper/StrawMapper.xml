@@ -125,4 +125,11 @@
         WHERE id = #{strawId,jdbcType=INTEGER}
     </update>
 
+    <select id="selectStrawCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(tb_straw.id)
+        FROM
+        tb_straw
+    </select>
+
 </mapper>

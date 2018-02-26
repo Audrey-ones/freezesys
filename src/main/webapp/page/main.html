@@ -21,7 +21,7 @@
 					<i class="iconfont icon-text" data-icon="icon-text"></i>
 				</div>
 				<div class="panel_word emptyNum">
-					<span></span>
+					<span>查询</span>
 					<cite>剩余存储位置</cite>
 				</div>
 			</a>
@@ -38,7 +38,7 @@
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/nitInfo/nitsList.html">
+			<a href="javascript:;" data-url="page/nit/nitsList.html">
 				<div class="panel_icon" style="background-color:#F7B824;">
 					<i class="iconfont icon-wenben" data-icon="icon-wenben"></i>
 				</div>
@@ -49,7 +49,7 @@
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/patientInfo/patientsList.html">
+			<a href="javascript:;" data-url="page/patient/patientsList.html">
 				<div class="panel_icon" style="background-color:#009688;">
 					<i class="layui-icon" data-icon="&#xe613;">&#xe613;</i>
 				</div>
@@ -65,7 +65,47 @@
 		<p style="margin-top:5px;">开发文档地址：<a class="layui-btn layui-btn-mini" target="_blank" href="http://www.layui.com/doc">点此跳转</a> <a class="layui-btn layui-btn-mini layui-btn-danger" target="_blank" href="http://fly.layui.com/case/u/3198216">我要点赞</a>　　技术交流QQ群：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=8b7dd3ea73528c1e46c5d4e522426d60deed355caefdf481c1eacdd1b7b73bfd"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="layui后台管理模版" title="layui后台管理模版"></a>（添加时请注明来自本框架） <span style="color:#f00;"> 注：本框架未引入任何第三方组件（天气信息除外），单纯的layui+js实现的各种功能【本框架仅作为学习交流使用，如需用作商业用途，请联系作者授权，谢谢】</span></p>
 	</blockquote>-->
 	<br/>
-	<br/>
+	<blockquote class="layui-elem-quote news_search">
+		<div class="layui-inline">
+			<div class="layui-input-inline">
+				<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
+			</div>
+			<a class="layui-btn search_btn"><i class="fa fa-search fa-1g"></i></a>
+		</div>
+		<div class="layui-inline">
+			<a class="layui-btn layui-btn-normal nitsAdd_btn" style="background-color:#269f42">添加液氮罐</a>
+		</div>
+		<div class="layui-inline">
+			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
+		</div>
+		<div class="layui-inline">
+			<div class="layui-form-mid layui-word-aux">本页面刷新后除新添加的文章外所有操作无效，关闭页面所有数据重置</div>
+		</div>
+	</blockquote>
+	<div class="layui-form divepipe_list">
+		<table class="layui-table">
+			<colgroup>
+				<col width="4%">
+				<col width="9%">
+				<col width="9%">
+				<col width="9%">
+				<col width="9%">
+			</colgroup>
+			<thead>
+			<tr>
+				<!--<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>-->
+				<th></th>
+				<th>液氮罐编号</th>
+				<th>吊桶编号</th>
+				<th>套管编号</th>
+				<th>剩余数目</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody class="divepipe_content"></tbody>
+		</table>
+	</div>
+	<div id="page"></div>
 	<!--<div class="row">
 		<div class="sysNotice col">
 			<blockquote class="layui-elem-quote title">更新日志</blockquote>

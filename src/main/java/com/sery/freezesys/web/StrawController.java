@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class StrawController {
@@ -86,5 +88,12 @@ public class StrawController {
         //传递参数，调用
         int result = strawService.updateStraw(strawDTO,patientId,divepipeId);
         return result;
+    }
+
+    @RequestMapping(value = "getCount",method = RequestMethod.GET)
+    public @ResponseBody
+    Map getCount(){
+        Map map = strawService.getCount();
+        return map;
     }
 }

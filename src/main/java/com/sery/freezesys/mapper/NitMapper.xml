@@ -33,6 +33,7 @@
         <result column="num" property="nitNum" jdbcType="VARCHAR"></result>
         <result column="tub_num" property="tubNum" jdbcType="VARCHAR"></result>
         <result column="divepipe_num" property="divepipeNum" jdbcType="VARCHAR"></result>
+        <result column="flag_num" property="flagNum" jdbcType="INTEGER"></result>
     </resultMap>
 
     <!--查询所有的液氮罐-->
@@ -157,6 +158,21 @@
         WHERE
         d.tub_id = t.id AND t.nit_id = n.id AND
         d.id = #{divepipeId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectNitCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(tb_nit.id)
+        FROM
+        tb_nit
+    </select>
+
+    <select id="selectAllDivepipe" resultMap="nitDto">
+        SELECT d.id,n.num,t.tub_num,d.divepipe_num,d.flag_num
+        FROM
+        tb_nit n,tb_tub t,tb_divepipe d
+        WHERE
+        d.tub_id = t.id AND t.nit_id = n.id
     </select>
 
 </mapper>

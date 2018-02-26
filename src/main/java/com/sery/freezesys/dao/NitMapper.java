@@ -107,4 +107,16 @@ public interface NitMapper{
      */
     NitDTO selectNumByDivepipeId(int divepipeId);
 
+    /**
+     * 查找液氮罐数目
+     * @return
+     */
+    int selectNitCount();
+
+    /**
+     * 查找所有的套管
+     * @return
+     */
+    List<NitDTO> selectAllDivepipe();
+
 }

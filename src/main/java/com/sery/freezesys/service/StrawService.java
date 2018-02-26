@@ -43,4 +43,10 @@ public interface StrawService {
      * @return
      */
     int updateStraw(StrawDTO strawDTO,int patientId,int divepipeId);
+
+    /**
+     * 获取主页的参数
+     * @return
+     */
+    Map getCount();
 }

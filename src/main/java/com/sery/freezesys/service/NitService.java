@@ -64,4 +64,10 @@ public interface NitService {
      */
     NitDTO getNumByDivepipeId(int divepipeId);
 
+    /**
+     * 查找所有的套管
+     * @return
+     */
+    List<NitDTO> getAllDivepipe();
+
 }

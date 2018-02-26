@@ -70,4 +70,11 @@ public class NitServiceTest {
         NitDTO nitDTO = nitMapper.selectNumByDivepipeId(4031);
         System.out.println(nitDTO);
     }
+
+    @Test
+    public void getAllDivepipe() {
+        List<NitDTO> nitDTOList = nitService.getAllDivepipe();
+        System.out.println(nitDTOList);
+        System.out.println(nitDTOList.size());
+    }
 }

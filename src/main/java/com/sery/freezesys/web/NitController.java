@@ -87,4 +87,10 @@ public class NitController {
         NitDTO nitDTO = nitService.getNumByDivepipeId(divepipeId);
         return nitDTO;
     }
+
+    @RequestMapping(value = "allDivepipe",method = RequestMethod.GET)
+    public @ResponseBody List<NitDTO> getAllDivepipe(){
+        List<NitDTO> nitDTOList = nitService.getAllDivepipe();
+        return nitDTOList;
+    }
 }

@@ -155,4 +155,16 @@ public class StrawServiceImpl implements StrawService {
         int result = strawMapper.updateStrawInfo(straw);
         return result;
     }
+
+    @Override
+    public Map getCount() {
+        int nitCount = nitMapper.selectNitCount();
+        int patientCount = patientMapper.selectPatientCount();
+        int strawCount = strawMapper.selectStrawCount();
+        Map map = new HashMap();
+        map.put("nitCount",nitCount);
+        map.put("patientCount",patientCount);
+        map.put("strawCount",strawCount);
+        return map;
+    }
 }

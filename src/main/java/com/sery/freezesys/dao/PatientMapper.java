@@ -46,4 +46,6 @@ public interface PatientMapper {
      * @return
      */
     int deletePatient(int patientId);
+
+    int selectPatientCount();
 }

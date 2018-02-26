@@ -88,4 +88,10 @@ public class NitServiceImpl implements NitService {
         NitDTO nitDTO = nitMapper.selectNumByDivepipeId(divepipeId);
         return nitDTO;
     }
+
+    @Override
+    public List<NitDTO> getAllDivepipe() {
+        List<NitDTO> nitDTOList = nitMapper.selectAllDivepipe();
+        return nitDTOList;
+    }
 }
