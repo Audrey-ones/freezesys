@@ -119,4 +119,11 @@ public interface NitMapper{
      */
     List<NitDTO> selectAllDivepipe();
 
+    /**
+     * 根据剩余位置数目获取套管
+     * @param flagNum
+     * @return
+     */
+    List<NitDTO> selectDivepipeByFlagNum(int flagNum);
+
 }

@@ -50,6 +50,7 @@
         AND s.divepipe_id = d.id
         AND n.id = t.nit_id
         AND t.id = d.tub_id
+        ORDER BY id DESC
     </select>
 
     <insert id="insertStraw" parameterType="com.sery.freezesys.model.Straw">

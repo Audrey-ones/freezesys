@@ -93,4 +93,10 @@ public class NitController {
         List<NitDTO> nitDTOList = nitService.getAllDivepipe();
         return nitDTOList;
     }
+
+    @RequestMapping(value = "getDivepipeByFlagNum",method = RequestMethod.GET)
+    public @ResponseBody List<NitDTO> getDivepipeByFlagNum(HttpServletRequest request){
+        List<NitDTO> nitDTOList = nitService.getDivepipesByFlagNum(Integer.parseInt(request.getParameter("flagNum")));
+        return nitDTOList;
+    }
 }

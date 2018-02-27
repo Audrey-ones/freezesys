@@ -8,16 +8,19 @@ layui.config({
 
 	//加载页面数据
 	var strawsData = '';
-	$.get("/straws", function(data){
-        //正常加载信息
-        strawsData = data;
-        /*if(window.sessionStorage.getItem("addStraws")){
-            var addStraws = window.sessionStorage.getItem("addStraws");
-            strawsData = JSON.parse(addStraws).concat(strawsData);
-        }*/
-        //执行加载数据的方法
-        strawsList();
-	})
+	loadStraw();
+	function loadStraw() {
+        $.get("/straws", function(data){
+            //正常加载信息
+            strawsData = data;
+            /*if(window.sessionStorage.getItem("addStraws")){
+                var addStraws = window.sessionStorage.getItem("addStraws");
+                strawsData = JSON.parse(addStraws).concat(strawsData);
+            }*/
+            //执行加载数据的方法
+            strawsList();
+        })
+    }
 
 	//查询
 	$(".search_btn").click(function(){
@@ -96,7 +99,7 @@ layui.config({
                 layer.close(index);
             },2000);
 		}else{
-			layer.msg("请输入需要查询的内容");
+			loadStraw();
 		}
 	})
 

@@ -7,17 +7,20 @@ layui.config({
         $ = layui.jquery;
 
     var patientData = '';
-    $.get("/patients",function(data){
-        //正常加载病人信息
-        patientData = data;
-        //console.log(patientData)
-        if (window.sessionStorage.getItem("addPatient")){
-            var addPatient = window.sessionStorage.getItem("addPatient");
-            patientData = JSON.parse(addPatient).concat(patientData);
-        }
-        //执行加载数据的方法
-        patientsList();
-    })
+    loadPatients();
+    function loadPatients() {
+        $.get("/patients",function(data){
+            //正常加载病人信息
+            patientData = data;
+            //console.log(patientData)
+            if (window.sessionStorage.getItem("addPatient")){
+                var addPatient = window.sessionStorage.getItem("addPatient");
+                patientData = JSON.parse(addPatient).concat(patientData);
+            }
+            //执行加载数据的方法
+            patientsList();
+        })
+    }
 
     //根据病历号、男女方姓名、男女方身份证、住址、电话进行查询
     $(".search_btn").click(function () {
@@ -91,7 +94,7 @@ layui.config({
                layer.close(index);
            },2000);
         }else {
-            layui.msg("请输入需要查询的内容");
+            loadPatients();
         }
     })
 
@@ -208,7 +211,7 @@ layui.config({
                     + '</tr>>';
                 }
             }else {
-                dataHtml += '<tr><th colspan="12">暂无数据</th></tr>'
+                dataHtml += '<tr><td colspan="12">暂无数据</td></tr>'
             }
             return dataHtml;
         }

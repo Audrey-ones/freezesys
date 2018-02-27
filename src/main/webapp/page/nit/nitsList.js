@@ -8,17 +8,20 @@ layui.config({
 
     //加载页面数据
     var nitsData = '';
-    $.get("/nits", function(data){
-      //正常加载信息
-        nitsData = data;
-        if(window.sessionStorage.getItem("addNits")){
-            var addNits = window.sessionStorage.getItem("addNits");
-            nitsData = JSON.parse(addNits).concat(nitsData);
-        }
-        //执行加载数据的方法
-        nitsList();
+    loadNits();
+    function loadNits() {
+        $.get("/nits", function(data){
+            //正常加载信息
+            nitsData = data;
+            if(window.sessionStorage.getItem("addNits")){
+                var addNits = window.sessionStorage.getItem("addNits");
+                nitsData = JSON.parse(addNits).concat(nitsData);
+            }
+            //执行加载数据的方法
+            nitsList();
 
-    })
+        })
+    }
 
     //查询
     $(".search_btn").click(function(){
@@ -83,7 +86,8 @@ layui.config({
                 layer.close(index);
             },2000);
         }else{
-            layer.msg("请输入需要查询的内容");
+            /*layer.msg("请输入需要查询的内容");*/
+            loadNits();
         }
     })
 

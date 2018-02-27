@@ -26,6 +26,7 @@
     <!--查询所有的病人信息-->
     <select id="selectAllPatient" resultMap="patientInfo">
         SELECT * FROM tb_patient
+        ORDER BY id DESC
     </select>
 
     <!--根据病历号和女方姓名查找一条病人记录-->

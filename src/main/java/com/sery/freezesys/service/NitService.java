@@ -70,4 +70,6 @@ public interface NitService {
      */
     List<NitDTO> getAllDivepipe();
 
+    List<NitDTO> getDivepipesByFlagNum(int flagNum);
+
 }
