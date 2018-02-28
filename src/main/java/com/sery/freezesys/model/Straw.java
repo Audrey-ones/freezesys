@@ -13,9 +13,11 @@ public class Straw {
     private Integer divepipeId;
     private String sampleType;
     private Integer sampleAmount;
+    private String sampleNum;
     private String freezeTime;
     private String expireTime;
     private String freezeStatus;
+    private String thawTime;
     private String operator;
     private String remark;
 
@@ -119,6 +121,24 @@ public class Straw {
         this.freezeStatus = freezeStatus;
     }
 
+    @Column(name = "sample_num")
+    public String getSampleNum() {
+        return sampleNum;
+    }
+
+    public void setSampleNum(String sampleNum) {
+        this.sampleNum = sampleNum;
+    }
+
+    @Column(name = "thaw_time")
+    public String getThawTime() {
+        return thawTime;
+    }
+
+    public void setThawTime(String thawTime) {
+        this.thawTime = thawTime;
+    }
+
     @Column(name = "operator")
     public String getOperator() {
         return operator;
@@ -138,8 +158,8 @@ public class Straw {
     }
 
     public Straw(Integer strawId, String strawNum, String freezeNum, String barcodeNum,
-                 Integer patientId, Integer divepipeId, String sampleType, Integer sampleAmount,
-                 String freezeTime, String expireTime, String freezeStatus, String operator, String remark) {
+                 Integer patientId, Integer divepipeId, String sampleType, Integer sampleAmount, String sampleNum,
+                 String freezeTime, String expireTime, String freezeStatus, String thawTime, String operator, String remark) {
         this.strawId = strawId;
         this.strawNum = strawNum;
         this.freezeNum = freezeNum;
@@ -148,9 +168,11 @@ public class Straw {
         this.divepipeId = divepipeId;
         this.sampleType = sampleType;
         this.sampleAmount = sampleAmount;
+        this.sampleNum = sampleNum;
         this.freezeTime = freezeTime;
         this.expireTime = expireTime;
         this.freezeStatus = freezeStatus;
+        this.thawTime = thawTime;
         this.operator = operator;
         this.remark = remark;
     }
@@ -169,9 +191,11 @@ public class Straw {
                 ", divepipeId=" + divepipeId +
                 ", sampleType='" + sampleType + '\'' +
                 ", sampleAmount=" + sampleAmount +
-                ", freezeTime=" + freezeTime +
-                ", expireTime=" + expireTime +
+                ", sampleNum='" + sampleNum + '\'' +
+                ", freezeTime='" + freezeTime + '\'' +
+                ", expireTime='" + expireTime + '\'' +
                 ", freezeStatus='" + freezeStatus + '\'' +
+                ", thawTime='" + thawTime + '\'' +
                 ", operator='" + operator + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';

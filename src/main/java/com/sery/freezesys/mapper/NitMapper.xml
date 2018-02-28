@@ -183,8 +183,8 @@
         tb_nit n,tb_tub t,tb_divepipe d
         WHERE
         d.tub_id = t.id AND t.nit_id = n.id AND
-        d.flag_num = #{flagNum,jdbcType=INTEGER}
-        ORDER BY id ASC
+        d.flag_num >= #{flagNum,jdbcType=INTEGER}
+        ORDER BY flag_num ASC
     </select>
 
 </mapper>

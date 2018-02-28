@@ -1,7 +1,5 @@
 package com.sery.freezesys.model;
 
-import java.util.Date;
-
 public class StrawDTO {
     private Integer strawId;
     private String strawNum;
@@ -15,8 +13,10 @@ public class StrawDTO {
     private String divepipeNum;
     private String sampleType;
     private Integer sampleAmount;
+    private String sampleNum;
     private String freezeTime;
     private String expireTime;
+    private String thawTime;
     private String freezeStatus;
     private String operator;
     private String remark;
@@ -125,12 +125,12 @@ public class StrawDTO {
         this.freezeTime = freezeTime;
     }
 
-    public String getExpireTime() {
-        return expireTime;
+    public String getThawTime() {
+        return thawTime;
     }
 
-    public void setExpireTime(String expireTime) {
-        this.expireTime = expireTime;
+    public void setThawTime(String thawTime) {
+        this.thawTime = thawTime;
     }
 
     public String getFreezeStatus() {
@@ -157,6 +157,22 @@ public class StrawDTO {
         this.remark = remark;
     }
 
+    public String getSampleNum() {
+        return sampleNum;
+    }
+
+    public void setSampleNum(String sampleNum) {
+        this.sampleNum = sampleNum;
+    }
+
+    public String getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(String expireTime) {
+        this.expireTime = expireTime;
+    }
+
     @Override
     public String toString() {
         return "StrawDTO{" +
@@ -172,8 +188,10 @@ public class StrawDTO {
                 ", divepipeNum='" + divepipeNum + '\'' +
                 ", sampleType='" + sampleType + '\'' +
                 ", sampleAmount=" + sampleAmount +
-                ", freezeTime=" + freezeTime +
-                ", expireTime=" + expireTime +
+                ", sampleNum='" + sampleNum + '\'' +
+                ", freezeTime='" + freezeTime + '\'' +
+                ", expireTime='" + expireTime + '\'' +
+                ", thawTime='" + thawTime + '\'' +
                 ", freezeStatus='" + freezeStatus + '\'' +
                 ", operator='" + operator + '\'' +
                 ", remark='" + remark + '\'' +
