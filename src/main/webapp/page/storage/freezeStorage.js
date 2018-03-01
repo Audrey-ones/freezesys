@@ -17,6 +17,7 @@ layui.config({
                 "maleName":$(".maleName").val(),
                 "sampleType":$(".sampleType option").eq($(".sampleType").val()).text(),
                 "sampleAmount":$(".sampleAmount").val(),
+                "sampleNum":$(".sampleNum").val(),
                 "freezeNum":$(".freezeNum").val(),
                 "freezeTime":$(".freezeTime").val(),
                 "expireTime":$(".expireTime").val(),
@@ -53,6 +54,7 @@ layui.config({
                                     $(".femaleName").val("");
                                     $(".maleName").val("");
                                     $(".sampleAmount").val("");
+                                    $(".sampleNum").val("");
                                     $(".strawNum").val("");
                                     $(".freezeNum").val("");
                                     $(".freezeTime").val("");

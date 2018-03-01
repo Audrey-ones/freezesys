@@ -2,12 +2,14 @@ package com.sery.freezesys.web;
 
 import com.sery.freezesys.model.Nit;
 import com.sery.freezesys.model.NitDTO;
+import com.sery.freezesys.model.Tub;
 import com.sery.freezesys.service.NitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class NitController {
@@ -98,5 +100,12 @@ public class NitController {
     public @ResponseBody List<NitDTO> getDivepipeByFlagNum(HttpServletRequest request){
         List<NitDTO> nitDTOList = nitService.getDivepipesByFlagNum(Integer.parseInt(request.getParameter("flagNum")));
         return nitDTOList;
+    }
+
+    @RequestMapping(value = "tubInfo",method = RequestMethod.GET)
+    public @ResponseBody
+    Map getTubList(){
+        Map map = nitService.getTubs();
+        return map;
     }
 }

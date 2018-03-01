@@ -2,8 +2,10 @@ package com.sery.freezesys.service;
 
 import com.sery.freezesys.model.Nit;
 import com.sery.freezesys.model.NitDTO;
+import com.sery.freezesys.model.Tub;
 
 import java.util.List;
+import java.util.Map;
 
 public interface NitService {
     /**
@@ -70,6 +72,18 @@ public interface NitService {
      */
     List<NitDTO> getAllDivepipe();
 
+    /**
+     * 根据剩余数目获取套管信息
+     * @param flagNum
+     * @return
+     */
     List<NitDTO> getDivepipesByFlagNum(int flagNum);
+
+    /**
+     * 根据液氮罐Id获取吊桶信息
+     * @param
+     * @return
+     */
+    Map getTubs();
 
 }

@@ -16,8 +16,9 @@
         <result column="divepipe_num" property="divepipeNum" jdbcType="VARCHAR"></result>
         <result column="sample_type" property="sampleType" jdbcType="VARCHAR"></result>
         <result column="sample_amount" property="sampleAmount" jdbcType="INTEGER"></result>
+        <result column="sample_num" property="sampleNum" jdbcType="VARCHAR"></result>
         <result column="freeze_time" property="freezeTime" jdbcType="VARCHAR"></result>
-        <result column="expire_time" property="expireTime" jdbcType="VARCHAR"></result>
+        <result column="thaw_time" property="thawTime" jdbcType="VARCHAR"></result>
         <result column="freeze_status" property="freezeStatus" jdbcType="VARCHAR"></result>
         <result column="operator" property="operator" jdbcType="VARCHAR"></result>
         <result column="remark" property="remark" jdbcType="VARCHAR"></result>
@@ -32,8 +33,9 @@
         <result column="divepipe_id" property="divepipeId" jdbcType="INTEGER"></result>
         <result column="sample_type" property="sampleType" jdbcType="VARCHAR"></result>
         <result column="sample_amount" property="sampleAmount" jdbcType="INTEGER"></result>
+        <result column="sample_num" property="sampleNum" jdbcType="VARCHAR"></result>
         <result column="freeze_time" property="freezeTime" jdbcType="VARCHAR"></result>
-        <result column="expire_time" property="expireTime" jdbcType="VARCHAR"></result>
+        <result column="thaw_time" property="thawTime" jdbcType="VARCHAR"></result>
         <result column="freeze_status" property="freezeStatus" jdbcType="VARCHAR"></result>
         <result column="operator" property="operator" jdbcType="VARCHAR"></result>
         <result column="remark" property="remark" jdbcType="VARCHAR"></result>
@@ -43,7 +45,7 @@
     <select id="selectAllStraw" resultMap="strawInfo">
         SELECT
         s.id,s.straw_num,s.freeze_num,s.barcode_num,p.medical_record,p.female_name,p.male_name,n.num,t.tub_num,d.divepipe_num,
-        s.sample_type,s.sample_amount,s.freeze_time,s.expire_time,s.freeze_status,s.operator,s.remark
+        s.sample_type,s.sample_amount,s.sample_num,s.freeze_time,s.thaw_time,s.freeze_status,s.operator,s.remark
         FROM
         tb_straw s, tb_nit n, tb_tub t, tb_divepipe d, tb_patient p
         WHERE s.patient_id = p.id
@@ -55,10 +57,10 @@
 
     <insert id="insertStraw" parameterType="com.sery.freezesys.model.Straw">
         INSERT INTO tb_straw (straw_num, freeze_num, barcode_num, patient_id, divepipe_id,
-        sample_type, sample_amount, freeze_time, expire_time, freeze_status, operator, remark)
+        sample_type, sample_amount, sample_num, freeze_time, expire_time, freeze_status, operator, remark)
         VALUES (#{strawNum,jdbcType=VARCHAR},#{freezeNum,jdbcType=VARCHAR},#{barcodeNum,jdbcType=VARCHAR},
         #{patientId,jdbcType=VARCHAR},#{divepipeId,jdbcType=VARCHAR},#{sampleType,jdbcType=VARCHAR},
-        #{sampleAmount,jdbcType=INTEGER},#{freezeTime,jdbcType=VARCHAR},#{expireTime,jdbcType=VARCHAR},
+        #{sampleAmount,jdbcType=INTEGER},#{sampleNum,jdbcType=VARCHAR},#{freezeTime,jdbcType=VARCHAR},#{expireTime,jdbcType=VARCHAR},
         #{freezeStatus,jdbcType=VARCHAR},#{operator,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
     </insert>
 

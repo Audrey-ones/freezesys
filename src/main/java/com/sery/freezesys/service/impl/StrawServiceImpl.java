@@ -71,6 +71,7 @@ public class StrawServiceImpl implements StrawService {
             straw.setDivepipeId(divepipe.getDivepipeId());
             straw.setSampleType(strawDTO.getSampleType());
             straw.setSampleAmount(strawDTO.getSampleAmount());
+            straw.setSampleNum(strawDTO.getSampleNum());
             straw.setFreezeTime(strawDTO.getFreezeTime());
             straw.setExpireTime(strawDTO.getExpireTime());
             straw.setFreezeStatus(strawDTO.getFreezeStatus());

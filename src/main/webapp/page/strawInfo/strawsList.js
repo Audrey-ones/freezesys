@@ -377,6 +377,7 @@ layui.config({
 					+'<td>'+currData[i].femaleName+'</td>'
 					+'<td>'+currData[i].sampleType+'</td>'
 					+'<td>'+currData[i].sampleAmount+'</td>'
+					+'<td>'+currData[i].sampleNum+'</td>'
 					+'<td>'+currData[i].freezeTime+'</td>'
 					+'<td>'+currData[i].expireTime+'</td>'
 					+'<td>'+currData[i].freezeStatus+'</td>'

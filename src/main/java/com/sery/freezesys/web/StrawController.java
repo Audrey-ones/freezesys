@@ -33,6 +33,7 @@ public class StrawController {
         strawDTO.setMaleName(request.getParameter("maleName"));
         strawDTO.setSampleType(request.getParameter("sampleType"));
         strawDTO.setSampleAmount(Integer.parseInt(request.getParameter("sampleAmount")));
+        strawDTO.setSampleNum(request.getParameter("sampleNum"));
         strawDTO.setFreezeNum(request.getParameter("freezeNum"));
         //时间的处理
         strawDTO.setFreezeTime(request.getParameter("freezeTime"));

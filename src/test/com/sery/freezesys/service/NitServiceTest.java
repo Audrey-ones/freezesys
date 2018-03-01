@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/applicationContext.xml"})
@@ -76,5 +77,11 @@ public class NitServiceTest {
         List<NitDTO> nitDTOList = nitService.getAllDivepipe();
         System.out.println(nitDTOList);
         System.out.println(nitDTOList.size());
+    }
+
+    @Test
+    public void getTubByNitId() {
+        Map tubList = nitService.getTubs();
+        System.out.println(tubList);
     }
 }
