@@ -84,6 +84,13 @@ public interface NitService {
      * @param
      * @return
      */
-    Map getTubs();
+    List getTubs();
+
+    /**
+     * 根据吊桶Id查找套管信息
+     * @param tubId
+     * @return
+     */
+    List<NitDTO> getDivepipeByTubId(int tubId);
 
 }

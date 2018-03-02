@@ -55,6 +55,7 @@
         SELECT * FROM
         tb_tub
         WHERE nit_id = #{nitId,jdbcType=INTEGER}
+        ORDER BY id ASC
     </select>
 
     <select id="selectDivepipeId" parameterType="java.util.Map" resultMap="divepipeInfo">
@@ -185,6 +186,16 @@
         d.tub_id = t.id AND t.nit_id = n.id AND
         d.flag_num >= #{flagNum,jdbcType=INTEGER}
         ORDER BY flag_num ASC
+    </select>
+
+    <select id="selectDivepipeByTubId" parameterType="java.lang.Integer" resultMap="nitDto">
+        SELECT d.id,n.num,t.tub_num,d.divepipe_num,d.flag_num
+        FROM
+        tb_nit n,tb_tub t,tb_divepipe d
+        WHERE
+        d.tub_id = t.id AND t.nit_id = n.id AND
+        d.tub_id = #{tubId,jdbcType=INTEGER}
+        ORDER BY id ASC
     </select>
 
 </mapper>

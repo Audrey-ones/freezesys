@@ -104,8 +104,14 @@ public class NitController {
 
     @RequestMapping(value = "tubInfo",method = RequestMethod.GET)
     public @ResponseBody
-    Map getTubList(){
-        Map map = nitService.getTubs();
-        return map;
+    List getTubList(){
+        List list = nitService.getTubs();
+        return list;
+    }
+
+    @RequestMapping(value = "divepipeByTubId/{tubId}",method = RequestMethod.GET)
+    public @ResponseBody List<NitDTO> getDivepipeByTubId(@PathVariable("tubId") int tubId){
+        List<NitDTO> nitDTOList = nitService.getDivepipeByTubId(tubId);
+        return nitDTOList;
     }
 }

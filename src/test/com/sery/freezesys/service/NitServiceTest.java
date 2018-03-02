@@ -81,7 +81,7 @@ public class NitServiceTest {
 
     @Test
     public void getTubByNitId() {
-        Map tubList = nitService.getTubs();
+        List tubList = nitService.getTubs();
         System.out.println(tubList);
     }
 }

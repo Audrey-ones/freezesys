@@ -9,6 +9,7 @@ import com.sery.freezesys.service.NitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,14 +105,24 @@ public class NitServiceImpl implements NitService {
     }
 
     @Override
-    public Map getTubs() {
-        Map map = new HashMap();
+    public List getTubs() {
+        List tubs = new ArrayList();
         List<Nit> nitList = nitMapper.selectAllNits();
         for (Nit nit : nitList){
+            Map map = new HashMap();
             List<Tub> tubList = nitMapper.selectAllTubsByNitId(nit.getNitId());
             map.put("nit",nit);
             map.put("tubList",tubList);
+            tubs.add(map);
+
+
         }
-        return map;
+        return tubs;
+    }
+
+    @Override
+    public List<NitDTO> getDivepipeByTubId(int tubId) {
+        List<NitDTO> nitDTOList = nitMapper.selectDivepipeByTubId(tubId);
+        return nitDTOList;
     }
 }

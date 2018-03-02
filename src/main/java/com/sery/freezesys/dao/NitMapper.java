@@ -126,4 +126,11 @@ public interface NitMapper{
      */
     List<NitDTO> selectDivepipeByFlagNum(int flagNum);
 
+    /**
+     * 根据吊桶ID查找该吊桶下的液氮罐
+     * @param tubId
+     * @return
+     */
+    List<NitDTO> selectDivepipeByTubId(int tubId);
+
 }

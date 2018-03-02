@@ -15,6 +15,7 @@
 <body>
 <blockquote class="layui-elem-quote" style="margin: 20px">所有液氮罐</blockquote>
     <div class="layui-row nit_content" style="margin: 20px">
+        <div id="tub_content"></div>
         <!--<div class="layui-col-xs12 layui-col-sm12 layui-col-md12" style="margin: 10px;border: 1px solid seagreen;padding: 10px">
             <div style="margin: 10px"><i class="fa fa-hourglass-end" aria-hidden="true"></i> A号液氮罐</div>
             <a class="layui-btn straws_edit" style="padding: 2px;margin: 5px"><span>1</span>号吊桶</a>
@@ -50,68 +51,60 @@
         var layer = layui.layer;
         $ = layui.jquery;
 
-        var nitData = '';
-        $.get("/nits", function(data){
-            nitData = data;
-            console.log(data)
+        var dataInfo = '';
+        $.get("/tubInfo", function(data){
+            dataInfo = data;
+            console.log(dataInfo)
             var dataHtml = '';
             for (var i=0; i<data.length; i++){
-                dataHtml += '<div class="layui-col-xs12 layui-col-sm12 layui-col-md12 tub_content" style="margin: 10px;border: 1px solid seagreen;padding: 10px">' +
+                dataHtml += '<div class="layui-col-xs12 layui-col-sm12 layui-col-md12" style="margin: 10px;border: 1px solid seagreen;padding: 10px">' +
                     '<div style="margin: 10px"><i class="fa fa-hourglass-end" aria-hidden="true"></i> ' +
-                    '<span>'+data[i].nitNum+'</span>号液氮罐</div>'
-                    + '</div>';
+                    '<span>'+data[i].nit.nitNum+'</span>号液氮罐</div>';
 
-                $.ajax({
-                    url : "/tubInfo/"+data[i].nitId,
-                    type : "get",
-                    dataType : "json",
-                    success : function (data) {
-                        console.log(data)
-                        var dataHtml = '';
-                        for (var i=0; i<data.length; i++){
-                            dataHtml += '<a class="layui-btn straws_edit" style="margin: 5px"><span>'+data[i].tubNum+'</span>号吊桶</a>'+data[i].nitId;
-                        }
-                        $(".tub_content").html(dataHtml)
-                    }
-
-                })
+                for (var j=0; j<data[i].tubList.length;j++){
+                    dataHtml += '<a class="layui-btn tub_click" style="margin: 5px" data-id="'+data[i].tubList[j].tubId+'">' +
+                        '<span>'+data[i].tubList[j].tubNum+'</span>号吊桶</a>';
+                }
+                dataHtml += '</div>';
             }
+
             $(".nit_content").html(dataHtml);
         });
 
 
         //获取液氮罐下所有的信息
-        $("body").on("click",".nit_click",function () {
+        $("body").on("click",".tub_click",function () {
             var _this = $(this);
-            for(var i=0; i<nitData.length; i++){
-                if (nitData[i].nitId == _this.attr("data-id")){
-                    //获取当前点击的病人ID
-                    var nitId = nitData[i].nitId;
-                    console.log(nitId)
-                    var index = layui.layer.open({
-                        title : "查看液氮罐下可存放麦管的位置",
-                        type : 2,
-                        content : "divepipeStorage.html",
-                        success : function (layero,index) {
-                            //获取子页面
-                            var body = layui.layer.getChildFrame('body', index);
-                            body.find("#nitId").text(nitId);
-                            $.ajax({
-                                url : "/nits/"+nitId,
-                                type : "get",
-                                dataType : "json",
-                                success : function (data) {
-                                    console.log(data)
-                                    body.find("#nitNum").text(data.nitNum);
-                                }
-                            })
-                        }
-                    })
-                    //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-                    $(window).resize(function () {
+            for(var i=0; i<dataInfo.length; i++){
+                for (var j=0; j<dataInfo[i].tubList.length;j++){
+                    if (dataInfo[i].tubList[j].tubId == _this.attr("data-id")){
+                        //获取当前点击的病人ID
+                        var tubId = dataInfo[i].tubList[j].tubId;
+                        console.log(tubId)
+                        var index = layui.layer.open({
+                            title : "查看"+dataInfo[i].nit.nitNum+"号液氮罐"+dataInfo[i].tubList[j].tubNum+"号吊桶下的套管信息",
+                            type : 2,
+                            content : "divepipeStorage.html",
+                            success : function (layero,index) {
+                                //获取子页面
+                                var body = layui.layer.getChildFrame('body', index);
+                                body.find("#tubId").text(tubId);
+                                $.ajax({
+                                    url : "/divepipeByTubId/"+tubId,
+                                    type : "get",
+                                    dataType : "json",
+                                    success : function (data) {
+                                        console.log(data)
+                                    }
+                                })
+                            }
+                        })
+                        //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+                        $(window).resize(function () {
+                            layui.layer.full(index);
+                        })
                         layui.layer.full(index);
-                    })
-                    layui.layer.full(index);
+                    }
                 }
             }
 
