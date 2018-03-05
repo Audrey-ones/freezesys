@@ -124,7 +124,7 @@ layui.config({
                         + '<td>' + currData[i].divepipeNum + '</td>'
                         + '<td>' + currData[i].flagNum + '</td>'
                         + '<td>'
-                        +   '<a class="layui-btn layui-btn-mini freezeStorage" data-id="'+data[i].divepipeId+'"><i class="fa fa-snowflake-o"></i>&nbsp;冷冻存储 </a>'
+                        +   '<a class="layui-btn layui-btn-mini freezeStorage" data-id="'+currData[i].divepipeId+'"><i class="fa fa-snowflake-o"></i>&nbsp;冷冻存储 </a>'
                         + '</td>'
                         + '</tr>>';
                 }

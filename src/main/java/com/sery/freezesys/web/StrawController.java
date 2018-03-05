@@ -42,6 +42,7 @@ public class StrawController {
         strawDTO.setNitNum(request.getParameter("nitNum"));
         strawDTO.setTubNum(request.getParameter("tubNum"));
         strawDTO.setDivepipeNum(request.getParameter("divepipeNum"));
+        strawDTO.setThawTime(request.getParameter("thawTime"));
         strawDTO.setFreezeStatus(request.getParameter("freezeStatus"));
         strawDTO.setOperator(request.getParameter("operator"));
         strawDTO.setStrawNum(request.getParameter("strawNum"));
@@ -56,6 +57,7 @@ public class StrawController {
         Straw straw = new Straw();
         straw.setStrawId(Integer.parseInt(request.getParameter("strawId")));
         straw.setFreezeStatus(request.getParameter("freezeStatus"));
+        straw.setThawTime(request.getParameter("thawTime"));
         straw.setOperator(request.getParameter("operator"));
         int result = strawService.updateFreezeStatus(straw);
         return result;
@@ -76,6 +78,7 @@ public class StrawController {
         strawDTO.setMaleName(httpServletRequest.getParameter("maleName"));
         strawDTO.setSampleType(httpServletRequest.getParameter("sampleType"));
         strawDTO.setSampleAmount(Integer.parseInt(httpServletRequest.getParameter("sampleAmount")));
+        strawDTO.setSampleNum(httpServletRequest.getParameter("sampleNum"));
         strawDTO.setFreezeNum(httpServletRequest.getParameter("freezeNum"));
         //时间的处理
         strawDTO.setFreezeTime(httpServletRequest.getParameter("freezeTime"));

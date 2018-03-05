@@ -317,8 +317,8 @@ layui.config({
                         +'<td>'+currData[i].divepipeAmount+'</td>'
                         +'<td>'+currData[i].strawAmount+'</td>'
                         +'<td>'
-                        +  '<a class="layui-btn layui-btn-mini nit_edit" data-id="'+data[i].nitId+'"><i class="iconfont icon-edit"></i> 编辑</a>'
-                        +  '<a class="layui-btn layui-btn-danger layui-btn-mini nit_del" data-id="'+data[i].nitId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
+                        +  '<a class="layui-btn layui-btn-mini nit_edit" data-id="'+currData[i].nitId+'"><i class="iconfont icon-edit"></i> 编辑</a>'
+                        +  '<a class="layui-btn layui-btn-danger layui-btn-mini nit_del" data-id="'+currData[i].nitId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
                         +'</td>'
                         +'</tr>';
                 }

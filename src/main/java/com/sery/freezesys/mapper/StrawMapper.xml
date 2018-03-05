@@ -42,7 +42,7 @@
     </resultMap>
 
     <!--查询所有的麦管记录-->
-    <select id="selectAllStraw" resultMap="strawInfo">
+    <select id="selectAllStraw" resultMap="strawInfo" parameterType="java.util.Map">
         SELECT
         s.id,s.straw_num,s.freeze_num,s.barcode_num,p.medical_record,p.female_name,p.male_name,n.num,t.tub_num,d.divepipe_num,
         s.sample_type,s.sample_amount,s.sample_num,s.freeze_time,s.thaw_time,s.freeze_status,s.operator,s.remark
@@ -57,11 +57,11 @@
 
     <insert id="insertStraw" parameterType="com.sery.freezesys.model.Straw">
         INSERT INTO tb_straw (straw_num, freeze_num, barcode_num, patient_id, divepipe_id,
-        sample_type, sample_amount, sample_num, freeze_time, expire_time, freeze_status, operator, remark)
+        sample_type, sample_amount, sample_num, freeze_time, expire_time, freeze_status, thaw_time, operator, remark)
         VALUES (#{strawNum,jdbcType=VARCHAR},#{freezeNum,jdbcType=VARCHAR},#{barcodeNum,jdbcType=VARCHAR},
         #{patientId,jdbcType=VARCHAR},#{divepipeId,jdbcType=VARCHAR},#{sampleType,jdbcType=VARCHAR},
         #{sampleAmount,jdbcType=INTEGER},#{sampleNum,jdbcType=VARCHAR},#{freezeTime,jdbcType=VARCHAR},#{expireTime,jdbcType=VARCHAR},
-        #{freezeStatus,jdbcType=VARCHAR},#{operator,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
+        #{freezeStatus,jdbcType=VARCHAR},#{thawTime,jdbcType=VARCHAR},#{operator,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
     </insert>
 
     <!--更新解冻状态-->
@@ -70,6 +70,9 @@
         <set>
             <if test="freezeStatus != null">
                 freeze_status = #{freezeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="thawTime != null">
+                thaw_time = #{thawTime,jdbcType=VARCHAR},
             </if>
             <if test="operator != null">
                 operator = #{operator,jdbcType=VARCHAR}
@@ -108,6 +111,9 @@
             </if>
             <if test="sampleAmount != null">
                 sample_amount = #{sampleAmount,jdbcType=INTEGER},
+            </if>
+            <if test="sampleNum != null">
+                sample_num = #{sampleNum,jdbcType=VARCHAR},
             </if>
             <if test="freezeTime != null">
                 freeze_time = #{freezeTime,jdbcType=VARCHAR},

@@ -163,6 +163,7 @@ layui.config({
 		var _this = $(this);
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			//_this.parents("tr").remove();
+			console.log(_this.attr("data-id"))
 			for(var i=0;i<linksData.length;i++){
 				if(linksData[i].linksId == _this.attr("data-id")){
 					linksData.splice(i,1);
@@ -193,7 +194,7 @@ layui.config({
 			    	+'<td>'+currData[i].showAddress+'</td>'
 			    	+'<td>'
 					+  '<a class="layui-btn layui-btn-mini links_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
-					+  '<a class="layui-btn layui-btn-danger layui-btn-mini links_del" data-id="'+data[i].linksId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
+					+  '<a class="layui-btn layui-btn-danger layui-btn-mini links_del" data-id="'+currData[i].linksId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +'</td>'
 			    	+'</tr>';
 				}
@@ -204,7 +205,7 @@ layui.config({
 		}
 
 		//分页
-		var nums = 13; //每页出现的数据量
+		var nums = 3; //每页出现的数据量
 		if(that){
 			linksData = that;
 		}

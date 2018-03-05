@@ -205,8 +205,8 @@ layui.config({
                     + '<td>' + currData[i].phone + '</td>'
                     + '<td>' + currData[i].remark + '</td>'
                     + '<td>'
-                    +   '<a class="layui-btn layui-btn-mini patient_edit" data-id="'+data[i].patientId+'"><i class="iconfont icon-edit patient_edit"></i>编辑 </a>'
-                    +   '<a class="layui-btn layui-btn-danger layui-btn-mini patient_del" data-id="'+data[i].patientId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
+                    +   '<a class="layui-btn layui-btn-mini patient_edit" data-id="'+currData[i].patientId+'"><i class="iconfont icon-edit patient_edit"></i>编辑 </a>'
+                    +   '<a class="layui-btn layui-btn-danger layui-btn-mini patient_del" data-id="'+currData[i].patientId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
                     + '</td>'
                     + '</tr>>';
                 }

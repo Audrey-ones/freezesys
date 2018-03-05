@@ -258,6 +258,7 @@ layui.config({
                             success : function (data) {
                                 console.log(data)
                                 body.find(".sampleAmount").val(data.sampleAmount);
+                                body.find(".sampleNum").val(data.sampleNum);
                                 body.find(".freezeNum").val(data.freezeNum);
                                 body.find(".freezeTime").val(data.freezeTime);
                                 body.find(".expireTime").val(data.expireTime);
@@ -314,6 +315,8 @@ layui.config({
 		var _this = $(this);
 		layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'提示信息'},function(index){
 			//_this.parents("tr").remove();
+            var thawTime = new Date().toLocaleString();
+            console.log(thawTime);
 			for(var i=0;i<strawsData.length;i++){
 				if(strawsData[i].strawId == _this.attr("data-id")){
 				    $.ajax({
@@ -323,6 +326,7 @@ layui.config({
                         data : {
                             "strawId" : strawsData[i].strawId,
                             "freezeStatus" : "已解冻",
+							"thawTime" : thawTime,
                             "operator" : user.nickname
                         },
                         success : function (data) {
@@ -379,12 +383,12 @@ layui.config({
 					+'<td>'+currData[i].sampleAmount+'</td>'
 					+'<td>'+currData[i].sampleNum+'</td>'
 					+'<td>'+currData[i].freezeTime+'</td>'
-					+'<td>'+currData[i].expireTime+'</td>'
+					+'<td>'+currData[i].thawTime+'</td>'
 					+'<td>'+currData[i].freezeStatus+'</td>'
 					+'<td>'+currData[i].operator+'</td>'
                     +'<td>'
-                    +  '<a class="layui-btn layui-btn-mini straws_edit" data-id="'+data[i].strawId+'"><i class="iconfont icon-edit"></i> 编辑</a>'
-                    +  '<a class="layui-btn layui-btn-danger layui-btn-mini straw_del" data-id="'+data[i].strawId+'"><i class="fa fa-snowflake-o"></i> 解冻</a>'
+                    +  '<a class="layui-btn layui-btn-mini straws_edit" data-id="'+currData[i].strawId+'"><i class="iconfont icon-edit"></i> 编辑</a>'
+                    +  '<a class="layui-btn layui-btn-danger layui-btn-mini straw_del" data-id="'+currData[i].strawId+'"><i class="fa fa-snowflake-o"></i> 解冻</a>'
                     +'</td>'
 			    	+'</tr>';
 				}

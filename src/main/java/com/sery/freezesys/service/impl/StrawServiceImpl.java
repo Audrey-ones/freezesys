@@ -74,6 +74,7 @@ public class StrawServiceImpl implements StrawService {
             straw.setSampleNum(strawDTO.getSampleNum());
             straw.setFreezeTime(strawDTO.getFreezeTime());
             straw.setExpireTime(strawDTO.getExpireTime());
+            straw.setThawTime(strawDTO.getThawTime());
             straw.setFreezeStatus(strawDTO.getFreezeStatus());
             straw.setOperator(strawDTO.getOperator());
             straw.setRemark(strawDTO.getRemark());
@@ -101,6 +102,7 @@ public class StrawServiceImpl implements StrawService {
             Map updateMap = new HashMap();
             updateMap.put("strawId",straw.getStrawId());
             updateMap.put("freezeStatus",straw.getFreezeStatus());
+            updateMap.put("thawTime",straw.getThawTime());
             updateMap.put("operator",straw.getOperator());
             result = strawMapper.updataFreezeStatus(updateMap);
         }
@@ -122,6 +124,7 @@ public class StrawServiceImpl implements StrawService {
         straw.setFreezeNum(strawDTO.getFreezeNum());
         straw.setSampleType(strawDTO.getSampleType());
         straw.setSampleAmount(strawDTO.getSampleAmount());
+        straw.setSampleNum(strawDTO.getSampleNum());
         straw.setFreezeTime(strawDTO.getFreezeTime());
         straw.setExpireTime(strawDTO.getExpireTime());
         //根据液氮罐编号，吊桶编号，套管编号获取套管ID

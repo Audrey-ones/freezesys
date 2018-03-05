@@ -35,7 +35,8 @@ layui.config({
             "strawNum":$(".strawNum").val(),
             "remark":"无"
         }*/
-
+        /*var thawTime = new Date().toLocaleString();
+        console.log(thawTime);*/
         $.ajax({
             url : "/straw",
             type : "post",
@@ -46,6 +47,7 @@ layui.config({
                 "maleName":$(".maleName").val(),
                 "sampleType":$(".sampleType option").eq($(".sampleType").val()).text(),
                 "sampleAmount":$(".sampleAmount").val(),
+                "sampleNum":$(".sampleNum").val(),
                 "freezeNum":$(".freezeNum").val(),
                 "freezeTime":$(".freezeTime").val(),
                 "expireTime":$(".expireTime").val(),
@@ -53,6 +55,7 @@ layui.config({
                 "nitNum":$(".nitNum").val(),
                 "tubNum":$(".tubNum").val(),
                 "divepipeNum":$(".divepipeNum").val(),
+                "thawTime":"无",
                 "freezeStatus":"未解冻",
                 "operator":"无",
                 "strawNum":$(".strawNum").val(),

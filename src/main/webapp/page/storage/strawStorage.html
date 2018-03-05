@@ -13,7 +13,10 @@
     <link rel="stylesheet" href="../../font-awesome/css/font-awesome.min.css"/>
 </head>
 <body>
-<blockquote class="layui-elem-quote" style="margin: 20px">所有液氮罐</blockquote>
+<blockquote class="layui-elem-quote" style="margin: 20px">
+    <span>所有液氮罐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span><a class="layui-btn layui-btn-normal reload" style="background-color:#269f42">刷新&nbsp;<i class="fa fa-refresh" aria-hidden="true"></i></a></span>
+</blockquote>
     <div class="layui-row nit_content" style="margin: 20px">
         <div id="tub_content"></div>
         <!--<div class="layui-col-xs12 layui-col-sm12 layui-col-md12" style="margin: 10px;border: 1px solid seagreen;padding: 10px">
@@ -50,6 +53,10 @@
     layui.use(['layer','jquery'], function(){
         var layer = layui.layer;
         $ = layui.jquery;
+
+        $(".reload").click(function () {
+            window.location.reload();
+        });
 
         var dataInfo = '';
         $.get("/tubInfo", function(data){

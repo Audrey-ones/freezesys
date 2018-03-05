@@ -12,7 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -29,9 +31,8 @@ public class StrawServiceTest {
     public void getStrawList() throws ParseException {
         //List<StrawDTO> strawDTOList = strawService.getStrawList();
         //System.out.println(strawDTOList);
-        String str = "2013-04-08 13:54";
-        Date d = new Date(str);
-        System.out.println(d);
+        List<StrawDTO> strawDTOList = strawMapper.selectAllStraw();
+        System.out.println(strawDTOList);
     }
 
     @Test
