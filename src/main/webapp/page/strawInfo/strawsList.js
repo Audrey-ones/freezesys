@@ -77,8 +77,8 @@ layui.config({
                                 strawsStr["freezeTime"] = changeStr(strawsStr.freezeTime);
 		            		}
 		            		//到期时间
-		            		if(strawsStr.expireTime.indexOf(selectStr) > -1){
-                                strawsStr["expireTime"] = changeStr(strawsStr.expireTime);
+		            		if(strawsStr.thawTime.indexOf(selectStr) > -1){
+                                strawsStr["thawTime"] = changeStr(strawsStr.thawTime);
 		            		}
                             //冷冻状态
                             if(strawsStr.freezeStatus.indexOf(selectStr) > -1){
@@ -86,7 +86,7 @@ layui.config({
                             }
 		            		if(strawsStr.freezeNum.indexOf(selectStr)>-1 || strawsStr.medicalRecord.indexOf(selectStr)>-1
 								|| strawsStr.femaleName.indexOf(selectStr)>-1 || strawsStr.sampleType.indexOf(selectStr)>-1
-								|| strawsStr.freezeTime.indexOf(selectStr)>-1 || strawsStr.expireTime.indexOf(selectStr)>-1
+								|| strawsStr.freezeTime.indexOf(selectStr)>-1 || strawsStr.thawTime.indexOf(selectStr)>-1
 								|| strawsStr.freezeStatus.indexOf(selectStr)>-1){
                                 strawArray.push(strawsStr);
 		            		}

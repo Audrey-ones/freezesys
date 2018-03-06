@@ -107,7 +107,7 @@ public class NitServiceImpl implements NitService {
     @Override
     public List getTubs() {
         List tubs = new ArrayList();
-        List<Nit> nitList = nitMapper.selectAllNits();
+        List<Nit> nitList = nitMapper.selectNitsByStatus();
         for (Nit nit : nitList){
             Map map = new HashMap();
             List<Tub> tubList = nitMapper.selectAllTubsByNitId(nit.getNitId());

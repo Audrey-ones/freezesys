@@ -43,6 +43,13 @@
         ORDER BY id ASC
     </select>
 
+    <select id="selectNitsByStatus" resultMap="nitInfo">
+        SELECT * FROM
+        tb_nit
+        WHERE status = '已使用'
+        ORDER BY id ASC
+    </select>
+
     <!--根据Id查询一条液氮罐记录-->
     <select id="selectNitById" parameterType="java.lang.Integer" resultMap="nitInfo">
         SELECT * FROM
@@ -183,7 +190,7 @@
         FROM
         tb_nit n,tb_tub t,tb_divepipe d
         WHERE
-        d.tub_id = t.id AND t.nit_id = n.id AND
+        d.tub_id = t.id AND t.nit_id = n.id AND n.status = '已使用' AND
         d.flag_num >= #{flagNum,jdbcType=INTEGER}
         ORDER BY flag_num ASC
     </select>

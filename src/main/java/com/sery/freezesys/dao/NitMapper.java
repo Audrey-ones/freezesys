@@ -17,6 +17,12 @@ public interface NitMapper{
     List<Nit> selectAllNits();
 
     /**
+     * 根据液氮罐使用状态查找液氮罐
+     * @return
+     */
+    List<Nit> selectNitsByStatus();
+
+    /**
      * 根据ID查询一条液氮罐记录
      * @param id
      * @return
