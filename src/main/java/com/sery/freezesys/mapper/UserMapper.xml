@@ -8,6 +8,10 @@
         <result column="account" property="account" jdbcType="VARCHAR"></result>
         <result column="nickname" property="nickname" jdbcType="VARCHAR"></result>
         <result column="password" property="password" jdbcType="VARCHAR"></result>
+        <result column="role" property="role" jdbcType="VARCHAR"></result>
+        <result column="nit_del" property="nitDel" jdbcType="VARCHAR"></result>
+        <result column="straw_del" property="strawDel" jdbcType="VARCHAR"></result>
+        <result column="patient_del" property="patientDel" jdbcType="VARCHAR"></result>
         <result column="remark" property="remark" jdbcType="VARCHAR"></result>
     </resultMap>
 
@@ -33,9 +37,10 @@
     <!--用户注册-->
     <insert id="insertUser" parameterType="com.sery.freezesys.model.User">
         INSERT INTO
-        tb_user(account,nickname,password,remark)
+        tb_user(account,nickname,password,role,nit_del,straw_del,patient_del,remark)
         VALUES (#{account,jdbcType=VARCHAR},#{nickname,jdbcType=VARCHAR},
-        #{password,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
+        #{password,jdbcType=VARCHAR},#{role,jdbcType=VARCHAR},#{nitDel,jdbcType=VARCHAR},
+        #{strawDel,jdbcType=VARCHAR},#{patientDel,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
     </insert>
 
     <select id="getUserByAccount" parameterType="java.lang.String" resultMap="userInfo">
@@ -48,6 +53,13 @@
         SELECT * FROM
         tb_user
         WHERE id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getAllUsers" resultMap="userInfo">
+        SELECT * FROM
+        tb_user
+        WHERE role != '超级管理员'
+        ORDER BY id ASC
     </select>
 
 </mapper>

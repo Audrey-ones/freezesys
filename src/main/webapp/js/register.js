@@ -41,6 +41,10 @@ layui.config({
                 "account" : $("#account").val(),
                 "nickname" : $("#nickname").val(),
                 "password" : $("#password").val(),
+                "role" : "普通用户",
+                "nitDel" : "不可操作",
+                "strawDel" : "不可操作",
+                "patientDel" : "不可操作",
                 "remark" : "无"
             },
             success : function (data) {

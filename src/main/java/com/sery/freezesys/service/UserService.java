@@ -2,6 +2,7 @@ package com.sery.freezesys.service;
 
 import com.sery.freezesys.model.User;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -32,5 +33,11 @@ public interface UserService {
      * @return
      */
     User getUserById(int userId);
+
+    /**
+     * 获取非超级管理员以外的所有用户
+     * @return
+     */
+    List<User> getAllUsers();
 
 }

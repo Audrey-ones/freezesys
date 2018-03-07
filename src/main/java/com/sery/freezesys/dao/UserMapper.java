@@ -40,4 +40,10 @@ public interface UserMapper {
      * @return
      */
     User getUserById(int userId);
+
+    /**
+     * 查询非超级管理员以外的所有用户
+     * @return
+     */
+    List<User> getAllUsers();
 }

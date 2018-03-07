@@ -14,6 +14,9 @@ layui.config({
     	user=JSON.parse(getCookie('user'));
         $(".userName").text(user.nickname);
         $(".lockUserName").text(user.nickname);
+        if (user.role != "超级管理员"){
+            $("#userSetting").css("display","none");
+		}
     }
 
     //获取用户密码，用于锁屏

@@ -6,6 +6,22 @@ layui.config({
         laypage = layui.laypage,
         $ = layui.jquery;
 
+    //获取保存在cookie里的用户
+    var user;
+    if (getCookie('user')){
+        user=JSON.parse(getCookie('user'));
+
+    }
+    //读取cookies
+    function getCookie(name) {
+        var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr=document.cookie.match(reg)){
+            return arr[2];
+        }else {
+            return null;
+        }
+    }
+
     //加载页面数据
     var nitsData = '';
     loadNits();
@@ -240,60 +256,70 @@ layui.config({
     $(".batchDel").click(function(){
         var $checkbox = $('.nits_list tbody input[type="checkbox"][name="checked"]');
         var $checked = $('.nits_list tbody input[type="checkbox"][name="checked"]:checked');
-        if($checkbox.is(":checked")){
-            layer.confirm('确定删除选中的液氮罐？将一并删除该液氮罐中的麦管记录',{icon:3, title:'提示信息'},function(index){
-                var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
-                setTimeout(function(){
-                    //删除数据
-                    for(var j=0;j<$checked.length;j++){
-                        for(var i=0;i<nitsData.length;i++){
-                            if(nitsData[i].nitId == $checked.eq(j).parents("tr").find(".nit_del").attr("data-id")){
-                                $.ajax({
-                                    url : "/nits/" + nitsData[i].nitId,
-                                    type : "post",
-                                    dataType : "json",
-                                    success : function (data) {
-                                        //layer.msg("删除成功！");
-                                    }
-                                });
-                                nitsData.splice(i,1);
-                                nitsList(nitsData);
+        if (user.nitDel == "可操作"){
+            if($checkbox.is(":checked")){
+                layer.confirm('确定删除选中的液氮罐？将一并删除该液氮罐中的麦管记录',{icon:3, title:'提示信息'},function(index){
+                    var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
+                    setTimeout(function(){
+                        //删除数据
+                        for(var j=0;j<$checked.length;j++){
+                            for(var i=0;i<nitsData.length;i++){
+                                if(nitsData[i].nitId == $checked.eq(j).parents("tr").find(".nit_del").attr("data-id")){
+                                    $.ajax({
+                                        url : "/nits/" + nitsData[i].nitId,
+                                        type : "post",
+                                        dataType : "json",
+                                        success : function (data) {
+                                            //layer.msg("删除成功！");
+                                        }
+                                    });
+                                    nitsData.splice(i,1);
+                                    nitsList(nitsData);
+                                }
                             }
                         }
-                    }
-                    $('.nits_list thead input[type="checkbox"]').prop("checked",false);
-                    form.render();
-                    layer.close(index);
-                    layer.msg("删除成功");
-                },2000);
-            })
-        }else{
-            layer.msg("请选择需要删除的液氮罐");
+                        $('.nits_list thead input[type="checkbox"]').prop("checked",false);
+                        form.render();
+                        layer.close(index);
+                        layer.msg("删除成功");
+                    },2000);
+                })
+            }else{
+                layer.msg("请选择需要删除的液氮罐");
+            }
+        }else {
+            layer.msg("您没有批量删除液氮罐的权限！");
         }
+
     })
 
     //删除液氮罐
     $("body").on("click",".nit_del",function(){
         var _this = $(this);
-        layer.confirm('小主，你真的要删除我吗？将一并删除该液氮罐中的麦管记录',{icon:3, title:'提示信息'},function(index){
-            //_this.parents("tr").remove();
-            for(var i=0;i<nitsData.length;i++){
-                if(nitsData[i].nitId == _this.attr("data-id")){
-                    $.ajax({
-                        url : "/nits/" + nitsData[i].nitId,
-                        type : "post",
-                        dataType : "json",
-                        success : function (data) {
-                            layer.msg("删除成功！");
-                        }
-                    });
-                    //同时在表格中移除被删除的信息
-                    nitsData.splice(i,1);
-                    nitsList(nitsData);
+        if (user.nitDel == "可操作"){
+            layer.confirm('小主，你真的要删除我吗？将一并删除该液氮罐中的麦管记录',{icon:3, title:'提示信息'},function(index){
+                //_this.parents("tr").remove();
+                for(var i=0;i<nitsData.length;i++){
+                    if(nitsData[i].nitId == _this.attr("data-id")){
+                        $.ajax({
+                            url : "/nits/" + nitsData[i].nitId,
+                            type : "post",
+                            dataType : "json",
+                            success : function (data) {
+                                layer.msg("删除成功！");
+                            }
+                        });
+                        //同时在表格中移除被删除的信息
+                        nitsData.splice(i,1);
+                        nitsList(nitsData);
+                    }
                 }
-            }
-            layer.close(index);
-        });
+                layer.close(index);
+            });
+        }else {
+            layer.msg("您没有删除该液氮罐的权限！");
+        }
+
     })
 
     function nitsList(that){

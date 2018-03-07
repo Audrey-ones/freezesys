@@ -6,6 +6,22 @@ layui.config({
 		laypage = layui.laypage,
 		$ = layui.jquery;
 
+    //获取保存在cookie里的用户
+    var user;
+    if (getCookie('user')){
+        user=JSON.parse(getCookie('user'));
+
+    }
+    //读取cookies
+    function getCookie(name) {
+        var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr=document.cookie.match(reg)){
+            return arr[2];
+        }else {
+            return null;
+        }
+    }
+
 	//加载页面数据
 	var strawsData = '';
 	loadStraw();
@@ -169,41 +185,46 @@ layui.config({
 	$(".batchDel").click(function(){
 		var $checkbox = $('.straws_list tbody input[type="checkbox"][name="checked"]');
 		var $checked = $('.straws_list tbody input[type="checkbox"][name="checked"]:checked');
-		if($checkbox.is(":checked")){
-			layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'提示信息'},function(index){
-				var index = layer.msg('解冻中，请稍候',{icon: 16,time:false,shade:0.8});
-	            setTimeout(function(){
-	            	//更改解冻状态
-	            	for(var j=0;j<$checked.length;j++){
-	            		for(var i=0;i<strawsData.length;i++){
-							if(strawsData[i].strawId == $checked.eq(j).parents("tr").find(".straw_del").attr("data-id")){
-                                /*strawsData.splice(i,1);
-								strawsList(strawsData);*/
-                                $.ajax({
-                                    url : "/updateFreezeStatus",
-                                    type : "post",
-                                    dataType : "json",
-                                    data : {
-                                        "strawId" : strawsData[i].strawId,
-                                        "freezeStatus" : "已解冻",
-                                        "operator" : user.nickname
-                                    },
-                                    success : function (data) {
+		if (user.strawDel == "可操作"){
+            if($checkbox.is(":checked")){
+                layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'提示信息'},function(index){
+                    var index = layer.msg('解冻中，请稍候',{icon: 16,time:false,shade:0.8});
+                    setTimeout(function(){
+                        //更改解冻状态
+                        for(var j=0;j<$checked.length;j++){
+                            for(var i=0;i<strawsData.length;i++){
+                                if(strawsData[i].strawId == $checked.eq(j).parents("tr").find(".straw_del").attr("data-id")){
+                                    /*strawsData.splice(i,1);
+                                    strawsList(strawsData);*/
+                                    $.ajax({
+                                        url : "/updateFreezeStatus",
+                                        type : "post",
+                                        dataType : "json",
+                                        data : {
+                                            "strawId" : strawsData[i].strawId,
+                                            "freezeStatus" : "已解冻",
+                                            "operator" : user.nickname
+                                        },
+                                        success : function (data) {
 
-                                    }
-                                })
-							}
-						}
-	            	}
-	            	$('.straws_list thead input[type="checkbox"]').prop("checked",false);
-	            	form.render();
-	                layer.close(index);
-					layer.msg("解冻成功");
-	            },2000);
-	        })
-		}else{
-			layer.msg("请选择需要解冻的麦管");
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                        $('.straws_list thead input[type="checkbox"]').prop("checked",false);
+                        form.render();
+                        layer.close(index);
+                        layer.msg("解冻成功");
+                    },2000);
+                })
+            }else{
+                layer.msg("请选择需要解冻的麦管");
+            }
+		}else {
+			layer.msg("您没有批量解冻麦管的权限哦!");
 		}
+
 	})
 
 	//全选
@@ -313,41 +334,46 @@ layui.config({
     //解冻一条记录（逻辑删除）
 	$("body").on("click",".straw_del",function(){
 		var _this = $(this);
-		layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'提示信息'},function(index){
-			//_this.parents("tr").remove();
-            var thawTime = new Date().toLocaleString();
-            console.log(thawTime);
-			for(var i=0;i<strawsData.length;i++){
-				if(strawsData[i].strawId == _this.attr("data-id")){
-				    $.ajax({
-                        url : "/updateFreezeStatus",
-                        type : "post",
-                        dataType : "json",
-                        data : {
-                            "strawId" : strawsData[i].strawId,
-                            "freezeStatus" : "已解冻",
-							"thawTime" : thawTime,
-                            "operator" : user.nickname
-                        },
-                        success : function (data) {
-                            if (data == 1){
-                                layer.msg("解冻成功！");
-                                setTimeout(function(){
-                                    //刷新父页面
-                                    parent.location.reload();
-                                },2000);
-                            }else {
-                                layer.msg("您已经解冻过该记录，请勿重复解冻！");
-                            }
+		if (user.strawDel == "可操作"){
+            layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'提示信息'},function(index){
+                //_this.parents("tr").remove();
+                var thawTime = new Date().toLocaleString();
+                console.log(thawTime);
+                for(var i=0;i<strawsData.length;i++){
+                    if(strawsData[i].strawId == _this.attr("data-id")){
+                        $.ajax({
+                            url : "/updateFreezeStatus",
+                            type : "post",
+                            dataType : "json",
+                            data : {
+                                "strawId" : strawsData[i].strawId,
+                                "freezeStatus" : "已解冻",
+                                "thawTime" : thawTime,
+                                "operator" : user.nickname
+                            },
+                            success : function (data) {
+                                if (data == 1){
+                                    layer.msg("解冻成功！");
+                                    setTimeout(function(){
+                                        //刷新父页面
+                                        parent.location.reload();
+                                    },2000);
+                                }else {
+                                    layer.msg("您已经解冻过该记录，请勿重复解冻！");
+                                }
 
-                        }
-                    })
-                    /*strawsData.splice(i,1);
-					strawsList(strawsData);*/
-				}
-			}
-			layer.close(index);
-		});
+                            }
+                        })
+                        /*strawsData.splice(i,1);
+                        strawsList(strawsData);*/
+                    }
+                }
+                layer.close(index);
+            });
+		}else {
+			layer.msg("您没有解冻该麦管的权限哦！");
+		}
+
 	})
 
     function timestampToTime(timestamp) {
