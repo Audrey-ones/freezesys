@@ -40,4 +40,11 @@ public interface UserService {
      */
     List<User> getAllUsers();
 
+    /**
+     * 根据用户Id删除用户
+     * @param userId
+     * @return
+     */
+    int deleteUserById(int userId);
+
 }

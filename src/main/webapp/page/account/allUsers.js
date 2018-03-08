@@ -6,14 +6,36 @@ layui.config({
 		laypage = layui.laypage,
 		$ = layui.jquery;
 
-	//加载页面数据
-	var usersData = '';
-	$.get("/allUsers", function(data){
-		usersData = data;
-		console.log(usersData)
-		//执行加载数据的方法
-		usersList();
-	})
+    //获取保存在cookie里的用户，非管理员不显示用户管理页面
+    var user;
+    if (getCookie('user')){
+        user=JSON.parse(getCookie('user'));
+        if (user.role != "超级管理员"){
+        	$("#userPage").css("display","none");
+		}
+
+    }
+    //读取cookies
+    function getCookie(name) {
+        var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr=document.cookie.match(reg)){
+            return arr[2];
+        }else {
+            return null;
+        }
+    }
+
+    var usersData = '';
+    loadUsers();
+    //加载用户数据
+    function loadUsers() {
+        $.get("/allUsers", function(data){
+            usersData = data;
+            console.log(usersData)
+            //执行加载数据的方法
+            usersList();
+        })
+    }
 
 	//查询
 	$(".search_btn").click(function(){
@@ -22,16 +44,10 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
             	$.ajax({
-					url : "../../json/usersList.json",
+					url : "/allUsers",
 					type : "get",
 					dataType : "json",
-					success : function(data){
-						if(window.sessionStorage.getItem("addUsers")){
-							var addUsers = window.sessionStorage.getItem("addUsers");
-							usersData = JSON.parse(addUsers).concat(data);
-						}else{
-							usersData = data;
-						}
+					success : function(usersData){
 						for(var i=0;i<usersData.length;i++){
 							var usersStr = usersData[i];
 							var selectStr = $(".search_input").val();
@@ -50,22 +66,14 @@ layui.config({
 		            			}
 		            		}
 		            		//用户名
-		            		if(usersStr.userName.indexOf(selectStr) > -1){
-			            		usersStr["userName"] = changeStr(usersStr.userName);
+		            		if(usersStr.account.indexOf(selectStr) > -1){
+			            		usersStr["account"] = changeStr(usersStr.account);
 		            		}
 		            		//用户邮箱
-		            		if(usersStr.userEmail.indexOf(selectStr) > -1){
-			            		usersStr["userEmail"] = changeStr(usersStr.userEmail);
+		            		if(usersStr.nickname.indexOf(selectStr) > -1){
+			            		usersStr["nickname"] = changeStr(usersStr.nickname);
 		            		}
-		            		//性别
-		            		if(usersStr.userSex.indexOf(selectStr) > -1){
-			            		usersStr["userSex"] = changeStr(usersStr.userSex);
-		            		}
-		            		//会员等级
-		            		if(usersStr.userGrade.indexOf(selectStr) > -1){
-			            		usersStr["userGrade"] = changeStr(usersStr.userGrade);
-		            		}
-		            		if(usersStr.userName.indexOf(selectStr)>-1 || usersStr.userEmail.indexOf(selectStr)>-1 || usersStr.userSex.indexOf(selectStr)>-1 || usersStr.userGrade.indexOf(selectStr)>-1){
+		            		if(usersStr.account.indexOf(selectStr)>-1 || usersStr.nickname.indexOf(selectStr)>-1){
 		            			userArray.push(usersStr);
 		            		}
 		            	}
@@ -77,20 +85,17 @@ layui.config({
                 layer.close(index);
             },2000);
 		}else{
-			layer.msg("请输入需要查询的内容");
+			loadUsers();
 		}
 	})
 
 	//添加会员
 	$(".usersAdd_btn").click(function(){
 		var index = layui.layer.open({
-			title : "添加会员",
+			title : "添加用户",
 			type : 2,
 			content : "addUser.html",
 			success : function(layero, index){
-				layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
-					tips: 3
-				});
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
@@ -126,25 +131,38 @@ layui.config({
 		layer.alert('您点击了会员编辑按钮，由于是纯静态页面，所以暂时不存在编辑内容，后期会添加，敬请谅解。。。',{icon:6, title:'文章编辑'});
 	})
 
-	$("body").on("click",".users_del",function(){  //删除
+	//删除一个用户
+	$("body").on("click",".users_del",function(){
 		var _this = $(this);
 		layer.confirm('确定删除此用户？',{icon:3, title:'提示信息'},function(index){
-			//_this.parents("tr").remove();
 			for(var i=0;i<usersData.length;i++){
-				if(usersData[i].usersId == _this.attr("data-id")){
-					usersData.splice(i,1);
-					usersList(usersData);
+				if(usersData[i].userId == _this.attr("data-id")){
+					$.ajax({
+						url : "/users/"+usersData[i].userId,
+						type : "post",
+						dataType : "json",
+						success : function (data) {
+							layer.msg("删除成功！");
+                        }
+					});
+                    //同时在表格中移除被删除的信息
+                    usersData.splice(i,1);
+                    usersList(usersData);
 				}
 			}
 			layer.close(index);
 		});
 	})
 
-	function usersList(){
+	function usersList(that){
 		//渲染数据
 		function renderDate(data,curr){
 			var dataHtml = '';
-			currData = usersData.concat().splice(curr*nums-nums, nums);
+            if(!that){
+                currData = usersData.concat().splice(curr*nums-nums, nums);
+            }else{
+                currData = that.concat().splice(curr*nums-nums, nums);
+            }
 			if(currData.length != 0){
 				for(var i=0;i<currData.length;i++){
 					dataHtml += '<tr>'
@@ -157,7 +175,7 @@ layui.config({
 			    	+  '<td>'+currData[i].patientDel+'</td>'
 			    	+  '<td>'
 					+    '<a class="layui-btn layui-btn-mini users_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
-					+    '<a class="layui-btn layui-btn-danger layui-btn-mini users_del" data-id="'+currData[i].usersId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
+					+    '<a class="layui-btn layui-btn-danger layui-btn-mini users_del" data-id="'+currData[i].userId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +  '</td>'
 			    	+'</tr>';
 				}

@@ -82,4 +82,10 @@ public class UserController {
         return userList;
     }
 
+    @RequestMapping(value = "users/{userId}",method = RequestMethod.POST)
+    public int deleteUserById(@PathVariable("userId") int userId){
+        int result = userService.deleteUserById(userId);
+        return result;
+    }
+
 }

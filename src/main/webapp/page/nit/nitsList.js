@@ -49,13 +49,7 @@ layui.config({
                     url : "/nits",
                     type : "get",
                     dataType : "json",
-                    success : function(data){
-                        if(window.sessionStorage.getItem("addNits")){
-                            var addNits = window.sessionStorage.getItem("addNits");
-                            nitsData = JSON.parse(addNits).concat(data);
-                        }else{
-                            nitsData = data;
-                        }
+                    success : function(nitsData){
                         for(var i=0;i<nitsData.length;i++){
                             var nitsStr = nitsData[i];
                             var selectStr = $(".search_input").val();

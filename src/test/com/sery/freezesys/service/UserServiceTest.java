@@ -25,4 +25,10 @@ public class UserServiceTest {
         Map map = userService.signIn(user);
         System.out.println(map);
     }
+
+    @Test
+    public void deleteUserById() {
+        int result = userService.deleteUserById(1);
+        System.out.println(result);
+    }
 }

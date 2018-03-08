@@ -62,4 +62,11 @@
         ORDER BY id ASC
     </select>
 
+    <delete id="deleteUserById" parameterType="java.lang.Integer">
+        DELETE FROM
+        tb_user
+        WHERE
+        id = #{userId,jdbcType=INTEGER}
+    </delete>
+
 </mapper>
