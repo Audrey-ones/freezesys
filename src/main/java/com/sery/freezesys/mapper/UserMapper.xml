@@ -69,4 +69,26 @@
         id = #{userId,jdbcType=INTEGER}
     </delete>
 
+    <update id="updateUser" parameterType="com.sery.freezesys.model.User">
+        UPDATE tb_user
+        <set>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nitDel != null">
+                nit_del = #{nitDel,jdbcType=VARCHAR},
+            </if>
+            <if test="strawDel != null">
+                straw_del = #{strawDel,jdbcType=VARCHAR},
+            </if>
+            <if test="patientDel != null">
+                patient_del = #{patientDel,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE id = #{userId,jdbcType=INTEGER}
+    </update>
+
 </mapper>

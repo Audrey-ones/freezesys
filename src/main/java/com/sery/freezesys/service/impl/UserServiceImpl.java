@@ -70,4 +70,10 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public int updateUser(User user) {
+        int result = userMapper.updateUser(user);
+        return result;
+    }
+
 }

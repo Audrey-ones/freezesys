@@ -47,4 +47,11 @@ public interface UserService {
      */
     int deleteUserById(int userId);
 
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    int updateUser(User user);
+
 }

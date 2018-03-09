@@ -10,19 +10,14 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
-	<!--<style type="text/css">
-		.layui-form-item .layui-inline{ width:33.333%; float:left; margin-right:0; }
-		@media(max-width:1240px){
-			.layui-form-item .layui-inline{ width:100%; float:none; }
-		}
-	</style>-->
 </head>
 <body class="childrenBody">
 	<form class="layui-form" style="width:80%;">
+		<input type="hidden" id="userId"/>
 		<div class="layui-form-item">
 			<label class="layui-form-label">用户名</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input account" lay-verify="required" placeholder="请输入用户名" style="width: 50%">
+				<input type="text" id="account" disabled class="layui-input layui-disabled" style="width: 50%;color: #1AA094">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -32,9 +27,15 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
+			<label class="layui-form-label">用户密码</label>
+			<div class="layui-input-block">
+				<input type="password" class="layui-input password" lay-verify="required" placeholder="请输入用户密码" style="width: 50%">
+			</div>
+		</div>
+		<div class="layui-form-item">
 			<label class="layui-form-label">液氮罐删除</label>
 			<div class="layui-input-block" style="width: 50%">
-				<select name="userGrade" class="nitDel" lay-filter="userGrade" >
+				<select class="nitDel" >
 					<option value="0">不可操作</option>
 					<option value="1">可操作</option>
 				</select>
@@ -43,7 +44,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">麦管解冻</label>
 			<div class="layui-input-block" style="width: 50%">
-				<select name="userGrade" class="strawDel" lay-filter="userGrade" >
+				<select class="strawDel" >
 					<option value="0">不可操作</option>
 					<option value="1">可操作</option>
 				</select>
@@ -52,7 +53,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">病人删除</label>
 			<div class="layui-input-block" style="width: 50%">
-				<select name="userGrade" class="patientDel" lay-filter="userGrade" >
+				<select class="patientDel" >
 					<option value="0">不可操作</option>
 					<option value="1">可操作</option>
 				</select>
@@ -61,12 +62,46 @@
 
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="addUser">立即提交</button>
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				<button class="layui-btn" lay-submit="" lay-filter="editUser">立即提交</button>
+				<button class="layui-btn layui-btn-primary reset">重置</button>
 		    </div>
 		</div>
 	</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="addUser.js"></script>
+	<script>
+        layui.use(['layer', 'form','jquery'], function() {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form();
+
+			form.on("submit(editUser)",function (data) {
+				$.ajax({
+					url : "/updateUser",
+					type : "post",
+					dataType : "json",
+					data : {
+					    "userId" : $("#userId").val(),
+					    "nickname" : $(".nickname").val(),
+						"password" : $(".password").val(),
+						"nitDel" : $(".nitDel option").eq($(".nitDel").val()).text(),
+                        "strawDel" : $(".strawDel option").eq($(".strawDel").val()).text(),
+                        "patientDel" : $(".patientDel option").eq($(".patientDel").val()).text()
+					},
+					success : function (data) {
+						//弹出loading
+						var index = top.layer.msg('数据提交中，请稍后',{icon: 16,time: false,shade: 0.8});
+						setTimeout(function () {
+							top.layer.close(index);
+							top.layer.msg("修改用户信息成功！");
+							layer.closeAll();
+							//刷新父页面
+							parent.location.reload();
+                        },2000);
+                    }
+				})
+				return false;
+            })
+        });
+	</script>
 </body>
 </html>

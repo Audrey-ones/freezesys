@@ -1,4 +1,4 @@
-form input.layui-input[disabled]{ background:#f2f2f2; color:#595963!important; }
+form input.layui-input[disabled]{ background:#f2f2f2; color:#009f95!important; }
 .user_left{ width:45%; float: left; margin:20px 0 0 5%; }
 .user_right{ width:25%; float: left; margin:20px 0 0 5%; text-align: center; }
 .user_right p{ margin:10px 0 25px; font-size: 12px; text-align: center; color: #FF5722;}

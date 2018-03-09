@@ -34,7 +34,7 @@ layui.config({
             console.log(usersData)
             //执行加载数据的方法
             usersList();
-        })
+        });
     }
 
 	//查询
@@ -126,9 +126,41 @@ layui.config({
 		form.render('checkbox');
 	})
 
-	//操作
-	$("body").on("click",".users_edit",function(){  //编辑
-		layer.alert('您点击了会员编辑按钮，由于是纯静态页面，所以暂时不存在编辑内容，后期会添加，敬请谅解。。。',{icon:6, title:'文章编辑'});
+    //编辑用户消息
+	$("body").on("click",".users_edit",function(){
+		var _this = $(this);
+		for (var i=0; i<usersData.length; i++){
+			if (usersData[i].userId == _this.attr("data-id")){
+				//获取当前用户的ID
+				var userId = usersData[i].userId;
+				var index = layui.layer.open({
+					title : "编辑病人信息",
+					type : 2,
+					content : "userEdit.html",
+					success : function (data) {
+						//获取子页面
+						var body = layui.layer.getChildFrame('body',index);
+						body.find("#userId").val(userId);
+						$.ajax({
+							url : "/users/"+userId,
+							type : "get",
+							dataType : "json",
+							success : function (data) {
+								console.log(data)
+								body.find("#account").val(data.account);
+								body.find(".nickname").val(data.nickname);
+								body.find(".password").val(data.password);
+                            }
+						})
+                    }
+				})
+				//改变窗口大下时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+				$(window).resize(function () {
+					layui.layer.full(index);
+                })
+				layui.layer.full(index);
+			}
+		}
 	})
 
 	//删除一个用户
@@ -174,7 +206,7 @@ layui.config({
 			    	+  '<td>'+currData[i].strawDel+'</td>'
 			    	+  '<td>'+currData[i].patientDel+'</td>'
 			    	+  '<td>'
-					+    '<a class="layui-btn layui-btn-mini users_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
+					+    '<a class="layui-btn layui-btn-mini users_edit" data-id="'+currData[i].userId+'"><i class="iconfont icon-edit"></i> 编辑</a>'
 					+    '<a class="layui-btn layui-btn-danger layui-btn-mini users_del" data-id="'+currData[i].userId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +  '</td>'
 			    	+'</tr>';

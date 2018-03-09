@@ -88,4 +88,23 @@ public class UserController {
         return result;
     }
 
+    @RequestMapping(value = "users/{userId}",method = RequestMethod.GET)
+    public @ResponseBody User getUserByUserId(@PathVariable("userId") int userId){
+        User user = userService.getUserById(userId);
+        return user;
+    }
+
+    @RequestMapping(value = "updateUser",method = RequestMethod.POST)
+    public int updateUser(HttpServletRequest request){
+        User user = new User();
+        user.setUserId(Integer.parseInt(request.getParameter("userId")));
+        user.setNickname(request.getParameter("nickname"));
+        user.setPassword(request.getParameter("password"));
+        user.setNitDel(request.getParameter("nitDel"));
+        user.setStrawDel(request.getParameter("strawDel"));
+        user.setPatientDel(request.getParameter("patientDel"));
+        int result = userService.updateUser(user);
+        return result;
+    }
+
 }
