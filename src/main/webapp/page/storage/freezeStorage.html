@@ -40,6 +40,12 @@
                 <input type="text" class="layui-input freezeNum" lay-verify="required" placeholder="请输入冷冻编号">
             </div>
         </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">冷冻时间&nbsp;&nbsp;</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input freezeTime" placeholder="请输入冷冻时间">
+            </div>
+        </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
@@ -85,24 +91,10 @@
             </div>
         </div>
     </div>
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">冷冻时间&nbsp;&nbsp;</label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input freezeTime" placeholder="请输入冷冻时间">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">到期时间</label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input expireTime" placeholder="请输入到期时间">
-            </div>
-        </div>
-    </div>
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" lay-filter="addStorage">立即提交</button>
+            <button class="layui-btn" lay-submit="" lay-filter="addStorage">保存并打印</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>

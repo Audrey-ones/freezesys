@@ -3,12 +3,12 @@ package com.sery.freezesys.service.impl;
 import com.sery.freezesys.dao.NitMapper;
 import com.sery.freezesys.dao.PatientMapper;
 import com.sery.freezesys.dao.StrawMapper;
-import com.sery.freezesys.utils.TscLibDll;
 import com.sery.freezesys.model.Divepipe;
 import com.sery.freezesys.model.Patient;
 import com.sery.freezesys.model.Straw;
 import com.sery.freezesys.model.StrawDTO;
 import com.sery.freezesys.service.StrawService;
+import com.sery.freezesys.utils.TscLibDllUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,10 +64,12 @@ public class StrawServiceImpl implements StrawService {
             map.put("divepipeId",divepipe.getDivepipeId());
             map.put("flagNum",divepipe.getFlagNum()-1);
             nitMapper.updateFlagNum(map);
+            //使用时间戳，作为条形码编号
+            String barcodeNum = String.valueOf(System.currentTimeMillis());
             Straw straw = new Straw();
             straw.setStrawNum(strawDTO.getStrawNum());
             straw.setFreezeNum(strawDTO.getFreezeNum());
-            straw.setBarcodeNum(strawDTO.getBarcodeNum());
+            straw.setBarcodeNum(barcodeNum);
             straw.setPatientId(patientId);
             straw.setDivepipeId(divepipe.getDivepipeId());
             straw.setSampleType(strawDTO.getSampleType());
@@ -80,22 +82,12 @@ public class StrawServiceImpl implements StrawService {
             straw.setOperator(strawDTO.getOperator());
             straw.setRemark(strawDTO.getRemark());
             result = strawMapper.insertStraw(straw);
-            //打印信息
-            //TscLibDll.INSTANCE.about();
-            TscLibDll.INSTANCE.openport("Brady BBP12 #2");
-            //TscLibDll.INSTANCE.downloadpcx("C:\\UL.PCX", "UL.PCX");
-            TscLibDll.INSTANCE.sendcommand("REM ***** This is a test by JAVA. *****");
-            TscLibDll.INSTANCE.setup("25.4", "9.5", "5", "8", "0", "0", "0");
-            TscLibDll.INSTANCE.clearbuffer();
-            //TscLibDll.INSTANCE.sendcommand("PUTPCX 550,10,\"UL.PCX\"");
-            TscLibDll.INSTANCE.printerfont ("100", "10", "3", "0", "1", "1", strawDTO.getMedicalRecord()+""+strawDTO.getFemaleName()+""+strawDTO.getSampleNum());
-            TscLibDll.INSTANCE.barcode("100", "40", "128", "50", "1", "0", "2", "2", "123456789");
-            TscLibDll.INSTANCE.windowsfont(300, 180, 48, 0, 3, 1, "arial", "DEG 0");
-            TscLibDll.INSTANCE.windowsfont(300, 180, 48, 90, 3, 1, "arial", "DEG 90");
-            TscLibDll.INSTANCE.windowsfont(300, 180, 48, 180, 3, 1, "arial", "DEG 180");
-            TscLibDll.INSTANCE.windowsfont(300, 180, 48, 270, 3, 1, "arial", "DEG 270");
-            TscLibDll.INSTANCE.printlabel("1", "1");
-            TscLibDll.INSTANCE.closeport();
+            //打印信息，调用TscLibDllUtil的方法
+            String text1 = strawDTO.getMedicalRecord()+"  "+strawDTO.getFemaleName();
+            String text2 = strawDTO.getStrawNum()+"管"+strawDTO.getSampleAmount()+"枚"+strawDTO.getFreezeTime();
+            String[] str = text2.split(" ");
+            TscLibDllUtil.printBarcode(barcodeNum,text1,str[0]);
+
         }else {
             result = 0;
         }

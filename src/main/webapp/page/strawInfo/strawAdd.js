@@ -50,7 +50,7 @@ layui.config({
                 "sampleNum":$(".sampleNum").val(),
                 "freezeNum":$(".freezeNum").val(),
                 "freezeTime":$(".freezeTime").val(),
-                "expireTime":$(".expireTime").val(),
+                "expireTime":"无",
                 "barcodeNum":"无",
                 "nitNum":$(".nitNum").val(),
                 "tubNum":$(".tubNum").val(),
