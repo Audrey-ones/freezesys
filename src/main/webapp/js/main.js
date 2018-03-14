@@ -34,7 +34,6 @@ layui.config({
             //正常加载信息
             divepipeData = data;
             $(".record span").html("一共"+data.length+"条记录");
-            console.log(data);
             //执行加载数据的方法
             divepipeList();
         })
@@ -85,7 +84,6 @@ layui.config({
                             type : "get",
                             dataType : "json",
                             success : function (data) {
-                                console.log(data)
                                 body.find(".nitNum").text(data.nitNum);
                                 body.find(".tubNum").text(data.tubNum);
                                 body.find(".divepipeNum").text(data.divepipeNum);

@@ -70,6 +70,11 @@ public class NitController {
         return nit;
     }
 
+    /**
+     * 编辑液氮罐信息
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping(value = "nitEdit",method = RequestMethod.POST)
     public int editNit(HttpServletRequest httpServletRequest){
         Nit nit = new Nit();
@@ -83,6 +88,11 @@ public class NitController {
         return result;
     }
 
+    /**
+     * 根据套管ID查找套管信息
+     * @param divepipeId
+     * @return
+     */
     @RequestMapping(value = "nit/{divepipeId}",method = RequestMethod.GET)
     public @ResponseBody
     NitDTO getNumByDivepipeId(@PathVariable("divepipeId") int divepipeId){
@@ -90,18 +100,31 @@ public class NitController {
         return nitDTO;
     }
 
+    /**
+     * 查找所有的套管
+     * @return
+     */
     @RequestMapping(value = "allDivepipe",method = RequestMethod.GET)
     public @ResponseBody List<NitDTO> getAllDivepipe(){
         List<NitDTO> nitDTOList = nitService.getAllDivepipe();
         return nitDTOList;
     }
 
+    /**
+     * 根据需要的麦管数量查找符合条件的套管信息
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "getDivepipeByFlagNum",method = RequestMethod.GET)
     public @ResponseBody List<NitDTO> getDivepipeByFlagNum(HttpServletRequest request){
         List<NitDTO> nitDTOList = nitService.getDivepipesByFlagNum(Integer.parseInt(request.getParameter("flagNum")));
         return nitDTOList;
     }
 
+    /**
+     * 查询已启动的液氮罐所有的吊桶信息
+     * @return
+     */
     @RequestMapping(value = "tubInfo",method = RequestMethod.GET)
     public @ResponseBody
     List getTubList(){
@@ -109,6 +132,11 @@ public class NitController {
         return list;
     }
 
+    /**
+     * 根据吊桶ID查找该吊桶下的所有套管信息
+     * @param tubId
+     * @return
+     */
     @RequestMapping(value = "divepipeByTubId/{tubId}",method = RequestMethod.GET)
     public @ResponseBody List<NitDTO> getDivepipeByTubId(@PathVariable("tubId") int tubId){
         List<NitDTO> nitDTOList = nitService.getDivepipeByTubId(tubId);

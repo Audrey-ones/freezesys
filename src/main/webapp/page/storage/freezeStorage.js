@@ -5,7 +5,6 @@ layui.config({
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         $ = layui.jquery;
 
-    console.log($("#divepipeId").val())
     form.on("submit(addStorage)",function(data){
         $.ajax({
             url : "/straw",
@@ -29,7 +28,8 @@ layui.config({
                 "freezeStatus":"未解冻",
                 "operator":"无",
                 "strawNum":$(".strawNum").val(),
-                "remark":"无"
+                "remark":"无",
+                "addType":1
             },
             success : function (data) {
                 if (data == 1){

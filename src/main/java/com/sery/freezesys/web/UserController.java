@@ -20,7 +20,7 @@ public class UserController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "sigin",method = RequestMethod.GET)
+    @RequestMapping(value = "sigin",method = RequestMethod.POST)
     public @ResponseBody
     Map sigIn(HttpServletRequest request){
         User user = new User();
@@ -76,18 +76,32 @@ public class UserController {
         return password;
     }
 
+    /**
+     * 获取所有用户信息
+     * @return
+     */
     @RequestMapping(value = "allUsers",method = RequestMethod.GET)
     public List<User> getAllUsers(){
         List<User> userList = userService.getAllUsers();
         return userList;
     }
 
+    /**
+     * 根据用户ID删除一条用户记录
+     * @param userId
+     * @return
+     */
     @RequestMapping(value = "users/{userId}",method = RequestMethod.POST)
     public int deleteUserById(@PathVariable("userId") int userId){
         int result = userService.deleteUserById(userId);
         return result;
     }
 
+    /**
+     *
+     * @param userId
+     * @return
+     */
     @RequestMapping(value = "users/{userId}",method = RequestMethod.GET)
     public @ResponseBody User getUserByUserId(@PathVariable("userId") int userId){
         User user = userService.getUserById(userId);

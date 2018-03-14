@@ -114,8 +114,6 @@ public class NitServiceImpl implements NitService {
             map.put("nit",nit);
             map.put("tubList",tubList);
             tubs.add(map);
-
-
         }
         return tubs;
     }

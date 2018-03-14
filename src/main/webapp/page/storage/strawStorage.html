@@ -61,7 +61,6 @@
         var dataInfo = '';
         $.get("/tubInfo", function(data){
             dataInfo = data;
-            console.log(dataInfo)
             var dataHtml = '';
             for (var i=0; i<data.length; i++){
                 dataHtml += '<div class="layui-col-xs12 layui-col-sm12 layui-col-md12" style="margin: 10px;border: 1px solid seagreen;padding: 10px">' +
@@ -101,7 +100,6 @@
                                     type : "get",
                                     dataType : "json",
                                     success : function (data) {
-                                        console.log(data)
                                     }
                                 })
                             }

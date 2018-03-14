@@ -27,7 +27,6 @@ layui.config({
     form.verify({
         oldPwd : function(value, item){
             if (getCookie('user')){
-                console.log(user.password)
                 if(value != user.password){
                     return "密码错误，请重新输入！";
                 }

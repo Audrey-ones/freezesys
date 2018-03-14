@@ -29,10 +29,6 @@ layui.config({
         $.get("/straws", function(data){
             //正常加载信息
             strawsData = data;
-            /*if(window.sessionStorage.getItem("addStraws")){
-                var addStraws = window.sessionStorage.getItem("addStraws");
-                strawsData = JSON.parse(addStraws).concat(strawsData);
-            }*/
             //执行加载数据的方法
             strawsList();
         })
@@ -49,12 +45,6 @@ layui.config({
 					type : "get",
 					dataType : "json",
 					success : function(data){
-						if(window.sessionStorage.getItem("addStraws")){
-							var addStraws = window.sessionStorage.getItem("addStraws");
-                            strawsData = JSON.parse(addStraws).concat(data);
-						}else{
-                            strawsData = data;
-						}
 						for(var i=0;i<strawsData.length;i++){
 							var strawsStr = strawsData[i];
 							var selectStr = $(".search_input").val();
@@ -139,48 +129,6 @@ layui.config({
 	})
 
 
-	//审核文章
-	$(".audit_btn").click(function(){
-		var $checkbox = $('.straws_list tbody input[type="checkbox"][name="checked"]');
-		var $checked = $('.straws_list tbody input[type="checkbox"][name="checked"]:checked');
-		if($checkbox.is(":checked")){
-			var index = layer.msg('审核中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-            	for(var j=0;j<$checked.length;j++){
-            		for(var i=0;i<newsData.length;i++){
-						if(newsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
-							//修改列表中的文字
-							$checked.eq(j).parents("tr").find("td:eq(3)").text("审核通过").removeAttr("style");
-							//将选中状态删除
-							$checked.eq(j).parents("tr").find('input[type="checkbox"][name="checked"]').prop("checked",false);
-							form.render();
-						}
-					}
-            	}
-                layer.close(index);
-				layer.msg("审核成功");
-            },2000);
-		}else{
-			layer.msg("请选择需要审核的文章");
-		}
-	})
-
-    //主页获取保存在cookie里的用户昵称
-    var user;
-    if (getCookie('user')){
-        user=JSON.parse(getCookie('user'));
-    }
-
-    //读取cookies
-    function getCookie(name) {
-        var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-        if (arr=document.cookie.match(reg)){
-            return arr[2];
-        }else {
-            return null;
-        }
-    }
-
 	//批量解冻
 	$(".batchDel").click(function(){
 		var $checkbox = $('.straws_list tbody input[type="checkbox"][name="checked"]');
@@ -247,15 +195,6 @@ layui.config({
 		}
 		form.render('checkbox');
 	})
-
-	//是否展示
-	form.on('switch(isShow)', function(data){
-		var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
-        setTimeout(function(){
-            layer.close(index);
-			layer.msg("展示状态修改成功！");
-        },2000);
-	})
  
 	//编辑麦管信息
 	$("body").on("click",".straws_edit",function(){  //编辑
@@ -277,7 +216,6 @@ layui.config({
                             type : "get",
                             dataType : "json",
                             success : function (data) {
-                                console.log(data)
                                 body.find(".sampleAmount").val(data.sampleAmount);
                                 body.find(".sampleNum").val(data.sampleNum);
                                 body.find(".freezeNum").val(data.freezeNum);
@@ -319,16 +257,6 @@ layui.config({
                 layui.layer.full(index);
             }
         }
-	})
-
-	$("body").on("click",".news_collect",function(){  //收藏.
-		if($(this).text().indexOf("已收藏") > 0){
-			layer.msg("取消收藏成功！");
-			$(this).html("<i class='layui-icon'>&#xe600;</i> 收藏");
-		}else{
-			layer.msg("收藏成功！");
-			$(this).html("<i class='iconfont icon-star'></i> 已收藏");
-		}
 	})
 
     //解冻一条记录（逻辑删除）
@@ -398,7 +326,6 @@ layui.config({
 			if(currData.length != 0){
 				for(var i=0;i<currData.length;i++){
 				    /*var freezeTime = timestampToTime(currData[i].freezeTime);*/
-				    console.log(data)
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
 			    	+'<td>'+currData[i].strawNum+'管'+currData[i].nitNum+'-'+currData[i].tubNum+'-'+currData[i].divepipeNum+'</td>'

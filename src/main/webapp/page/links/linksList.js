@@ -163,7 +163,6 @@ layui.config({
 		var _this = $(this);
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			//_this.parents("tr").remove();
-			console.log(_this.attr("data-id"))
 			for(var i=0;i<linksData.length;i++){
 				if(linksData[i].linksId == _this.attr("data-id")){
 					linksData.splice(i,1);

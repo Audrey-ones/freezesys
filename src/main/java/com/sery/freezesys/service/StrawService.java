@@ -19,7 +19,7 @@ public interface StrawService {
      * @param strawDTO
      * @return
      */
-    int addStraw(StrawDTO strawDTO);
+    int addStraw(StrawDTO strawDTO,int addType);
 
     /**
      * 修改解冻状态

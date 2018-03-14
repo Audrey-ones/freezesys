@@ -32,7 +32,7 @@ public class StrawServiceImpl implements StrawService {
     }
 
     @Override
-    public int addStraw(StrawDTO strawDTO) {
+    public int addStraw(StrawDTO strawDTO,int addType) {
         int result;
         //根据病历号，女方姓名获取病人Id
         Map patientMap = new HashMap();
@@ -82,11 +82,15 @@ public class StrawServiceImpl implements StrawService {
             straw.setOperator(strawDTO.getOperator());
             straw.setRemark(strawDTO.getRemark());
             result = strawMapper.insertStraw(straw);
-            //打印信息，调用TscLibDllUtil的方法
-            String text1 = strawDTO.getMedicalRecord()+"  "+strawDTO.getFemaleName();
-            String text2 = strawDTO.getStrawNum()+"管"+strawDTO.getSampleAmount()+"枚"+strawDTO.getFreezeTime();
-            String[] str = text2.split(" ");
-            TscLibDllUtil.printBarcode(barcodeNum,text1,str[0]);
+            //当addType为0时，为历史录入存储，不打印信息；当addType为1时，为冷冻存储，打印信息
+            if (addType == 1){
+                //打印信息，调用TscLibDllUtil的方法
+                String text1 = strawDTO.getMedicalRecord()+"  "+strawDTO.getFemaleName();
+                String text2 = strawDTO.getStrawNum()+"管"+strawDTO.getSampleAmount()+"枚"+strawDTO.getFreezeTime();
+                String[] str = text2.split(" ");
+                TscLibDllUtil.printBarcode(barcodeNum,text1,str[0]);
+            }
+
 
         }else {
             result = 0;

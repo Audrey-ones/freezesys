@@ -18,6 +18,10 @@ public class StrawController {
     @Autowired
     private StrawService strawService;
 
+    /**
+     * 获取所有已存储的麦管记录
+     * @return
+     */
     @RequestMapping(value = "straws",method = RequestMethod.GET)
     public @ResponseBody
     List<StrawDTO> getStrawList(){
@@ -25,6 +29,12 @@ public class StrawController {
         return strawList;
     }
 
+    /**
+     * 新增一条麦管存储记录
+     * @param request
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping(value = "straw",method = RequestMethod.POST)
     public int addStraw(HttpServletRequest request) throws ParseException {
         StrawDTO strawDTO = new StrawDTO();
@@ -47,11 +57,17 @@ public class StrawController {
         strawDTO.setOperator(request.getParameter("operator"));
         strawDTO.setStrawNum(request.getParameter("strawNum"));
         strawDTO.setRemark(request.getParameter("remark"));
-        int result = strawService.addStraw(strawDTO);
+        int addType = Integer.parseInt(request.getParameter("addType"));
+        int result = strawService.addStraw(strawDTO,addType);
         return result;
 
     }
 
+    /**
+     * 解冻一条麦管记录
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "updateFreezeStatus",method = RequestMethod.POST)
     public int updateFreezeStatus(HttpServletRequest request){
         Straw straw = new Straw();
@@ -63,12 +79,22 @@ public class StrawController {
         return result;
     }
 
+    /**
+     * 根据麦管ID获取一条麦管记录
+     * @param strawId
+     * @return
+     */
     @RequestMapping(value = "straws/{strawId}",method = RequestMethod.GET)
     public @ResponseBody Straw getStrawById(@PathVariable("strawId") int strawId){
         Straw straw = strawService.getStrawById(strawId);
         return straw;
     }
 
+    /**
+     * 编辑一条麦管记录
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping(value = "strawEdit",method = RequestMethod.POST)
     public int editStraw(HttpServletRequest httpServletRequest){
         StrawDTO strawDTO = new StrawDTO();
@@ -94,6 +120,10 @@ public class StrawController {
         return result;
     }
 
+    /**
+     * 获取首页麦管总数、液氮罐总数、病人总数等参数
+     * @return
+     */
     @RequestMapping(value = "getCount",method = RequestMethod.GET)
     public @ResponseBody
     Map getCount(){

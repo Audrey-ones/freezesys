@@ -31,7 +31,6 @@ layui.config({
     function loadUsers() {
         $.get("/allUsers", function(data){
             usersData = data;
-            console.log(usersData)
             //执行加载数据的方法
             usersList();
         });
@@ -89,7 +88,7 @@ layui.config({
 		}
 	})
 
-	//添加会员
+	//添加用户
 	$(".usersAdd_btn").click(function(){
 		var index = layui.layer.open({
 			title : "添加用户",
@@ -114,7 +113,7 @@ layui.config({
 		form.render('checkbox');
 	});
 
-	//通过判断文章是否全部选中来确定全选按钮是否选中
+	//通过判断用户是否全部选中来确定全选按钮是否选中
 	form.on("checkbox(choose)",function(data){
 		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
 		var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
@@ -146,7 +145,6 @@ layui.config({
 							type : "get",
 							dataType : "json",
 							success : function (data) {
-								console.log(data)
 								body.find("#account").val(data.account);
 								body.find(".nickname").val(data.nickname);
 								body.find(".password").val(data.password);

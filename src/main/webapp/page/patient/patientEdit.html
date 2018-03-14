@@ -89,7 +89,6 @@
             $ = layui.jquery,
             form = layui.form();
 
-        console.log("获取当前病人ID："+$("#patientId").val())
         /*var patient = {
             patientId : $("#patientId").val(),
             medicalRecord : $(".medicalRecord").val(),
@@ -102,7 +101,6 @@
             remark : $(".remark").val()
         }*/
         form.on("submit(addPatient)",function (data) {
-            console.log("获取当前病人ID："+$("#patientId").val())
             $.ajax({
                 url : "/patientEdit",
                 type : "post",

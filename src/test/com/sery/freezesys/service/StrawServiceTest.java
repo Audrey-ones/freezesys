@@ -53,7 +53,7 @@ public class StrawServiceTest {
         straw.setFreezeStatus("未解冻");
         straw.setOperator("无");
         straw.setRemark("无");
-        int result = strawService.addStraw(straw);
+        int result = strawService.addStraw(straw,0);
         System.out.println(result);
     }
 

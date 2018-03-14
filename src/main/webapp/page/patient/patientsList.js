@@ -48,13 +48,7 @@ layui.config({
                    url : "/patients",
                    type : "get",
                    dataType : "json",
-                   success : function (data) {
-                       if (window.sessionStorage.getItem("addPatient")){
-                           var addPatient = window.sessionStorage.getItem("addPatient");
-                           patientData = JSON.parse(addPatient).concat(data);
-                       }else {
-                           patientData = data;
-                       }
+                   success : function (patientData) {
                        for (var i=0; i<patientData.length; i++){
                            var patientStr = patientData[i];
                            var selectStr = $(".search_input").val();

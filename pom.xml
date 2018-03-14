@@ -9,7 +9,7 @@
   <url>http://maven.apache.org</url>
   <!-- 全局属性配置 -->
   <properties>
-    <project.build.name>jianshu</project.build.name>  <!-- 用来定义war包名称-->
+    <project.build.name>freezesys</project.build.name>  <!-- 用来定义war包名称-->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>   <!--用来定义资源文件的编码格式-->
     <!-- spring版本号 -->
     <spring.version>4.2.4.RELEASE</spring.version>

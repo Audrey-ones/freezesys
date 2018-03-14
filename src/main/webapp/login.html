@@ -60,7 +60,7 @@
 				form.on('submit(login)',function(data){
 				    $.ajax({
                         url : "/sigin",
-                        type : "get",
+                        type : "post",
                         dataType : "json",
 						data : {
 						    "account" : $("#account").val(),
@@ -70,7 +70,6 @@
                             if (data.user != null){
                                 setCookie("user",data.user);//用户基本信息计入cookie
                                 setCookie("token",data.token);//令牌token计入cookie
-                                console.log(data)
                                 var index = layer.msg('登录成功！',{icon:1,time:false,shade:0.8});
                                 setTimeout(function(){
                                     layer.close(index);

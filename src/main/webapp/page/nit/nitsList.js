@@ -120,20 +120,6 @@ layui.config({
         layui.layer.full(index);
     })
 
-    //推荐文章
-    /*$(".recommend").click(function(){
-        var $checkbox = $(".news_list").find('tbody input[type="checkbox"]:not([name="show"])');
-        if($checkbox.is(":checked")){
-            var index = layer.msg('推荐中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-                layer.close(index);
-                layer.msg("推荐成功");
-            },2000);
-        }else{
-            layer.msg("请选择需要推荐的文章");
-        }
-    })*/
-
     //审核文章
     $(".audit_btn").click(function(){
         var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
@@ -190,10 +176,6 @@ layui.config({
         },2000);
     })
 
-    //操作
-    $("body").on("click",".news_edit",function(){  //编辑
-        layer.alert('您点击了文章编辑按钮，由于是纯静态页面，所以暂时不存在编辑内容，后期会添加，敬请谅解。。。',{icon:6, title:'文章编辑'});
-    })
 
     $("body").on("click",".news_collect",function(){  //收藏.
         if($(this).text().indexOf("已收藏") > 0){
@@ -212,7 +194,6 @@ layui.config({
             if (nitsData[i].nitId == _this.attr("data-id")){
                 //获取当前点击的病人ID
                 var nitId = nitsData[i].nitId;
-                console.log(nitId)
                 var index = layui.layer.open({
                     title : "编辑病人信息",
                     type : 2,
@@ -226,7 +207,6 @@ layui.config({
                             type : "get",
                             dataType : "json",
                             success : function (data) {
-                                console.log(data)
                                 body.find(".nitNum").val(data.nitNum);
                                 body.find(".version").val(data.version);
                                 body.find(".antibodyType").val(data.antibodyType);
