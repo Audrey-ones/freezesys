@@ -6,6 +6,10 @@ layui.config({
 		laypage = layui.laypage,
 		$ = layui.jquery;
 
+    $(".reload").click(function () {
+        window.location.reload();
+    });
+
     //获取保存在cookie里的用户
     var user;
     if (getCookie('user')){
@@ -137,6 +141,7 @@ layui.config({
             if($checkbox.is(":checked")){
                 layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'提示信息'},function(index){
                     var index = layer.msg('解冻中，请稍候',{icon: 16,time:false,shade:0.8});
+                    var thawTime = new Date().toLocaleString();
                     setTimeout(function(){
                         //更改解冻状态
                         for(var j=0;j<$checked.length;j++){
@@ -151,10 +156,19 @@ layui.config({
                                         data : {
                                             "strawId" : strawsData[i].strawId,
                                             "freezeStatus" : "已解冻",
+                                            "thawTime" : thawTime,
                                             "operator" : user.nickname
                                         },
                                         success : function (data) {
-
+                                            if (data == 1){
+                                                layer.msg("解冻成功！");
+                                                setTimeout(function(){
+                                                    //刷新父页面
+                                                    parent.location.reload();
+                                                },2000);
+                                            }else {
+                                                layer.msg("您已经解冻过该记录，请勿重复解冻！");
+                                            }
                                         }
                                     })
                                 }
@@ -163,7 +177,6 @@ layui.config({
                         $('.straws_list thead input[type="checkbox"]').prop("checked",false);
                         form.render();
                         layer.close(index);
-                        layer.msg("解冻成功");
                     },2000);
                 })
             }else{

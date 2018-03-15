@@ -47,5 +47,10 @@ public interface PatientMapper {
      */
     int deletePatient(int patientId);
 
+    /**
+     * 查找病人总数
+     * @return
+     */
     int selectPatientCount();
+
 }

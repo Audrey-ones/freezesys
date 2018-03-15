@@ -141,4 +141,18 @@
         tb_straw
     </select>
 
+    <select id="getStrawByPatientId" parameterType="java.lang.Integer" resultMap="straw">
+        SELECT * FROM
+        tb_straw
+        WHERE
+        patient_id = #{patientId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteStrawByPatientId" parameterType="java.lang.Integer">
+        DELETE FROM
+        tb_straw
+        WHERE
+        patient_id = #{patientId,jdbcType=INTEGER}
+    </delete>
+
 </mapper>

@@ -6,6 +6,10 @@ layui.config({
         laypage = layui.laypage,
         $ = layui.jquery;
 
+    $(".reload").click(function () {
+        window.location.reload();
+    });
+
     //获取保存在cookie里的用户
     var user;
     if (getCookie('user')){
@@ -172,7 +176,36 @@ layui.config({
     $("body").on("click",".patient_del",function () {
         var _this = $(this);
         if (user.patientDel == "可操作"){
-            layer.confirm("确认删除该条病人记录？将一并删除该病人所有的麦管记录",{icon: 3,title:'提示信息'},function (index) {
+            $.ajax({
+                url : "/patients/straws/" + _this.attr("data-id"),
+                type : "get",
+                dataType : "json",
+                success : function (data) {
+                    layer.confirm("该病人共有"+data+"条麦管记录，确认删除？将一并删除该病人的这"+data+"条麦管记录",{icon: 3,title:'提示信息'},function (index) {
+                        for (var i=0; i<patientData.length; i++){
+                            if (patientData[i].patientId == _this.attr("data-id")){
+                                $.ajax({
+                                    url : "/patients/" + patientData[i].patientId,
+                                    type : "post",
+                                    dataType : "json",
+                                    success : function (data) {
+                                        layer.msg("删除成功！");
+                                        setTimeout(function(){
+                                            //刷新父页面
+                                            parent.location.reload();
+                                        },2000);
+                                    }
+                                });
+                                patientData.splice(i,1);
+                                patientsList(patientData);
+                            }
+                        }
+                        layer.close(index);
+                    });
+                }
+            })
+
+            /*layer.confirm("确认删除该条病人记录？将一并删除该病人所有的麦管记录",{icon: 3,title:'提示信息'},function (index) {
                 for (var i=0; i<patientData.length; i++){
                     if (patientData[i].patientId == _this.attr("data-id")){
                         $.ajax({
@@ -188,7 +221,7 @@ layui.config({
                     }
                 }
                 layer.close(index);
-            });
+            });*/
         }else {
             layer.msg("您没有删除病人信息的权限哦！");
         }

@@ -39,4 +39,11 @@ public interface PatientService {
      */
     Patient getPatientById(int patientId);
 
+    /**
+     * 根据病人Id获取该病人所有的麦秆记录
+     * @param patientId
+     * @return
+     */
+    int getStrawCountByPatientId(int patientId);
+
 }

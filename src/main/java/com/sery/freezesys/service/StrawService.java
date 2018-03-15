@@ -26,7 +26,7 @@ public interface StrawService {
      * @param straws
      * @return
      */
-    int updateFreezeStatus(Straw straws);
+    int updateFreezeStatus(Straw straws) throws Exception;
 
     /**
      * 根据麦管Id查找麦管信息

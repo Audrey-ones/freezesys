@@ -69,7 +69,7 @@ public class StrawController {
      * @return
      */
     @RequestMapping(value = "updateFreezeStatus",method = RequestMethod.POST)
-    public int updateFreezeStatus(HttpServletRequest request){
+    public int updateFreezeStatus(HttpServletRequest request) throws Exception {
         Straw straw = new Straw();
         straw.setStrawId(Integer.parseInt(request.getParameter("strawId")));
         straw.setFreezeStatus(request.getParameter("freezeStatus"));

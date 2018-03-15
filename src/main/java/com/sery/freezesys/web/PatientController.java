@@ -86,4 +86,10 @@ public class PatientController {
         int result = patientService.updatePatient(patient) ;
         return result;
     }
+
+    @RequestMapping(value = "patients/straws/{patientId}",method = RequestMethod.GET)
+    public int getStrawCountByPatientId(@PathVariable("patientId") int patientId){
+        int count = patientService.getStrawCountByPatientId(patientId);
+        return count;
+    }
 }

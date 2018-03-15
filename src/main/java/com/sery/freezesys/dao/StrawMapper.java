@@ -42,6 +42,24 @@ public interface StrawMapper{
      */
     int updateStrawInfo(Straw straw);
 
+    /**
+     * 查询麦管记录总数
+     * @return
+     */
     int selectStrawCount();
+
+    /**
+     * 根据病人Id删除该病人ID的所有麦管记录
+     * @param patientId
+     * @return
+     */
+    int deleteStrawByPatientId(int patientId);
+
+    /**
+     * 根据病人Id获取该病人的所有麦管记录
+     * @param patientId
+     * @return
+     */
+    List<Straw> getStrawByPatientId(int patientId);
 
 }

@@ -100,24 +100,30 @@ public class StrawServiceImpl implements StrawService {
     }
 
     @Override
-    public int updateFreezeStatus(Straw straw) {
+    public int updateFreezeStatus(Straw straw) throws Exception {
         int result;
         Straw selectStraw = strawMapper.getStrawById(straw.getStrawId());
         if (selectStraw.getFreezeStatus().equals(straw.getFreezeStatus())){
             result = 0;
         }else {
             Divepipe divepipe = nitMapper.selectDivepipeById(selectStraw.getDivepipeId());
-            //每次解冻，套管剩余位置+1
-            Map map = new HashMap();
-            map.put("divepipeId",divepipe.getDivepipeId());
-            map.put("flagNum",divepipe.getFlagNum()+1);
-            nitMapper.updateFlagNum(map);
-            Map updateMap = new HashMap();
-            updateMap.put("strawId",straw.getStrawId());
-            updateMap.put("freezeStatus",straw.getFreezeStatus());
-            updateMap.put("thawTime",straw.getThawTime());
-            updateMap.put("operator",straw.getOperator());
-            result = strawMapper.updataFreezeStatus(updateMap);
+            //当套管中麦管剩余位置小于或等于7时，每次解冻，套管剩余位置+1；否者抛出异常
+            if (divepipe.getFlagNum() <= 7){
+                //
+                Map map = new HashMap();
+                map.put("divepipeId",divepipe.getDivepipeId());
+                map.put("flagNum",divepipe.getFlagNum()+1);
+                nitMapper.updateFlagNum(map);
+                Map updateMap = new HashMap();
+                updateMap.put("strawId",straw.getStrawId());
+                updateMap.put("freezeStatus",straw.getFreezeStatus());
+                updateMap.put("thawTime",straw.getThawTime());
+                updateMap.put("operator",straw.getOperator());
+                result = strawMapper.updataFreezeStatus(updateMap);
+            }else {
+                throw new Exception("套管位置已满");
+            }
+
         }
 
         return result;
