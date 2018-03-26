@@ -148,6 +148,9 @@ layui.config({
 								body.find("#account").val(data.account);
 								body.find(".nickname").val(data.nickname);
 								body.find(".password").val(data.password);
+								body.find(".nitDel").val(data.nitDel);
+                                body.find(".strawDel").val(data.strawDel);
+                                body.find(".patientDel").val(data.patientDel);
                             }
 						})
                     }

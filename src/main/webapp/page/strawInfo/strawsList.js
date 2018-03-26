@@ -235,6 +235,8 @@ layui.config({
                                 body.find(".freezeTime").val(data.freezeTime);
                                 body.find(".expireTime").val(data.expireTime);
                                 body.find(".strawNum").val(data.strawNum);
+                                //设置下拉框的默认值
+                                body.find(".sampleType").val(data.sampleType);
                                 var patientId = data.patientId;
                                 var divepipeId = data.divepipeId;
                                 body.find("#patientId").val(patientId);

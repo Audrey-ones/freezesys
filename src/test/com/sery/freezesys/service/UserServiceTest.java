@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -30,5 +31,11 @@ public class UserServiceTest {
     public void deleteUserById() {
         int result = userService.deleteUserById(1);
         System.out.println(result);
+    }
+
+    @Test
+    public void getUserNickname() {
+        List<User> userList = userService.getUserNickname();
+        System.out.println(userList);
     }
 }

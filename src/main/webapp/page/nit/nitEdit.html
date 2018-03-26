@@ -10,10 +10,11 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../css/news.css" media="all" />
 	<link rel="stylesheet" href="../../css/font_eolqem241z66flxr.css" media="all" />
 </head>
 <body class="childrenBody">
-<form class="layui-form">
+<form>
 	<div class="layui-form-item">
 		<input type="hidden" id="nitId"/>
 		<div class="layui-inline">
@@ -39,9 +40,9 @@
 		<div class="layui-inline">
 			<label class="layui-form-label">使用状态&nbsp;&nbsp;</label>
 			<div class="layui-input-inline">
-				<select name="browseLook" class="status">
-					<option value="0">未使用</option>
-					<option value="1">已使用</option>
+				<select name="browseLook" class="status" lay-filter="browseLook">
+					<option value="未使用">未使用</option>
+					<option value="已使用">已使用</option>
 				</select>
 			</div>
 		</div>
@@ -81,7 +82,7 @@
                     'nitNum': $(".nitNum").val(),
                     'version': $(".version").val(),
                     'antibodyType': $(".antibodyType").val(),
-                    'status': $(".status option").eq($(".status").val()).text(),
+                    'status': $(".status").val(),
                     "remark" : $(".remark").val()
                 },
                 success : function (data) {

@@ -76,4 +76,10 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public List<User> getUserNickname() {
+        List<User> userList = userMapper.getUserNickname();
+        return userList;
+    }
+
 }

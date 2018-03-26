@@ -61,4 +61,10 @@ public interface UserMapper {
      */
     int updateUser(User user);
 
+    /**
+     * 根据解冻权限查找用户昵称
+     * @return
+     */
+    List<User> getUserNickname();
+
 }

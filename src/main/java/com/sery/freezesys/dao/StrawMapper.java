@@ -62,4 +62,17 @@ public interface StrawMapper{
      */
     List<Straw> getStrawByPatientId(int patientId);
 
+    /**
+     * 根据条形码查找麦管记录
+     * @param barcodeNum
+     * @return
+     */
+    StrawDTO getStrawByBarcodeNum(String barcodeNum);
+
+    /**
+     * 根据麦管记录获取麦管记录
+     * @param strawId
+     * @return
+     */
+    StrawDTO getStrawByStrawId(int strawId);
 }

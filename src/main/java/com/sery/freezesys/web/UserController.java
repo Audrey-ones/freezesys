@@ -121,4 +121,10 @@ public class UserController {
         return result;
     }
 
+    @RequestMapping(value = "nickname",method = RequestMethod.GET)
+    public @ResponseBody List<User> getNickname(){
+        List<User> userList = userService.getUserNickname();
+        return userList;
+    }
+
 }

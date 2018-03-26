@@ -210,7 +210,7 @@ layui.config({
                                 body.find(".nitNum").val(data.nitNum);
                                 body.find(".version").val(data.version);
                                 body.find(".antibodyType").val(data.antibodyType);
-                                /*body.find(".status option").eq($(".status").val(1)).text(data.status);*/
+                                body.find(".status").val(data.status);
                                 body.find(".remark").val(data.remark);
                             }
                         })

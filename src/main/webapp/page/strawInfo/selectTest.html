@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../../css/font_eolqem241z66flxr.css" media="all" />
+    <link rel="stylesheet" href="../../css/news.css" media="all" />
+    <link rel="stylesheet" href="../../font-awesome/css/font-awesome.min.css"/>
+    <title>下拉框测试</title>
+    <style>
+        #operator{
+            padding-right: 30px;
+            cursor: pointer;
+            border-color: #D2D2D2!important;
+            display: block;
+            width: 100%;
+            padding-left: 10px;
+            height: 38px;
+            line-height: 38px;
+            line-height: 36px;
+            border: 1px solid #e6e6e6;
+            background-color: #fff;
+            border-radius: 2px;
+            outline: 0;
+            -webkit-transition: border-color .3s cubic-bezier(.65,.05,.35,.5);
+            transition: border-color .3s cubic-bezier(.65,.05,.35,.5);
+            -webkit-box-sizing: border-box!important;
+            -moz-box-sizing: border-box!important;
+            box-sizing: border-box!important;
+
+        }
+        #operator option{
+            padding: 20px;
+           /* background-color: #5FB878;
+            color: #fff;
+            height: 100px;*/
+            font-size: 16px;
+        }
+       /*select{
+           font-family: "微软雅黑";
+           margin:100px;
+           background: rgba(0,0,0,0);
+           width: 249px;
+           height: 40px;
+           font-size: 18px;
+           color: black;
+           text-align: center;
+           border: 1px #1a1a1a solid;
+           border-radius: 5px;
+       }
+       option{
+           color: black;
+           background: #A6E1EC;
+           line-height: 20px;
+       }
+       select:focus{
+           border: 2px #ddd solid;
+           box-shadow: 0 0 15px 1px #DDDDDD;
+       }
+       option:hover{
+           background: #EBCCD1;
+       }*/
+
+    </style>
+</head>
+<body>
+<form>
+    <div class="layui-form-item">
+<div class="layui-inline">
+    <label class="layui-form-label"><i class="fa fa-user-circle-o"></i>&nbsp;&nbsp;解冻者</label>
+    <div class="layui-input-inline">
+        <select name="operator" id="operator" lay-filter="operator">
+           <!-- <option value="0">请选择解冻者</option>
+            <option value="1">胚胎</option>
+            <option value="2">卵子</option>
+            <option value="3">精子</option>-->
+        </select>
+    </div>
+</div>
+    </div></form>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script>
+    layui.use(['layer', 'form','jquery'], function() {
+        var layer = layui.layer,
+            $ = layui.jquery,
+            form = layui.form();
+
+        $("#operator").append("<option value='0'>精子</option>");
+        $("#operator").append("<option value='1'>卵子</option>");
+        $("#operator").append("<option value='2'>胚胎</option>");
+    });
+</script>
+</body>
+</html>

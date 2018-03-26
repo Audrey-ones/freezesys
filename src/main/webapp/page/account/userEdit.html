@@ -10,9 +10,10 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../css/news.css" media="all" />
 </head>
 <body class="childrenBody">
-	<form class="layui-form" style="width:80%;">
+	<form style="width:80%;">
 		<input type="hidden" id="userId"/>
 		<div class="layui-form-item">
 			<label class="layui-form-label">用户名</label>
@@ -34,28 +35,28 @@
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">液氮罐删除</label>
-			<div class="layui-input-block" style="width: 50%">
-				<select class="nitDel" >
-					<option value="0">不可操作</option>
-					<option value="1">可操作</option>
+			<div class="layui-input-block">
+				<select class="nitDel" style="width: 40%">
+					<option value="不可操作">不可操作</option>
+					<option value="可操作">可操作</option>
 				</select>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">麦管解冻</label>
-			<div class="layui-input-block" style="width: 50%">
-				<select class="strawDel" >
-					<option value="0">不可操作</option>
-					<option value="1">可操作</option>
+			<div class="layui-input-block" >
+				<select class="strawDel" style="width: 40%">
+					<option value="不可操作">不可操作</option>
+					<option value="可操作">可操作</option>
 				</select>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">病人删除</label>
-			<div class="layui-input-block" style="width: 50%">
-				<select class="patientDel" >
-					<option value="0">不可操作</option>
-					<option value="1">可操作</option>
+			<div class="layui-input-block">
+				<select class="patientDel" style="width: 40%">
+					<option value="不可操作">不可操作</option>
+					<option value="可操作">可操作</option>
 				</select>
 			</div>
 		</div>
@@ -83,9 +84,9 @@
 					    "userId" : $("#userId").val(),
 					    "nickname" : $(".nickname").val(),
 						"password" : $(".password").val(),
-						"nitDel" : $(".nitDel option").eq($(".nitDel").val()).text(),
-                        "strawDel" : $(".strawDel option").eq($(".strawDel").val()).text(),
-                        "patientDel" : $(".patientDel option").eq($(".patientDel").val()).text()
+						"nitDel" : $(".nitDel").val(),
+                        "strawDel" : $(".strawDel").val(),
+                        "patientDel" : $(".patientDel").val()
 					},
 					success : function (data) {
 						//弹出loading

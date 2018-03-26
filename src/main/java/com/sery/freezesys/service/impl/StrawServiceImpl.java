@@ -190,4 +190,33 @@ public class StrawServiceImpl implements StrawService {
         map.put("strawCount",strawCount);
         return map;
     }
+
+    @Override
+    public StrawDTO getStrawByBarcodeNum(String barcodeNum) {
+        StrawDTO strawDTO = strawMapper.getStrawByBarcodeNum(barcodeNum);
+        return strawDTO;
+    }
+
+    @Override
+    public StrawDTO getStrawBySanningThawing(int strawId, String operator,String thawTime) throws Exception {
+        Straw straw = strawMapper.getStrawById(strawId);
+        Divepipe divepipe = nitMapper.selectDivepipeById(straw.getDivepipeId());
+        //当套管中麦管剩余位置小于或等于7时，每次解冻，套管剩余位置+1；否者抛出异常
+        if (divepipe.getFlagNum() <= 7){
+            Map nitMap = new HashMap();
+            nitMap.put("divepipeId",divepipe.getDivepipeId());
+            nitMap.put("flagNum",divepipe.getFlagNum()+1);
+            nitMapper.updateFlagNum(nitMap);
+            Map strawMap = new HashMap();
+            strawMap.put("strawId",strawId);
+            strawMap.put("freezeStatus","已解冻");
+            strawMap.put("thawTime",thawTime);
+            strawMap.put("operator",operator);
+            strawMapper.updataFreezeStatus(strawMap);
+        }else {
+            throw new Exception("套管位置已满");
+        }
+        StrawDTO strawDTO = strawMapper.getStrawByStrawId(strawId);
+        return strawDTO;
+    }
 }

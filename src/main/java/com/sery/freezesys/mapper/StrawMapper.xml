@@ -155,4 +155,30 @@
         patient_id = #{patientId,jdbcType=INTEGER}
     </delete>
 
+    <select id="getStrawByBarcodeNum" resultMap="strawInfo" parameterType="java.lang.String">
+        SELECT
+        s.id,s.straw_num,s.freeze_num,s.barcode_num,p.medical_record,p.female_name,p.male_name,n.num,t.tub_num,d.divepipe_num,
+        s.barcode_num,s.sample_type,s.sample_amount,s.sample_num,s.freeze_time,s.thaw_time,s.freeze_status,s.operator,s.remark
+        FROM
+        tb_straw s, tb_nit n, tb_tub t, tb_divepipe d, tb_patient p
+        WHERE s.patient_id = p.id
+        AND s.divepipe_id = d.id
+        AND n.id = t.nit_id
+        AND t.id = d.tub_id
+        AND s.barcode_num = #{barcodeNum,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getStrawByStrawId" resultMap="strawInfo" parameterType="java.lang.Integer">
+        SELECT
+        s.id,s.straw_num,s.freeze_num,s.barcode_num,p.medical_record,p.female_name,p.male_name,n.num,t.tub_num,d.divepipe_num,
+        s.barcode_num,s.sample_type,s.sample_amount,s.sample_num,s.freeze_time,s.thaw_time,s.freeze_status,s.operator,s.remark
+        FROM
+        tb_straw s, tb_nit n, tb_tub t, tb_divepipe d, tb_patient p
+        WHERE s.patient_id = p.id
+        AND s.divepipe_id = d.id
+        AND n.id = t.nit_id
+        AND t.id = d.tub_id
+        AND s.straw_id = #{strawId,jdbcType=INTEGER}
+    </select>
+
 </mapper>

@@ -49,4 +49,19 @@ public interface StrawService {
      * @return
      */
     Map getCount();
+
+    /**
+     * 根据条形码获取麦管记录
+     * @param barcodeNum
+     * @return
+     */
+    StrawDTO getStrawByBarcodeNum(String barcodeNum);
+
+    /**
+     * 扫描解冻，并返回解冻后的信息
+     * @param strawId
+     * @param operator
+     * @return
+     */
+    StrawDTO getStrawBySanningThawing(int strawId,String operator,String thawTime) throws Exception;
 }

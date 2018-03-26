@@ -6,3 +6,30 @@
 
 /*分页*/
 #page{ text-align:right; }
+
+select{
+    -webkit-box-sizing: border-box!important;
+    -moz-box-sizing: border-box!important;
+    box-sizing: border-box!important;
+    padding-right: 30px;
+    cursor: pointer;
+    border-color: #ffffff!important;
+    display: block;
+    width: 100%;
+    padding-left: 10px;
+    height: 38px;
+    line-height: 38px;
+    line-height: 36px;
+    border: 1px solid #e6e6e6;
+    background-color: #fff;
+    border-radius: 2px;
+    outline: 0;
+    -webkit-transition: border-color .3s cubic-bezier(.65,.05,.35,.5);
+    transition: border-color .3s cubic-bezier(.65,.05,.35,.5);
+}
+select:hover{
+    border-color: #D2D2D2!important;
+}
+select option{
+    color: #1AA094;
+}

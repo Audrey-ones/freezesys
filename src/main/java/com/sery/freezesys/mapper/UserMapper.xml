@@ -91,4 +91,13 @@
         WHERE id = #{userId,jdbcType=INTEGER}
     </update>
 
+    <!--根据解冻权限查找用户昵称-->
+    <select id="getUserNickname" resultMap="userInfo">
+        SELECT nickname
+        FROM
+        tb_user
+        WHERE
+        straw_del = '可操作'
+    </select>
+
 </mapper>

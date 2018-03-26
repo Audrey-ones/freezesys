@@ -86,4 +86,10 @@ public class StrawServiceTest {
        int result = strawMapper.updateStrawInfo(straw);*/
         System.out.println(result);
     }
+
+    @Test
+    public void getStrawByBarcodeNum() {
+        StrawDTO strawDTO = strawService.getStrawByBarcodeNum("1521018798605");
+        System.out.println(strawDTO);
+    }
 }
