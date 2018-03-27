@@ -89,7 +89,15 @@ public class StrawServiceTest {
 
     @Test
     public void getStrawByBarcodeNum() {
-        StrawDTO strawDTO = strawService.getStrawByBarcodeNum("1521018798605");
+        /*StrawDTO strawDTO = strawService.getStrawByBarcodeNum("1521018798605");
+        System.out.println(strawDTO);*/
+        StrawDTO strawDTO = strawMapper.getStrawByStrawId(42);
         System.out.println(strawDTO);
+    }
+
+    @Test
+    public void getAllThawRecord() {
+        List<StrawDTO> strawDTOList = strawService.getAllThawRecord();
+        System.out.println(strawDTOList);
     }
 }

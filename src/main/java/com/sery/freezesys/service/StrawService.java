@@ -55,7 +55,7 @@ public interface StrawService {
      * @param barcodeNum
      * @return
      */
-    StrawDTO getStrawByBarcodeNum(String barcodeNum);
+    Map getStrawByBarcodeNum(String barcodeNum);
 
     /**
      * 扫描解冻，并返回解冻后的信息
@@ -64,4 +64,10 @@ public interface StrawService {
      * @return
      */
     StrawDTO getStrawBySanningThawing(int strawId,String operator,String thawTime) throws Exception;
+
+    /**
+     * 获取所有解冻记录
+     * @return
+     */
+    List<StrawDTO> getAllThawRecord();
 }

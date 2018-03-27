@@ -75,4 +75,10 @@ public interface StrawMapper{
      * @return
      */
     StrawDTO getStrawByStrawId(int strawId);
+
+    /**
+     * 获取所有麦管解冻记录
+     * @return
+     */
+    List<StrawDTO> getAllThawRecord();
 }

@@ -132,10 +132,10 @@ public class StrawController {
     }
 
     @RequestMapping(value = "strawByBarcodeNum",method = RequestMethod.POST)
-    public @ResponseBody StrawDTO getStrawByBarcodeNum(HttpServletRequest request){
+    public @ResponseBody Map getStrawByBarcodeNum(HttpServletRequest request){
         String barcodeNum = request.getParameter("barcodeNum");
-        StrawDTO strawDTO = strawService.getStrawByBarcodeNum(barcodeNum);
-        return strawDTO;
+        Map map = strawService.getStrawByBarcodeNum(barcodeNum);
+        return map;
     }
 
     @RequestMapping(value = "scanningThawing",method = RequestMethod.POST)
@@ -145,5 +145,11 @@ public class StrawController {
         String thawTime = request.getParameter("thawTime");
         StrawDTO strawDTO = strawService.getStrawBySanningThawing(strawId,operator,thawTime);
         return strawDTO;
+    }
+
+    @RequestMapping(value = "allThawRecord",method = RequestMethod.GET)
+    public @ResponseBody List<StrawDTO> getAllThawRecord(){
+        List<StrawDTO> strawDTOList = strawService.getAllThawRecord();
+        return strawDTOList;
     }
 }

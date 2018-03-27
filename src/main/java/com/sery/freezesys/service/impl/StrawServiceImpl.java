@@ -107,8 +107,8 @@ public class StrawServiceImpl implements StrawService {
             result = 0;
         }else {
             Divepipe divepipe = nitMapper.selectDivepipeById(selectStraw.getDivepipeId());
-            //当套管中麦管剩余位置小于或等于7时，每次解冻，套管剩余位置+1；否者抛出异常
-            if (divepipe.getFlagNum() <= 7){
+            //当套管中麦管剩余位置小于7时，每次解冻，套管剩余位置+1；否者抛出异常
+            if (divepipe.getFlagNum() < 7){
                 //
                 Map map = new HashMap();
                 map.put("divepipeId",divepipe.getDivepipeId());
@@ -192,17 +192,32 @@ public class StrawServiceImpl implements StrawService {
     }
 
     @Override
-    public StrawDTO getStrawByBarcodeNum(String barcodeNum) {
+    public Map getStrawByBarcodeNum(String barcodeNum) {
+        Map map = new HashMap();//结果放在Map里
+        int result;//返回前端的判断标志，0为已解冻，不可重复操作；1为正常返回；2为条形码无效
         StrawDTO strawDTO = strawMapper.getStrawByBarcodeNum(barcodeNum);
-        return strawDTO;
+        if (strawDTO != null){
+            if (strawDTO.getFreezeStatus().equals("已解冻")){
+                result = 0;
+                map.put("result",result);
+            }else {
+                result = 1;
+                map.put("result",result);
+                map.put("straw",strawDTO);
+            }
+        }else {
+            result = 2;
+            map.put("result",result);
+        }
+        return map;
     }
 
     @Override
     public StrawDTO getStrawBySanningThawing(int strawId, String operator,String thawTime) throws Exception {
         Straw straw = strawMapper.getStrawById(strawId);
         Divepipe divepipe = nitMapper.selectDivepipeById(straw.getDivepipeId());
-        //当套管中麦管剩余位置小于或等于7时，每次解冻，套管剩余位置+1；否者抛出异常
-        if (divepipe.getFlagNum() <= 7){
+        //当套管中麦管剩余位置小于7时，每次解冻，套管剩余位置+1；否者抛出异常
+        if (divepipe.getFlagNum() < 7){
             Map nitMap = new HashMap();
             nitMap.put("divepipeId",divepipe.getDivepipeId());
             nitMap.put("flagNum",divepipe.getFlagNum()+1);
@@ -218,5 +233,11 @@ public class StrawServiceImpl implements StrawService {
         }
         StrawDTO strawDTO = strawMapper.getStrawByStrawId(strawId);
         return strawDTO;
+    }
+
+    @Override
+    public List<StrawDTO> getAllThawRecord() {
+        List<StrawDTO> strawDTOList = strawMapper.getAllThawRecord();
+        return strawDTOList;
     }
 }
