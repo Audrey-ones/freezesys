@@ -1,5 +1,6 @@
 package com.sery.freezesys.service;
 
+import com.sery.freezesys.model.FingerPrint;
 import com.sery.freezesys.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,5 +38,20 @@ public class UserServiceTest {
     public void getUserNickname() {
         List<User> userList = userService.getUserNickname();
         System.out.println(userList);
+    }
+
+    @Test
+    public void insertFingerprint() {
+        FingerPrint fingerPrint = new FingerPrint();
+        fingerPrint.setFingerprintTemp("4dsf5dfsdkfls,dmfkdnmfkd");
+        fingerPrint.setUserId(10);
+        int result = userService.insertFingerprint(fingerPrint);
+        System.out.println(result);
+    }
+
+    @Test
+    public void getAllFingerprintInfo() {
+        List list = userService.getAllFingerprintInfo();
+        System.out.println(list);
     }
 }

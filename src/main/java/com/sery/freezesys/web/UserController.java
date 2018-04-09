@@ -1,5 +1,6 @@
 package com.sery.freezesys.web;
 
+import com.sery.freezesys.model.FingerPrint;
 import com.sery.freezesys.model.User;
 import com.sery.freezesys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,6 +126,21 @@ public class UserController {
     public @ResponseBody List<User> getNickname(){
         List<User> userList = userService.getUserNickname();
         return userList;
+    }
+
+    @RequestMapping(value = "fingerprint/register",method = RequestMethod.POST)
+    public int fingerprintRegister(HttpServletRequest request){
+        FingerPrint fingerPrint = new FingerPrint();
+        fingerPrint.setFingerprintTemp(request.getParameter("fingerprintTemp"));
+        fingerPrint.setUserId(Integer.parseInt(request.getParameter("userId")));
+        int result = userService.insertFingerprint(fingerPrint);
+        return result;
+    }
+
+    @RequestMapping(value = "fingerprint/allTemp",method = RequestMethod.GET)
+    public @ResponseBody List<FingerPrint> getAllTemp(){
+        List<FingerPrint> fingerPrintList = userService.getAllFingerprintInfo();
+        return fingerPrintList;
     }
 
 }

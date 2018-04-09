@@ -1,5 +1,6 @@
 package com.sery.freezesys.service;
 
+import com.sery.freezesys.model.FingerPrint;
 import com.sery.freezesys.model.User;
 
 import java.util.List;
@@ -59,5 +60,18 @@ public interface UserService {
      * @return
      */
     List<User> getUserNickname();
+
+    /**
+     * 登记指纹模板
+     * @param fingerPrint
+     * @return
+     */
+    int insertFingerprint(FingerPrint fingerPrint);
+
+    /**
+     * 获取所有的模板信息
+     * @return
+     */
+    List<FingerPrint> getAllFingerprintInfo();
 
 }

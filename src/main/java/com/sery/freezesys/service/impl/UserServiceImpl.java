@@ -1,6 +1,7 @@
 package com.sery.freezesys.service.impl;
 
 import com.sery.freezesys.dao.UserMapper;
+import com.sery.freezesys.model.FingerPrint;
 import com.sery.freezesys.model.Token;
 import com.sery.freezesys.model.User;
 import com.sery.freezesys.service.UserService;
@@ -8,6 +9,7 @@ import com.sery.freezesys.utils.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +82,18 @@ public class UserServiceImpl implements UserService {
     public List<User> getUserNickname() {
         List<User> userList = userMapper.getUserNickname();
         return userList;
+    }
+
+    @Override
+    public int insertFingerprint(FingerPrint fingerPrint) {
+        int result = userMapper.insertFingerprint(fingerPrint);
+        return result;
+    }
+
+    @Override
+    public List<FingerPrint> getAllFingerprintInfo() {
+        List<FingerPrint> fingerPrintList = userMapper.getAllFingerprint();
+        return fingerPrintList;
     }
 
 }

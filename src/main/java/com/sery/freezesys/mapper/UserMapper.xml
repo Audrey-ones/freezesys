@@ -15,6 +15,12 @@
         <result column="remark" property="remark" jdbcType="VARCHAR"></result>
     </resultMap>
 
+    <resultMap id="fingerprint" type="com.sery.freezesys.model.FingerPrint">
+        <id column="id" property="fingerprintId" jdbcType="INTEGER"></id>
+        <result column="fingerprint_temp" property="fingerprintTemp" jdbcType="VARCHAR"></result>
+        <result column="user_id" property="userId" jdbcType="INTEGER"></result>
+    </resultMap>
+
     <!--用户登录-->
     <select id="getUserByUser" parameterType="User" resultMap="userInfo">
         SELECT * FROM
@@ -98,6 +104,21 @@
         tb_user
         WHERE
         straw_del = '可操作'
+    </select>
+
+    <!--登记指纹模板-->
+    <insert id="insertFingerprint" parameterType="com.sery.freezesys.model.FingerPrint">
+        INSERT INTO
+        tb_fingerprint(fingerprint_temp,user_id)
+        VALUES
+        (#{fingerprintTemp,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER})
+    </insert>
+
+    <!--获取所有的指纹模板-->
+    <select id="getAllFingerprint" resultMap="fingerprint">
+        SELECT *
+        FROM
+        tb_fingerprint
     </select>
 
 </mapper>
