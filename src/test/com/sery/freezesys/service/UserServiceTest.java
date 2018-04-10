@@ -54,4 +54,10 @@ public class UserServiceTest {
         List list = userService.getAllFingerprintInfo();
         System.out.println(list);
     }
+
+    @Test
+    public void getFingerprintByUserId() {
+        FingerPrint fingerPrint = userService.getFingerprintByUserId(10);
+        System.out.println(fingerPrint);
+    }
 }

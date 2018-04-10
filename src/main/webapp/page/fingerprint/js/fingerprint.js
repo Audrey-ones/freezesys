@@ -1242,7 +1242,7 @@ function clearFPImage(context, browserFlag)
 	}
 	else if(browserFlag == "register")
 	{
-		showImage(context, "image/base_fpVerify_clearImage.png", "clearForRegister");
+		showImage(context, "page/fingerprint/image/base_fpVerify_clearImage.png", "clearForRegister");
 	}
 	else if(browserFlag == "verifyForSimple" || browserFlag == "registerForSimple")
 	{
@@ -1822,7 +1822,8 @@ function getFPTemplate(paramArray, flag)
                     }
                     //打印登记的指纹打印会叠加
                     console.log("采集的指纹信息为："+fpTemplate);
-                    fingerprintRegister(fpTemplate);
+                    var info = getAllTemplate();
+                    fingerprintRegister(info,fpTemplate);
                 }
                 else if(flag == "verification")
                 {
@@ -1830,7 +1831,10 @@ function getFPTemplate(paramArray, flag)
                     //指纹比对
                     fpComparison(fpTemplate);
                     console.log("比对的指纹信息为："+fpTemplate);
-                    fingerprintMatch(fpTemplate);
+                    var info = getAllTemplate();
+                    //console.log(info)
+                    fingerprintMatch(info,fpTemplate);
+                    //console.log(flag)
                 }
             }
             else if(ret == -2003)

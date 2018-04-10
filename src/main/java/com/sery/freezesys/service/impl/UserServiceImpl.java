@@ -96,4 +96,22 @@ public class UserServiceImpl implements UserService {
         return fingerPrintList;
     }
 
+    @Override
+    public Map signInByFingerprint(int userId) {
+        Map map = new HashMap();
+        User user = userMapper.getUserById(userId);
+        Token token = new Token();
+        token.setUserId(user.getUserId());
+        token.setToken(TokenUtil.getToken());
+        map.put("user",user);
+        map.put("token",token);
+        return map;
+    }
+
+    @Override
+    public FingerPrint getFingerprintByUserId(int userId) {
+        FingerPrint fingerPrint = userMapper.getFingerprintByUserId(userId);
+        return fingerPrint;
+    }
+
 }

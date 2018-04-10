@@ -121,4 +121,13 @@
         tb_fingerprint
     </select>
 
+    <!--根据用户ID查找该用户的指纹信息-->
+    <select id="getFingerprintByUserId" resultMap="fingerprint" parameterType="java.lang.Integer">
+        SELECT *
+        FROM
+        tb_fingerprint
+        WHERE
+        user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
 </mapper>

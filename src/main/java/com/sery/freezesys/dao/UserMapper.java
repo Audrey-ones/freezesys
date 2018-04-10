@@ -81,4 +81,11 @@ public interface UserMapper {
      */
     List<FingerPrint> getAllFingerprint();
 
+    /**
+     * 根据用户ID查找该用户的指纹信息
+     * @param userId
+     * @return
+     */
+    FingerPrint getFingerprintByUserId(int userId);
+
 }

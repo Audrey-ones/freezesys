@@ -74,4 +74,18 @@ public interface UserService {
      */
     List<FingerPrint> getAllFingerprintInfo();
 
+    /**
+     * 使用指纹登录，获取用户信息返回
+     * @param userId
+     * @return
+     */
+    Map signInByFingerprint(int userId);
+
+    /**
+     * 根据用户ID查找该用户的指纹信息
+     * @param userId
+     * @return
+     */
+    FingerPrint getFingerprintByUserId(int userId);
+
 }

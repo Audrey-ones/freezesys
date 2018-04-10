@@ -622,7 +622,7 @@ function drawHandAndArc(context, coordArray, color, x, y, num)
         new renderHand(context, coordArray).drawHand(color);
     }
     //绘画圆圈
-    showImage(context, "image/base_fpVerify_clearImage.png", "clearForRegister");
+    showImage(context, "page/fingerprint/image/base_fpVerify_clearImage.png", "clearForRegister");
     //绘画圆弧
     //else if(num == 12)
     //{
@@ -869,7 +869,7 @@ function doVerify()
 /**
  * 测试指纹1:1比对
  */
-function doVerify()
+/*function doVerify()
 {
     var regTemplate = new Array();
     //var regTemplate = "TVFTUjIyAAAEEhAFBQUHCc7QAAAcE2kAAAAAgyEgiBKiAacPlQABAIIdnAHcAH4PagBlEmYN6ACJAA0PLhKrAaoPSADAAZcdEQGWACsONgA8EqwMzQAYAEYPZBJMAIMOhAB3AJodXgGdALIPeAB5EmQPqQBZADAMNxKXAbMPRACKAMIdAABwAM4PYQAbEvkOoQA9Ab0PAhMXAFMOtQCeAfAdlwGIAM0PZABvEucMcgDfAEoPyBJqAUgOngDAAX0dcAEyANkPUAAnE/cOIwBXAH8PAxMHAFMMGQDiAMEdLAmp3xIhWOopGLPgtfpCBkfzxGWAgSogmv2fgkJ1qPtygM/6FgYnAf6ecoBWeeZzdz8K4i9neo/e2VeB9g7jj7PzfPgBCHvu5hdWAxMP/QzLAbaAsJMYEaa8IAtOidYD9w2j/FoCFgk3ia4jhmX6I8cHuYf3hcMQ8AG335Nj830/ERZyASuC6G9qhZJs8OoY8hMfC8filOfG4M5Wk4TO7EYDExab4gbnvZFXfbcHvvW69PsZcAGv37/XMgzfEcLuzLf4/cQJBBIDMVlMFw+e9VYh1l1f/06bOqskIQADRB4qBMUsBEicDQA4AFoBwIJDgiUARABXVXhw7cCVw4DDb0fAf9CGxRQAVACnosXSwkSEwsDCBosDEmABXpNcDsWHBHvCgWd4eAbFngRlx8HAwwUAHwAN7P7ZDAAOAoZ4+9FSbgMAGQWJwwgSYhNTwVyABYgZEswVj6lpwkl6ldSDocPBSQnF1R0dwf/9/f4kwQDJCIGOBAAbLviECxMNL6mZfsUFwcDSwcMRAO83WcPFgJONkMQLAKs4SNLDcMHClhbFp0r7/P3A+fjAm/767PzB/f/9wOMDBNtTgcMJAJmlU6XUyMLDDQELoEkyVMHB+10GAMtrOYHBDQAUazAFc4BuBQG8b3Cn3gDPYEf//vz9/D76+u38//7///w7/vns//v9wP3A3gEPb0j///9HwDhU++3+/ztE/0beAQiBSP/+PlP+Ov/7UsH8///AwDv/xewLARSXKXivhQ4SNp0peIOJzgEPvVIqV8AzDsUMvznDdcFsb8HdARSuXVVTPsDA7v867f9LBwAMyvWZaB4ADsta/0eQ/kkeABDZXP/COcFP0zMHAAveJwbAxNECAZ3fdP3QAQTsZUZM//5bBf/60j/BChAXC9N0emUGEZ8Icf6F/w0DAgtiPkr/yBEGC2ZL/8D+wzr+XRYRWVt9MgrUAiJ1RcH/ZAwQyynz63PD/8PAasIQED0XwMDCagjVDjU7n8GNBRChhXTEKgQR5kNtRcEQ511sRVJCABmGAQYTAccAWl8AxACmEoXUAAAZRZcAQFAAAAAAABbFAAQSAzIAAAAAxQBBUA==";
@@ -916,14 +916,7 @@ function doVerify()
     }
 
 
-}
-
-function getTemplate(fpteme)
-{
-    setTimeout(function(){
-        location.href='../../login.html';
-    },4000);
-}
+}*/
 
 /**
  * 返回登录页面
@@ -941,4 +934,43 @@ function closeCompa()
     $("#bg").css("display", "none");
     $("#box").css("display", "none");
     $("#comparisonDiv").css("display", "none");
+    //重新加载页面，防止重复比对
+    location.reload();
 }
+
+/**
+ * 1:1的指纹比对
+ * @param fingerprintTemp
+ * @param template
+ * @param callback
+ */
+function doVerify(fingerprintTemp,template,callback){
+    $.ajax( {
+        async:false,
+        type : "POST",
+        url : "http://127.0.0.1:22001/ZKBIOOnline/fingerprint/verify",
+        dataType : "json",
+        data:JSON.stringify({'reg':fingerprintTemp,
+            'ver':template}),
+        success : function(data)
+        {
+            //返回码
+            var ret = null;
+            ret = data.ret;
+            //接口调用成功返回时
+            if(ret == 0)
+            {
+                callback(data.score);
+            }
+            else
+            {
+                //alert("ret:" + data.ret);
+            }
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown)
+        {
+            alert("请安装指纹驱动或启动该服务!");
+        }
+    });
+}
+

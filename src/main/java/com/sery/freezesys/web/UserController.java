@@ -143,4 +143,18 @@ public class UserController {
         return fingerPrintList;
     }
 
+    @RequestMapping(value = "fingerprint/user",method = RequestMethod.POST)
+    public @ResponseBody Map signInByFingerprint(HttpServletRequest request){
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        Map map = userService.signInByFingerprint(userId);
+        return map;
+    }
+
+    @RequestMapping(value = "fingerprint/check",method = RequestMethod.POST)
+    public @ResponseBody FingerPrint getFingerprintByUserId(HttpServletRequest request){
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        FingerPrint fingerPrint = userService.getFingerprintByUserId(userId);
+        return fingerPrint;
+    }
+
 }

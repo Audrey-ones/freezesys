@@ -133,7 +133,7 @@ layui.config({
 				//获取当前用户的ID
 				var userId = usersData[i].userId;
 				var index = layui.layer.open({
-					title : "编辑病人信息",
+					title : "编辑用户信息",
 					type : 2,
 					content : "userEdit.html",
 					success : function (data) {
