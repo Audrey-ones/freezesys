@@ -29,8 +29,9 @@ function checkIsRegister() {
         success : function (data) {
             console.log(data)
             if (data != null){
-                $("#tip").text("您已经进行指纹登记了！请勿重复操作！");
-                $("#tip_flag").css("display","block");
+                /*$("#tip").text("您已经进行指纹登记了！请勿重复操作！");
+                $("#tip_flag").css("display","block");*/
+                $("#isRegister").css("display","block");
             }else{
                 $("#tip_flag").css("display","block");
                 $("#fpRegisterDiv").css("display","inline");
@@ -100,7 +101,7 @@ function fingerprintRegister(data,template) {
                 });
                 setTimeout(function () {
                     location.reload();
-                },1000);
+                },2000);
             }
         })
     }

@@ -23,7 +23,12 @@
 		<input type="hidden" id="verifyTemplate" name="verifyTemplate" />
 	</form>
 
-	<div id="tip_flag" style="margin-left: 20px;display: none">
+	<div id="isRegister" style="text-align: center; padding: 5% 0;display: none">
+		<i class="fa fa-check-square-o" style="line-height:20rem; font-size:20rem; color: #393D50;"></i>
+		<p style="font-size: 20px; font-weight: 300; color: #999;">您已经进行指纹登记了！请勿重复操作！</p>
+	</div>
+
+	<div id="tip_flag" style="margin-left: 20px;display: none;margin-bottom: 40px">
 		<h2 id="tip">请点击获取指纹进行登记：</h2>
 	</div>
 
@@ -51,24 +56,25 @@
 
 	<div id="bg" style="display: none;"></div>
 	<div id="box" class="box" style="display: none;">
-		<h2>指纹登记</h2>
+		<h2 style="text-align: center">指纹登记</h2>
 		<div class="list">
 			<canvas id="canvas" width="430" height="450"
 				style="background: rgb(243, 245, 240)"></canvas>
 			<input type="hidden" id="whetherModify" name="whetherModify" alt=""
 				value="111" />
 
-			<div
+			<!--<div
 				style="position: absolute; left: 310px; top: 325px; width: 70px; height: 28px;">
 				<button type="button" id="submitButtonId" name="makeSureName"
 					onclick="submitEvent()" class="button-form">确定</button>
-				<!-- ${common_edit_ok}:确定 -->
-			</div>
+				&lt;!&ndash; ${common_edit_ok}:确定 &ndash;&gt;
+			</div>-->
 			<div
-				style="position: absolute; left: 310px; top: 365px; width: 70px; height: 28px;">
-				<button class="button-form" type="button" id="closeButton"
+				style="position: absolute; left: 310px; top: 365px; width: 70px; height: 28px;border-radius: 4px">
+				<button class="button-form" type="button" id="closeButton" style="border-radius: 4px;border: 1px solid salmon;
+				padding: 4px;background: #fff;cursor: pointer;"
 					name="closeButton" onclick='cancelEvent("确认保存当前修改吗?", "指纹数:");'>
-					取消</button>
+					取消登记</button>
 				<!-- ${common_edit_cancel}:取消 -->
 			</div>
 		</div>
