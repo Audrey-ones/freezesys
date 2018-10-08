@@ -31,7 +31,7 @@ public class StrawServiceTest {
     public void getStrawList() throws ParseException {
         //List<StrawDTO> strawDTOList = strawService.getStrawList();
         //System.out.println(strawDTOList);
-        List<StrawDTO> strawDTOList = strawMapper.selectAllStraw();
+        List<StrawDTO> strawDTOList = strawService.getStrawByPage();
         System.out.println(strawDTOList);
     }
 
@@ -99,5 +99,12 @@ public class StrawServiceTest {
     public void getAllThawRecord() {
         List<StrawDTO> strawDTOList = strawService.getAllThawRecord();
         System.out.println(strawDTOList);
+    }
+
+    @Test
+    public void getStrawsLike() {
+        List<StrawDTO> list = strawService.selectStrawsLike("b");
+        System.out.println(list);
+        System.out.println(list.size());
     }
 }

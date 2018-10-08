@@ -1,4 +1,226 @@
-layui.config({
+//创建保存页码数组的函数
+function setPage(length, amount, num, first) {
+    //length数据总条数
+    //amount每页数据条数
+    //num保留的页码数
+    //first第一页的页码
+    var pages = []; //创建分页数组
+    var page = Math.ceil(length / amount);
+    if (page <= num) {
+        for (var i = 1; i <= page; i++) {
+            pages.push(i);
+        }
+    }
+    if (page > num) {
+        for (var i = first; i < first + num; i++) {
+            pages.push(i);
+        }
+    }
+    return pages;
+}
+
+var app = angular.module("nitApp",[]);
+app.controller("nitCtrl",["$scope","nitService",function ($scope,nitService) {
+    $scope.show=true;
+    $scope.tr_show=false;
+
+    //刷新页面
+    $scope.reloadPage = function () {
+        window.location.reload();
+    };
+
+    //分割数组（把大数组分割成小数组）
+    function sliceArr(page,size,data) {
+        var result = [];
+        for (var i=0; i<Math.ceil(data.length/size);i++){
+            if (i == page){
+                var start = i*size;
+                var end = start+size;
+                result = data.slice(start,end);
+            }
+        }
+        return result;
+    }
+
+    //分页
+    function pagination(length,data) {
+        $scope.firstPage = 1;
+        $scope.pageNum = 5;
+        $scope.page = 1;
+        var amount = length;
+        var each = 10;
+        $scope.sub = function (page) {
+            var list = sliceArr(page-1,each,data);
+            $scope.nitList = list;
+            $scope.lastPage = Math.ceil(amount / each);
+            if (page >= $scope.pageNum) {
+                $scope.firstPage = page - Math.floor($scope.pageNum / 2);
+            } else {
+                $scope.firstPage = 1;
+            }
+            if ($scope.firstPage > $scope.lastPage - $scope.pageNum) {
+                $scope.firstPage = $scope.lastPage - $scope.pageNum + 1;
+            }
+            $scope.pages = setPage(amount, each, $scope.pageNum, $scope.firstPage);
+            $scope.page = page;
+
+        };
+        $scope.sub(1);
+    }
+
+    //判断字符是否为空
+    function isEmpty(obj) {
+        if (typeof obj == "undefined" || obj == null || obj == ""){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    //加载页面液氮罐信息
+    nitService.loadNitList(function (data) {
+        pagination(data.length,data);
+    });
+
+    layui.use(['form','layer','jquery'],function () {
+        var form = layui.form(),
+            layer = parent.layer === undefined ? layui.layer : parent.layer,
+            $ = layui.jquery;
+
+        //获取保存在cookie里的用户
+        var user;
+        if (getCookie('user')){
+            user=JSON.parse(getCookie('user'));
+
+        }
+        //读取cookies
+        function getCookie(name) {
+            var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+            if (arr=document.cookie.match(reg)){
+                return arr[2];
+            }else {
+                return null;
+            }
+        }
+
+        //模糊查询液氮罐信息
+        $scope.nitLike = function (keyword) {
+            if (!isEmpty(keyword)){
+                nitService.loadLikeNit(keyword,function (data) {
+                    if (data.length != 0){
+                        pagination(data.length,data);
+                        $scope.tr_show=false;
+                        $scope.show=true;
+                    }else {
+                        $scope.nitList=data;
+                        $scope.tr_show=true;
+                        $scope.show=false;
+                    }
+                })
+            }else {
+                layer.msg("请输入关键字");
+            }
+
+        };
+
+        //新增液氮罐信息
+        $scope.addNit = function () {
+            var index = layui.layer.open({
+                title : "添加液氮罐",
+                type : 2,
+                content : "nitAdd.html",
+                success : function (layero, index) {
+                }
+            })
+            //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+            $(window).resize(function () {
+                layui.layer.full(index);
+            })
+            layui.layer.full(index);
+        }
+
+        //编辑选中的液氮罐信息
+        $scope.editNit = function (nit) {
+            var index = layui.layer.open({
+                title : "编辑病人信息",
+                type : 2,
+                content : "nitEdit.html",
+                success : function (layero, index) {
+                    //获取子页面
+                    var body = layui.layer.getChildFrame('body',index);
+                    body.find("#nitId").val(nit.nitId);
+                    body.find(".nitNum").val(nit.nitNum);
+                    body.find(".version").val(nit.version);
+                    body.find(".antibodyType").val(nit.antibodyType);
+                    body.find(".status").val(nit.status);
+                    body.find(".remark").val(nit.remark);
+                }
+            })
+            //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+            $(window).resize(function () {
+                layui.layer.full(index);
+            })
+            layui.layer.full(index);
+        }
+
+        //删除液氮罐
+        $scope.delNit = function (key,nit) {
+            if (user.nitDel == "可操作"){
+                layer.confirm('小主，你真的要删除我吗？删除我将会一并删除该液氮罐中的麦管记录哦~',{icon:3,title:'温馨提示'},function (index) {
+                    nitService.deleteNit(nit.nitId,function (data) {
+                        layer.msg("删除成功！");
+                        $scope.nitList.splice(key,1);
+                    });
+                    layer.close(index);
+                });
+            }else {
+                layer.msg("您没有删除该液氮罐的权限！");
+            }
+        }
+
+    })
+}]);
+
+app.service("nitService",["$http",function ($http) {
+    this.loadNitList = function (callback) {
+        $http({
+            url : '/nits',
+            method : 'GET'
+        }).then(function (value) {
+            if (callback){
+                callback(value.data);
+            }
+        })
+    };
+
+    this.deleteNit = function (nitId,callback) {
+        $http({
+            url : '/nits/'+nitId,
+            method : 'POST'
+        }).then(function (value) {
+            if (callback){
+                callback(value.data);
+            }
+        })
+    }
+
+    this.loadLikeNit = function (keyword,callback) {
+        $http({
+            url : '/nits/like',
+            method : 'GET',
+            params :{
+                keyword : keyword
+            }
+        }).then(function (value) {
+            if (callback){
+                callback(value.data);
+            }
+        })
+    };
+
+}]);
+
+/*layui.config({
     base : "js/"
 }).use(['form','layer','jquery','laypage'],function(){
     var form = layui.form(),
@@ -96,29 +318,12 @@ layui.config({
                 layer.close(index);
             },2000);
         }else{
-            /*layer.msg("请输入需要查询的内容");*/
+            /!*layer.msg("请输入需要查询的内容");*!/
             loadNits();
         }
     })
 
-    //添加文章
-    $(".nitsAdd_btn").click(function(){
-        var index = layui.layer.open({
-            title : "添加液氮罐",
-            type : 2,
-            content : "nitAdd.html",
-            success : function(layero, index){
-                /*layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
-                    tips: 3
-                });*/
-            }
-        })
-        //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-        $(window).resize(function(){
-            layui.layer.full(index);
-        })
-        layui.layer.full(index);
-    })
+
 
     //审核文章
     $(".audit_btn").click(function(){
@@ -167,64 +372,7 @@ layui.config({
         form.render('checkbox');
     })
 
-    //是否展示
-    form.on('switch(isShow)', function(data){
-        var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
-        setTimeout(function(){
-            layer.close(index);
-            layer.msg("展示状态修改成功！");
-        },2000);
-    })
 
-
-    $("body").on("click",".news_collect",function(){  //收藏.
-        if($(this).text().indexOf("已收藏") > 0){
-            layer.msg("取消收藏成功！");
-            $(this).html("<i class='layui-icon'>&#xe600;</i> 收藏");
-        }else{
-            layer.msg("收藏成功！");
-            $(this).html("<i class='iconfont icon-star'></i> 已收藏");
-        }
-    })
-
-    //编辑选中的液氮罐信息
-    $("body").on("click",".nit_edit",function () {
-        var _this = $(this);
-        for(var i=0; i<nitsData.length; i++){
-            if (nitsData[i].nitId == _this.attr("data-id")){
-                //获取当前点击的病人ID
-                var nitId = nitsData[i].nitId;
-                var index = layui.layer.open({
-                    title : "编辑病人信息",
-                    type : 2,
-                    content : "nitEdit.html",
-                    success : function (layero,index) {
-                        //获取子页面
-                        var body = layui.layer.getChildFrame('body', index);
-                        body.find("#nitId").val(nitId);
-                        $.ajax({
-                            url : "/nits/"+nitId,
-                            type : "get",
-                            dataType : "json",
-                            success : function (data) {
-                                body.find(".nitNum").val(data.nitNum);
-                                body.find(".version").val(data.version);
-                                body.find(".antibodyType").val(data.antibodyType);
-                                body.find(".status").val(data.status);
-                                body.find(".remark").val(data.remark);
-                            }
-                        })
-                    }
-                })
-                //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-                $(window).resize(function () {
-                    layui.layer.full(index);
-                })
-                layui.layer.full(index);
-            }
-        }
-
-    })
 
     //批量删除液氮罐
     $(".batchDel").click(function(){
@@ -343,4 +491,4 @@ layui.config({
             }
         })
     }
-})
+})*/

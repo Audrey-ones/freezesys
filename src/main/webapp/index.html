@@ -57,7 +57,7 @@
     <div class="layui-side layui-bg-black">
         <div class="user-photo">
             <a class="img" title="my head" ><img src="images/xiaoxin.jpg"></a>
-            <p><i class="fa fa-yelp" aria-hidden="true"></i>&nbsp;&nbsp;<span class="userName"></span></p>
+            <p><i class="fa fa-yelp" aria-hidden="true"></i>&emsp;<span class="userName"></span></p>
         </div>
         <div class="navBar layui-side-scroll"></div>
     </div>
@@ -84,8 +84,8 @@
 
 <!-- 锁屏 -->
 <div class="admin-header-lock" id="lock-box" style="display: none;">
-    <div class="admin-header-lock-img"><img src="images/xiaoxin.jpg"/></div>
-    <div class="admin-header-lock-name lockUserName" id="lockUserName"></div>
+    <div class="admin-header-lock-img"><img src="images/xiaoxin.jpg" style="border: 1px solid #ccc"/></div>
+    <div class="admin-header-lock-name lockUserName" id="lockUserName" style="color: #333333;font-size: 16px;"></div>
     <div class="input_btn">
         <input type="password" class="admin-header-lock-input layui-input" placeholder="请输入密码解锁.." name="lockPwd" id="lockPwd" />
         <button class="layui-btn" id="unlock">解锁</button>
@@ -95,6 +95,7 @@
 <div class="site-tree-mobile layui-hide"><i class="layui-icon">&#xe602;</i></div>
 <div class="site-mobile-shade"></div>
 
+<script type="javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="layui/layui.js"></script>
 <script type="text/javascript" src="js/nav.js"></script>
 <script type="text/javascript" src="js/leftNav.js"></script>

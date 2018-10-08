@@ -32,6 +32,7 @@ layui.config({
                 "addType":1
             },
             success : function (data) {
+                console.log(data);
                 if (data == 1){
                     //弹出loading
                     var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});

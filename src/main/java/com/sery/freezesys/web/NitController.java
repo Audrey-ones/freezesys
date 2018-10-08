@@ -142,4 +142,16 @@ public class NitController {
         List<NitDTO> nitDTOList = nitService.getDivepipeByTubId(tubId);
         return nitDTOList;
     }
+
+    /**
+     * 根据关键字模糊查询液氮罐信息
+     * @param keyword
+     * @return
+     */
+    @RequestMapping(value = "nits/like",method = RequestMethod.GET)
+    public @ResponseBody List<Nit> getNitsLike(@RequestParam("keyword")String keyword){
+        List<Nit> nitList = nitService.getNitsLike(keyword);
+        return nitList;
+    }
+
 }

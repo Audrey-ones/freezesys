@@ -99,7 +99,7 @@ public class UserController {
     }
 
     /**
-     *
+     *根据用户ID查询用户信息
      * @param userId
      * @return
      */
@@ -109,6 +109,11 @@ public class UserController {
         return user;
     }
 
+    /**
+     * 更新用户信息
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "updateUser",method = RequestMethod.POST)
     public int updateUser(HttpServletRequest request){
         User user = new User();
@@ -122,12 +127,21 @@ public class UserController {
         return result;
     }
 
+    /**
+     * 根据解冻权限查找用户昵称
+     * @return
+     */
     @RequestMapping(value = "nickname",method = RequestMethod.GET)
     public @ResponseBody List<User> getNickname(){
         List<User> userList = userService.getUserNickname();
         return userList;
     }
 
+    /**
+     * 登记指纹模板
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "fingerprint/register",method = RequestMethod.POST)
     public int fingerprintRegister(HttpServletRequest request){
         FingerPrint fingerPrint = new FingerPrint();
@@ -137,12 +151,21 @@ public class UserController {
         return result;
     }
 
+    /**
+     * 获取所有的模板信息
+     * @return
+     */
     @RequestMapping(value = "fingerprint/allTemp",method = RequestMethod.GET)
     public @ResponseBody List<FingerPrint> getAllTemp(){
         List<FingerPrint> fingerPrintList = userService.getAllFingerprintInfo();
         return fingerPrintList;
     }
 
+    /**
+     * 使用指纹登录，获取用户信息返回
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "fingerprint/user",method = RequestMethod.POST)
     public @ResponseBody Map signInByFingerprint(HttpServletRequest request){
         int userId = Integer.parseInt(request.getParameter("userId"));
@@ -150,11 +173,33 @@ public class UserController {
         return map;
     }
 
+    /**
+     * 根据用户ID查找该用户的指纹信息
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "fingerprint/check",method = RequestMethod.POST)
     public @ResponseBody FingerPrint getFingerprintByUserId(HttpServletRequest request){
         int userId = Integer.parseInt(request.getParameter("userId"));
         FingerPrint fingerPrint = userService.getFingerprintByUserId(userId);
         return fingerPrint;
+    }
+
+    /**
+     * 根据关键字查询用户信息
+     * @param keyword
+     * @return
+     */
+    @RequestMapping(value = "users/keyword",method = RequestMethod.GET)
+    public @ResponseBody List<User> getUserByKeyword(@RequestParam("keyword")String keyword){
+        List<User> userList = userService.getUserByKeyword(keyword);
+        return userList;
+    }
+
+    @RequestMapping(value = "users/fingerprint/{userId}",method = RequestMethod.POST)
+    public int deleteFingerprintByUserId(@PathVariable("userId") int userId){
+        int result = userService.deleteFingerprintByUserId(userId);
+        return result;
     }
 
 }

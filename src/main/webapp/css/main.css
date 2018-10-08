@@ -125,3 +125,7 @@
 	.top_menu .layui-nav-item.showNotice[pc]{ display:none !important; }
 	.panel{ width:100%; }
 }
+
+.layui-table,.layui-table th{
+	text-align:center;
+}

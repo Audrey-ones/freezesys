@@ -12,18 +12,18 @@
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
 	<link rel="stylesheet" href="../../css/font_eolqem241z66flxr.css" media="all" />
 </head>
-<body class="childrenBody">
+<body class="childrenBody" ng-app="app" ng-controller="appCtrl">
 	<form class="layui-form" style="width:80%;">
 		<div class="layui-form-item">
 			<label class="layui-form-label">网站名称</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input linksName" lay-verify="required" placeholder="请输入网站名称">
+				<input type="text" ng-model="name" class="layui-input linksName" lay-verify="required" placeholder="请输入网站名称">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">网站地址</label>
 			<div class="layui-input-block">
-				<input type="tel" class="layui-input linksUrl" lay-verify="required|url" placeholder="请输入网站地址">
+				<input type="tel" ng-model="age" class="layui-input linksUrl" lay-verify="required|url" placeholder="请输入网站地址">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -60,6 +60,8 @@
 		    </div>
 		</div>
 	</form>
+
+	<script type="text/javascript" src="../../js/angular.js"></script>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script type="text/javascript" src="linksAdd.js"></script>
 </body>

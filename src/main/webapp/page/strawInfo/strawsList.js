@@ -1,384 +1,241 @@
-layui.config({
-	base : "js/"
-}).use(['form','layer','jquery','laypage'],function(){
-	var form = layui.form(),
-		layer = parent.layer === undefined ? layui.layer : parent.layer,
-		laypage = layui.laypage,
-		$ = layui.jquery;
+//创建保存页码数组的函数
+function setPage(length, amount, num, first) {
+    //length数据总条数
+    //amount每页数据条数
+    //num保留的页码数
+    //first第一页的页码
+    var pages = []; //创建分页数组
+    var page = Math.ceil(length / amount);
+    if (page <= num) {
+        for (var i = 1; i <= page; i++) {
+            pages.push(i);
+        }
+    }
+    if (page > num) {
+        for (var i = first; i < first + num; i++) {
+            pages.push(i);
+        }
+    }
+    return pages;
+}
 
-    $(".reload").click(function () {
+var app = angular.module("strawApp",[]);
+app.controller("strawCtrl",["$scope","strawService",function ($scope,strawService) {
+    $scope.show=true;
+    $scope.tr_show=false;
+
+    $scope.findStraw = function () {
+        strawService.loadStrawList(function (data) {
+            pagination(data.length,data);
+            $scope.show = true;
+        })
+    };
+
+    //刷新页面
+    $scope.reloadPage = function () {
         window.location.reload();
+    };
+
+    //分割数组（把一个大数组分割成小数组）
+    function sliceArr(page,size,arr) {
+        var result = [];
+        for (var i=0; i<Math.ceil(arr.length/size); i++){
+            if (i == page){
+                var start = i*size;
+                var end = start+size;
+                result = arr.slice(start,end);
+            }
+        }
+        return result;
+    }
+
+    //分页
+    function pagination(length,data) {
+        $scope.firstPage = 1;
+        $scope.pageNum = 5;
+        $scope.page = 1;
+        var amount = length;
+        var each = 10;
+        $scope.sub = function (page) {
+            var list = sliceArr(page-1,each,data);
+            $scope.strawList = list;
+            $scope.lastPage = Math.ceil(amount / each);
+            if (page >= $scope.pageNum) {
+                $scope.firstPage = page - Math.floor($scope.pageNum / 2);
+            } else {
+                $scope.firstPage = 1;
+            }
+            if ($scope.firstPage > $scope.lastPage - $scope.pageNum) {
+                $scope.firstPage = $scope.lastPage - $scope.pageNum + 1;
+            }
+            $scope.pages = setPage(amount, each, $scope.pageNum, $scope.firstPage);
+            $scope.page = page;
+
+        };
+        $scope.sub(1);
+    }
+
+    //加载数据
+    strawService.loadStrawList(function (data) {
+        pagination(data.length,data);
     });
 
-    //获取保存在cookie里的用户
-    var user;
-    if (getCookie('user')){
-        user=JSON.parse(getCookie('user'));
+    layui.use(['form','layer','jquery'],function () {
+        var form = layui.form(),
+            layer = layui.layer,
+            $ = layui.jquery;
 
-    }
-    //读取cookies
-    function getCookie(name) {
-        var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-        if (arr=document.cookie.match(reg)){
-            return arr[2];
-        }else {
-            return null;
+        //获取保存在cookie里的用户
+        var user;
+        if (getCookie('user')){
+            user=JSON.parse(getCookie('user'));
+
         }
-    }
+        //读取cookies
+        function getCookie(name) {
+            var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+            if (arr=document.cookie.match(reg)){
+                return arr[2];
+            }else {
+                return null;
+            }
+        }
 
-	//加载页面数据
-	var strawsData = '';
-	loadStraw();
-	function loadStraw() {
-        $.get("/straws", function(data){
-            //正常加载信息
-            strawsData = data;
-            //执行加载数据的方法
-            strawsList();
+        //历史存储录入
+        $scope.addStraw = function () {
+            var index = layer.open({
+                title : "历史存储录入",
+                type : 2,
+                content : "strawAdd.html",
+                success : function (layero, index) {
+
+                }
+            });
+            $(window).resize(function () {
+                layer.full(index);
+            });
+            layer.full(index);
+        };
+
+        //编辑麦管信息
+        $scope.editStraw = function (straw) {
+            if (straw.freezeStatus != "已解冻"){
+                strawService.loadStrawById(straw.strawId,function (data) {
+                    console.log(data);
+                    var index = layer.open({
+                        title : "编辑麦管信息",
+                        type : 2,
+                        content : "strawEdit.html",
+                        success : function (layero , index) {
+                            //获取子页面
+                            var body = layer.getChildFrame('body',index);
+                            body.find(".nitNum").val(straw.nitNum);
+                            body.find(".tubNum").val(straw.tubNum);
+                            body.find(".divepipeNum").val(straw.divepipeNum);
+                            body.find(".strawNum").val(straw.strawNum);
+                            body.find("#strawId").val(straw.strawId);
+                            body.find(".medicalRecord").val(straw.medicalRecord);
+                            body.find(".femaleName").val(straw.femaleName);
+                            body.find(".maleName").val(straw.maleName);
+                            body.find(".sampleAmount").val(straw.sampleAmount);
+                            body.find(".sampleNum").val(straw.sampleNum);
+                            body.find(".freezeNum").val(straw.freezeNum);
+                            body.find(".freezeTime").val(straw.freezeTime);
+                            body.find(".expireTime").val(straw.expireTime);
+                            //设置下拉框的默认值
+                            body.find(".sampleType").val(straw.sampleType);
+                            body.find("#patientId").val(data.patientId);
+                            body.find("#divepipeId").val(data.divepipeId);
+                        }
+                    });
+                    //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+                    $(window).resize(function () {
+                        layer.full(index);
+                    });
+                    layer.full(index);
+
+                });
+            }else {
+                layer.msg("该记录已经被解冻了哦~不可进行编辑操作！");
+            }
+
+        };
+
+        //解冻麦管（逻辑删除）
+        $scope.delStraw = function (straw) {
+            if (user.strawDel == "可操作"){
+                if (straw.freezeStatus != "已解冻"){
+                    layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'温馨提示'},function (index) {
+                        var thawTime = new Date().toLocaleString();
+                        strawService.deleteStraw(straw.strawId,"已解冻",thawTime,user.nickname,function (data) {
+                            if (data == 1){
+                                layer.msg("解冻成功！");
+                                setTimeout(function(){
+                                    //刷新父页面
+                                    parent.location.reload();
+                                },2000);
+                            }
+                        });
+                        layer.close(index);
+                    });
+                }else {
+                    layer.msg("该记录已经被解冻啦，请勿重复解冻！");
+                }
+
+            }else {
+                layer.msg("您没有解冻该麦管的权限哦！");
+            }
+        };
+
+    })
+}]);
+
+app.service("strawService",["$http",function ($http) {
+    this.loadStrawList = function (callback) {
+        $http({
+            url : '/straws',
+            method : 'GET'
+        }).then(function (value) {
+            if (callback){
+                callback(value.data);
+            }
+        })
+    };
+
+    this.loadAllStraws = function (callback) {
+        $http({
+            url : '/straws/like',
+            method : 'GET'
+        }).then(function (value) {
+            if (callback){
+                callback(value.data);
+            }
+        })
+    };
+    this.loadStrawById = function (strawId,callback) {
+        $http({
+            url : '/straws/'+strawId,
+            method : 'GET'
+        }).then(function (value) {
+            if (callback){
+                callback(value.data);
+            }
+        })
+    };
+    this.deleteStraw = function (strawId,freezeStatus,thawTime,operator,callback) {
+        $http({
+            url : '/updateFreezeStatus',
+            method : 'POST',
+            params : {
+                strawId : strawId,
+                freezeStatus : freezeStatus,
+                thawTime : thawTime,
+                operator : operator
+            }
+        }).then(function (value) {
+            if (callback){
+                callback(value.data);
+            }
         })
     }
-
-	//查询
-	$(".search_btn").click(function(){
-		var strawArray = [];
-		if($(".search_input").val() != ''){
-			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-            	$.ajax({
-					url : "/straws",
-					type : "get",
-					dataType : "json",
-					success : function(data){
-						for(var i=0;i<strawsData.length;i++){
-							var strawsStr = strawsData[i];
-							var selectStr = $(".search_input").val();
-		            		function changeStr(data){
-		            			var dataStr = '';
-		            			var showNum = data.split(eval("/"+selectStr+"/ig")).length - 1;
-		            			if(showNum > 1){
-									for (var j=0;j<showNum;j++) {
-		            					dataStr += data.split(eval("/"+selectStr+"/ig"))[j] + "<i style='color:#03c339;font-weight:bold;'>" + selectStr + "</i>";
-		            				}
-		            				dataStr += data.split(eval("/"+selectStr+"/ig"))[showNum];
-		            				return dataStr;
-		            			}else{
-		            				dataStr = data.split(eval("/"+selectStr+"/ig"))[0] + "<i style='color:#03c339;font-weight:bold;'>" + selectStr + "</i>" + data.split(eval("/"+selectStr+"/ig"))[1];
-		            				return dataStr;
-		            			}
-		            		}
-                            //病历号
-                            if(strawsStr.freezeNum.indexOf(selectStr) > -1){
-                                strawsStr["freezeNum"] = changeStr(strawsStr.freezeNum);
-                            }
-		            		//病历号
-		            		if(strawsStr.medicalRecord.indexOf(selectStr) > -1){
-                                strawsStr["medicalRecord"] = changeStr(strawsStr.medicalRecord);
-		            		}
-		            		//女方姓名
-		            		if(strawsStr.femaleName.indexOf(selectStr) > -1){
-                                strawsStr["femaleName"] = changeStr(strawsStr.femaleName);
-		            		}
-		            		//样品类型
-		            		if(strawsStr.sampleType.indexOf(selectStr) > -1){
-                                strawsStr["sampleType"] = changeStr(strawsStr.sampleType);
-		            		}
-		            		//冷冻时间
-		            		if(strawsStr.freezeTime.indexOf(selectStr) > -1){
-                                strawsStr["freezeTime"] = changeStr(strawsStr.freezeTime);
-		            		}
-		            		//到期时间
-		            		if(strawsStr.thawTime.indexOf(selectStr) > -1){
-                                strawsStr["thawTime"] = changeStr(strawsStr.thawTime);
-		            		}
-                            //冷冻状态
-                            if(strawsStr.freezeStatus.indexOf(selectStr) > -1){
-                                strawsStr["freezeStatus"] = changeStr(strawsStr.freezeStatus);
-                            }
-		            		if(strawsStr.freezeNum.indexOf(selectStr)>-1 || strawsStr.medicalRecord.indexOf(selectStr)>-1
-								|| strawsStr.femaleName.indexOf(selectStr)>-1 || strawsStr.sampleType.indexOf(selectStr)>-1
-								|| strawsStr.freezeTime.indexOf(selectStr)>-1 || strawsStr.thawTime.indexOf(selectStr)>-1
-								|| strawsStr.freezeStatus.indexOf(selectStr)>-1){
-                                strawArray.push(strawsStr);
-		            		}
-		            	}
-                        strawsData = strawArray;
-		            	strawsList(strawsData);
-					}
-				})
-            	
-                layer.close(index);
-            },2000);
-		}else{
-			loadStraw();
-		}
-	})
-
-	//添加麦管信息
-	$(".strawAdd_btn").click(function(){
-		var index = layui.layer.open({
-			title : "历史存储录入",
-			type : 2,
-			content : "strawAdd.html",
-			success : function(layero, index){
-				/*layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
-					tips: 3
-				});*/
-			}
-		})
-		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-		$(window).resize(function(){
-			layui.layer.full(index);
-		})
-		layui.layer.full(index);
-	})
-
-
-	//批量解冻
-	$(".batchDel").click(function(){
-		var $checkbox = $('.straws_list tbody input[type="checkbox"][name="checked"]');
-		var $checked = $('.straws_list tbody input[type="checkbox"][name="checked"]:checked');
-		if (user.strawDel == "可操作"){
-            if($checkbox.is(":checked")){
-                layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'提示信息'},function(index){
-                    var index = layer.msg('解冻中，请稍候',{icon: 16,time:false,shade:0.8});
-                    var thawTime = new Date().toLocaleString();
-                    setTimeout(function(){
-                        //更改解冻状态
-                        for(var j=0;j<$checked.length;j++){
-                            for(var i=0;i<strawsData.length;i++){
-                                if(strawsData[i].strawId == $checked.eq(j).parents("tr").find(".straw_del").attr("data-id")){
-                                    /*strawsData.splice(i,1);
-                                    strawsList(strawsData);*/
-                                    $.ajax({
-                                        url : "/updateFreezeStatus",
-                                        type : "post",
-                                        dataType : "json",
-                                        data : {
-                                            "strawId" : strawsData[i].strawId,
-                                            "freezeStatus" : "已解冻",
-                                            "thawTime" : thawTime,
-                                            "operator" : user.nickname
-                                        },
-                                        success : function (data) {
-                                            if (data == 1){
-                                                layer.msg("解冻成功！");
-                                                setTimeout(function(){
-                                                    //刷新父页面
-                                                    parent.location.reload();
-                                                },2000);
-                                            }else {
-                                                layer.msg("您已经解冻过该记录，请勿重复解冻！");
-                                            }
-                                        }
-                                    })
-                                }
-                            }
-                        }
-                        $('.straws_list thead input[type="checkbox"]').prop("checked",false);
-                        form.render();
-                        layer.close(index);
-                    },2000);
-                })
-            }else{
-                layer.msg("请选择需要解冻的麦管");
-            }
-		}else {
-			layer.msg("您没有批量解冻麦管的权限哦!");
-		}
-
-	})
-
-	//全选
-	form.on('checkbox(allChoose)', function(data){
-		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
-		child.each(function(index, item){
-			item.checked = data.elem.checked;
-		});
-		form.render('checkbox');
-	});
-
-	//通过判断文章是否全部选中来确定全选按钮是否选中
-	form.on("checkbox(choose)",function(data){
-		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
-		var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
-		if(childChecked.length == child.length){
-			$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
-		}else{
-			$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
-		}
-		form.render('checkbox');
-	})
- 
-	//编辑麦管信息
-	$("body").on("click",".straws_edit",function(){  //编辑
-        var _this = $(this);
-        for(var i=0; i<strawsData.length; i++){
-            if (strawsData[i].strawId == _this.attr("data-id")){
-                //获取当前点击的病人ID
-                var strawId = strawsData[i].strawId;
-                var index = layui.layer.open({
-                    title : "编辑麦管信息",
-                    type : 2,
-                    content : "strawEdit.html",
-                    success : function (layero,index) {
-                        //获取子页面
-                        var body = layui.layer.getChildFrame('body', index);
-                        body.find("#strawId").val(strawId);
-                        $.ajax({
-                            url : "/straws/"+strawId,
-                            type : "get",
-                            dataType : "json",
-                            success : function (data) {
-                                body.find(".sampleAmount").val(data.sampleAmount);
-                                body.find(".sampleNum").val(data.sampleNum);
-                                body.find(".freezeNum").val(data.freezeNum);
-                                body.find(".freezeTime").val(data.freezeTime);
-                                body.find(".expireTime").val(data.expireTime);
-                                body.find(".strawNum").val(data.strawNum);
-                                //设置下拉框的默认值
-                                body.find(".sampleType").val(data.sampleType);
-                                var patientId = data.patientId;
-                                var divepipeId = data.divepipeId;
-                                body.find("#patientId").val(patientId);
-                                body.find("#divepipeId").val(divepipeId);
-                                $.ajax({
-									url : "/patients/"+patientId,
-									type : "get",
-									dataType : "json",
-									success : function (patientData) {
-                                        body.find(".medicalRecord").val(patientData.medicalRecord);
-                                        body.find(".femaleName").val(patientData.femaleName);
-                                        body.find(".maleName").val(patientData.maleName);
-                                    }
-								});
-                                $.ajax({
-                                    url : "/nit/"+divepipeId,
-                                    type : "get",
-                                    dataType : "json",
-                                    success : function (numData) {
-                                        body.find(".nitNum").val(numData.nitNum);
-                                        body.find(".tubNum").val(numData.tubNum);
-                                        body.find(".divepipeNum").val(numData.divepipeNum);
-                                    }
-                                });
-                            }
-                        })
-                    }
-                })
-                //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-                $(window).resize(function () {
-                    layui.layer.full(index);
-                })
-                layui.layer.full(index);
-            }
-        }
-	})
-
-    //解冻一条记录（逻辑删除）
-	$("body").on("click",".straw_del",function(){
-		var _this = $(this);
-		if (user.strawDel == "可操作"){
-            layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'提示信息'},function(index){
-                //_this.parents("tr").remove();
-                var thawTime = new Date().toLocaleString();
-                console.log(thawTime);
-                for(var i=0;i<strawsData.length;i++){
-                    if(strawsData[i].strawId == _this.attr("data-id")){
-                        $.ajax({
-                            url : "/updateFreezeStatus",
-                            type : "post",
-                            dataType : "json",
-                            data : {
-                                "strawId" : strawsData[i].strawId,
-                                "freezeStatus" : "已解冻",
-                                "thawTime" : thawTime,
-                                "operator" : user.nickname
-                            },
-                            success : function (data) {
-                                if (data == 1){
-                                    layer.msg("解冻成功！");
-                                    setTimeout(function(){
-                                        //刷新父页面
-                                        parent.location.reload();
-                                    },2000);
-                                }else {
-                                    layer.msg("您已经解冻过该记录，请勿重复解冻！");
-                                }
-
-                            }
-                        })
-                        /*strawsData.splice(i,1);
-                        strawsList(strawsData);*/
-                    }
-                }
-                layer.close(index);
-            });
-		}else {
-			layer.msg("您没有解冻该麦管的权限哦！");
-		}
-
-	})
-
-    function timestampToTime(timestamp) {
-        var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-        Y = date.getFullYear() + '-';
-        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-        D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()+1) + ' ';
-        h = date.getHours() + ':';
-        m = date.getMinutes() ;
-        return Y+M+D+h+m;
-    }
-
-	function strawsList(that){
-		//渲染数据
-		function renderDate(data,curr){
-			var dataHtml = '';
-			if(!that){
-				currData = strawsData.concat().splice(curr*nums-nums, nums);
-			}else{
-				currData = that.concat().splice(curr*nums-nums, nums);
-			}
-			if(currData.length != 0){
-				for(var i=0;i<currData.length;i++){
-				    /*var freezeTime = timestampToTime(currData[i].freezeTime);*/
-					dataHtml += '<tr>'
-			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
-			    	+'<td>'+currData[i].strawNum+'管'+currData[i].nitNum+'-'+currData[i].tubNum+'-'+currData[i].divepipeNum+'</td>'
-					+'<td>'+currData[i].freezeNum+'</td>'
-			    	+'<td>'+currData[i].medicalRecord+'</td>'
-					+'<td>'+currData[i].femaleName+'</td>'
-					+'<td>'+currData[i].sampleType+'</td>'
-					+'<td>'+currData[i].sampleAmount+'</td>'
-					+'<td>'+currData[i].sampleNum+'</td>'
-					+'<td>'+currData[i].freezeTime+'</td>'
-					+'<td>'+currData[i].thawTime+'</td>'
-					+'<td>'+currData[i].freezeStatus+'</td>'
-					+'<td>'+currData[i].operator+'</td>'
-                    +'<td>'
-                    +  '<a class="layui-btn layui-btn-mini straws_edit" data-id="'+currData[i].strawId+'"><i class="iconfont icon-edit"></i> 编辑</a>'
-                    +  '<a class="layui-btn layui-btn-danger layui-btn-mini straw_del" data-id="'+currData[i].strawId+'"><i class="fa fa-snowflake-o"></i> 解冻</a>'
-                    +'</td>'
-			    	+'</tr>';
-				}
-			}else{
-				dataHtml = '<tr><td colspan="12">暂无数据</td></tr>';
-			}
-		    return dataHtml;
-		}
-
-		//分页
-		var nums = 10; //每页出现的数据量
-		if(that){
-            strawsData = that;
-		}
-		laypage({
-			cont : "page",
-			pages : Math.ceil(strawsData.length/nums),
-			jump : function(obj){
-				$(".straws_content").html(renderDate(strawsData,obj.curr));
-				$('.straws_list thead input[type="checkbox"]').prop("checked",false);
-		    	form.render();
-			}
-		})
-	}
-})
+}]);

@@ -3,6 +3,7 @@ package com.sery.freezesys.service;
 import com.sery.freezesys.model.Patient;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PatientService {
     /**
@@ -45,5 +46,13 @@ public interface PatientService {
      * @return
      */
     int getStrawCountByPatientId(int patientId);
+
+
+    /**
+     * 根据关键字获取病人信息
+     * @param keys
+     * @return
+     */
+    List<Patient> getPatientLike(String keys);
 
 }

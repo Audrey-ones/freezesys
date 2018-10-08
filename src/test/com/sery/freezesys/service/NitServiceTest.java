@@ -84,4 +84,10 @@ public class NitServiceTest {
         List tubList = nitService.getTubs();
         System.out.println(tubList);
     }
+
+    @Test
+    public void getNitsLike() {
+        List<Nit> nitList = nitService.getNitsLike("A");
+        System.out.println(nitList);
+    }
 }

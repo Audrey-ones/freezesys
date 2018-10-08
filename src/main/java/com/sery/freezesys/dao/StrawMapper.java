@@ -12,7 +12,13 @@ public interface StrawMapper{
      * 查询所有的麦管记录
      * @return
      */
-    List<StrawDTO> selectAllStraw();
+    List<StrawDTO> selectStrawByPage();
+
+    /**
+     * 查询所有麦管信息
+     * @return
+     */
+    List<StrawDTO> selectStrawsLike(String keyword);
 
     /**
      * 插入一条麦管记录

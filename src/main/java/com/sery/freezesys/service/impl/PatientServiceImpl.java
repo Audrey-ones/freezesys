@@ -72,4 +72,11 @@ public class PatientServiceImpl implements PatientService {
         return count;
     }
 
+
+    @Override
+    public List<Patient> getPatientLike(String keys) {
+        List<Patient> patientList = patientMapper.selectPatientsLike(keys);
+        return patientList;
+    }
+
 }

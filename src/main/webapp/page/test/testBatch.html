@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html ng-app="UMApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <script type="text/javascript" src="../../js/jquery-2.1.0.js"></script>
+    <script type="text/javascript" src="../../js/angular.js"></script>
+    <title>用户管理</title>
+    <script type="text/javascript">
+        var example_data = [
+            {
+                id: 1,
+                name: "曹操",
+                password: "123456",
+                age: 45,
+                sex: "男"
+            },
+            {
+                id: 2,
+                name: "张辽",
+                password: "123456",
+                age: 34,
+                sex: "男"
+            },
+            {
+                id: 3,
+                name: "司马懿",
+                password: "123456",
+                age: 30,
+                sex: "男"
+            },
+            {
+                id: 4,
+                name: "夏侯淳",
+                password: "123456",
+                age: 40,
+                sex: "男"
+            },
+            {
+                id: 5,
+                name: "蔡文姬",
+                password: "123456",
+                age: 18,
+                sex: "女"
+            },
+            {
+                id: 6,
+                name: "刘备",
+                password: "123456",
+                age: 50,
+                sex: "男"
+            },
+            {
+                id: 7,
+                name: "关羽",
+                password: "123456",
+                age: 45,
+                sex: "男"
+            },
+            {
+                id: 8,
+                name: "张飞",
+                password: "123456",
+                age: 46,
+                sex: "男"
+            },
+            {
+                id: 9,
+                name: "赵云",
+                password: "123456",
+                age: 35,
+                sex: "男"
+            },
+            {
+                id: 10,
+                name: "孙尚香",
+                password: "123456",
+                age: 28,
+                sex: "女"
+            },
+            {
+                id: 11,
+                name: "孙权",
+                password: "123456",
+                age: 30,
+                sex: "男"
+            },
+            {
+                id: 12,
+                name: "周瑜",
+                password: "123456",
+                age: 32,
+                sex: "男"
+            },
+            {
+                id: 13,
+                name: "鲁肃",
+                password: "123456",
+                age: 33,
+                sex: "男"
+            },
+            {
+                id: 14,
+                name: "黄盖",
+                password: "123456",
+                age: 55,
+                sex: "男"
+            },
+            {
+                id: 15,
+                name: "小乔",
+                password: "123456",
+                age: 28,
+                sex: "女"
+            },
+            {
+                id: 16,
+                name: "小乔",
+                password: "123456",
+                age: 26,
+                sex: "女"
+            }
+        ];
+    </script>
+
+
+    <script type="text/javascript">
+        // 全选/全不选
+        $(function () {
+            $("input[name='check_all']").click(function () {
+                var checked = this.checked; // 获取 <input type="checkbox" name="check_all"/> 中checked属性的值
+                console.log(checked)
+                $("input[name='user_id[]']").each(function () {
+                    this.checked = checked; // 依次设置每一个 <input type="checkbox" name="user_id[]"/> 中checked属性的值
+                });
+            });
+        });
+
+
+        var app = angular.module("UMApp", []);
+
+
+        app.controller("UMCtrl", function ($scope) {
+            $scope.data = example_data;
+
+
+            $scope.removeAll = function () {
+                $scope.data = [];
+            };
+
+
+            $scope.removeChecked = function () {
+                var remove_idx_arr = []; // 待删除的所有索引
+
+
+                // 获取所有user_id[]并且被选择的Checkbox
+                $("input[name='user_id[]']:checked").each(function () {
+                    var index = this.value; // <input type="checkbox" name="user_id[]" value="{{ $index }}"/>，value中保存了数组的索引
+                    remove_idx_arr.push(index);
+                });
+
+
+                var data = $scope.data; // 备份当前列表
+                $scope.data = []; // 清空当前列表
+                for (var idx in data) {
+                    // 索引不在待删除的所有索引中，添加到新列表中
+                    if (remove_idx_arr.indexOf(idx) == -1) {
+                        $scope.data.push(data[idx]);
+                    }
+                }
+            };
+        });
+    </script>
+</head>
+<body ng-app="UMApp" ng-controller="UMCtrl">
+<div>
+    <button ng-click="removeAll()">全部删除</button>
+    <button ng-click="removeChecked()">批量删除</button>
+</div>
+
+
+<table border="1">
+    <tr>
+        <th>
+            <input type="checkbox" name="check_all"/>
+        </th>
+        <th>ID</th>
+        <th>用户名</th>
+        <th>密码</th>
+        <th>年龄</th>
+        <th>性别</th>
+        <th>操作</th>
+    </tr>
+    <tr ng-repeat="user in data">
+        <td>
+            <input type="checkbox" name="user_id[]" value="{{ $index }}"/>
+        </td>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.password }}</td>
+        <td>{{ user.age }}</td>
+        <td>{{ user.sex }}</td>
+        <td>
+            <button>修改密码</button>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

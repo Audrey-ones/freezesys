@@ -60,4 +60,10 @@ public class UserServiceTest {
         FingerPrint fingerPrint = userService.getFingerprintByUserId(10);
         System.out.println(fingerPrint);
     }
+
+    @Test
+    public void getUserByKeyword() {
+        List<User> userList = userService.getUserByKeyword("ad");
+        System.out.println(userList);
+    }
 }

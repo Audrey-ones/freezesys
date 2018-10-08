@@ -23,15 +23,15 @@
 		<input type="hidden" id="verifyTemplate" name="verifyTemplate" />
 	</form>
 
-	<div style="margin-left: 50px">
-		<h2>请点击进行指纹验证登录：</h2>
+	<div style="margin: 50px 0 10px 50px;">
+		<div>请点击进行指纹验证登录：</div>
 	</div>
 
 	<div id="driverDownload" style="display: inline; margin: 0 0 0 5px;">
 		<a id='downloadDriver' href='page/fingerprint/middleware/zkbioonline.exe'
 			title='驱动下载'>驱动下载</a>
 	</div>
-	<div id="comparison" style="border: 1px solid; width: 100px;padding: 10px;margin-left: 50px;border-radius: 4px;cursor: pointer;"
+	<div id="comparison" style="background-color: #1AA094;color: #ffffff; width: 10%;text-align: center;padding: 10px;margin-left: 50px;border-radius: 4px;cursor: pointer;"
 		onclick='fpVerification("指纹比对","请安装指纹驱动或启动服务",true,globalContext)'>指纹验证
 		<i class="fa fa-hand-o-right" aria-hidden="true"></i>
 	</div>
@@ -39,14 +39,14 @@
 		<input type="button" onclick="doVerify()" value="测试1:1接口"/>
 	</div>-->
 	<div id="comparisonDiv" class="box" style="display: none">
-		<h2 style="text-align: center;">指纹比对&nbsp;&nbsp;<i class="fa fa-hand-pointer-o" aria-hidden="true"></i></h2>
+		<div style="text-align: center;color: #fff;padding: 10px;">指纹比对&nbsp;&nbsp;<i class="fa fa-hand-pointer-o" aria-hidden="true"></i></div>
 		<div class="list">
 			<canvas id="canvasComp" width="430" height="320"
 				style="background: url('page/fingerprint/image/base_fpVerify.jpg') rgb(243, 245, 240);"></canvas>
-			<input type="button" style="border: 1px solid; width: 100px;padding: 10px;margin-left: 100px;border-radius: 4px;cursor: pointer;"
+			<input type="button" style="background-color: #1AA094;color: #fff;border: 0;outline: none; width: 25%;padding: 8px;margin-left: 100px;border-radius: 4px;cursor: pointer;"
 				   value="使用密码登录" onclick='returnLogin()' />
-			<input type="button" style="border: 1px solid; width: 100px;padding: 10px;border-radius: 4px;cursor: pointer;"
-				   value="取消验证" onclick='closeCompa()' />
+			<input type="button" style="background-color: #fe673c;color: #fff;border: 0;outline: none; width: 25%;padding: 8px;border-radius: 4px;cursor: pointer;"
+				   value="取&nbsp;消&nbsp;验&nbsp;证" onclick='closeCompa()' />
 		</div>
 	</div>
 

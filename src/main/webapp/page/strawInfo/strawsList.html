@@ -9,27 +9,25 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../css/bootstrap.css"/>
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
 	<link rel="stylesheet" href="../../css/font_eolqem241z66flxr.css" media="all" />
-	<link rel="stylesheet" href="../../css/news.css" media="all" />
+	<link rel="stylesheet" href="../../css/style.css" media="all" />
 	<link rel="stylesheet" href="../../font-awesome/css/font-awesome.min.css"/>
 </head>
-<body class="childrenBody">
+<body class="childrenBody" ng-app="strawApp" ng-controller="strawCtrl">
 	<blockquote class="layui-elem-quote news_search">
 		<div class="layui-inline">
 		    <div class="layui-input-inline">
-		    	<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
+		    	<input type="text" ng-model="keyword" placeholder="请输入关键字" class="layui-input search_input" style="font-size: 14px;">
 		    </div>
-		    <a class="layui-btn search_btn"><i class="fa fa-search fa-1g"></i></a>
+		    <a class="layui-btn search_btn" ng-click="findStraw()"><i class="fa fa-search fa-1g"></i></a>
 		</div>
 		<div class="layui-inline">
-			<a class="layui-btn layui-btn-normal strawAdd_btn" style="background-color:#269f42">历史存储录入</a>
+			<a class="layui-btn layui-btn-normal strawAdd_btn" ng-click="addStraw()" style="background-color:#269f42;text-decoration: none;">历史存储录入</a>
 		</div>
 		<div class="layui-inline">
-			<a class="layui-btn layui-btn-danger batchDel">批量解冻</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn layui-btn-normal reload" style="background-color:#269f42">刷新&nbsp;<i class="fa fa-refresh" aria-hidden="true"></i></a>
+			<a class="layui-btn layui-btn-danger reload" ng-click="reloadPage()" style="text-decoration: none;">刷新&nbsp;<i class="fa fa-refresh" aria-hidden="true"></i></a>
 		</div>
 		<div class="layui-inline">
 			<div class="layui-form-mid layui-word-aux">可根据冷冻编号，病历号，女方姓名，样本类型，冷冻时间，解冻时间，解冻状态进行智能查询</div>
@@ -39,7 +37,7 @@
 	  	<table class="layui-table">
 		    <thead>
 				<tr>
-					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
+					<!--<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>-->
 					<!--<th style="text-align:left;">序号</th>-->
 					<th>冷冻管号</th>
 					<th>冷冻编号</th>
@@ -55,10 +53,57 @@
 					<th>操作</th>
 				</tr> 
 		    </thead>
-		    <tbody class="straws_content"></tbody>
+		    <tbody class="straws_content">
+			<tr ng-repeat="straw in strawList | filter:keyword">
+				<td>{{straw.strawNum}}管-{{straw.nitNum}}-{{straw.tubNum}}-{{straw.divepipeNum}}</td>
+				<td>{{straw.freezeNum}}</td>
+				<td>{{straw.medicalRecord}}</td>
+				<td>{{straw.femaleName}}</td>
+				<td>{{straw.sampleType}}</td>
+				<td>{{straw.sampleAmount}}</td>
+				<td>{{straw.sampleNum}}</td>
+				<td>{{straw.freezeTime}}</td>
+				<td>{{straw.thawTime}}</td>
+				<td>{{straw.freezeStatus}}</td>
+				<td>{{straw.operator}}</td>
+				<td>
+					<a class="layui-btn layui-btn-mini straws_edit" ng-click="editStraw(straw)" style="text-decoration: none;"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> 编辑</a>
+					<a class="layui-btn layui-btn-danger layui-btn-mini straw_del" ng-click="delStraw(straw)" style="text-decoration: none;"><i class="fa fa-snowflake-o fa-lg"></i> 解冻</a>
+				</td>
+			</tr>
+			</tbody>
 		</table>
+
+		<ul ng-if="show" class="pagination pagination-sm pagination2 fr" style="float: right;margin-right: 4%;">
+			<li ng-class="{disabled:page==1}">
+				<a href="javascript:void(0)" aria-label="Previous" ng-click="sub(page-1<1?1:page-1)" ng-disabled="page==1">
+					<span aria-hidden="true">上一页</span><!--&laquo;-->
+				</a>
+			</li>
+			<li ng-if="page >= pageNum && lastPage !== pageNum" ng-click="sub(1)" ng-class="{active:item==1}">
+				<a href="javascript:void(0)">1</a>
+			</li>
+			<li ng-if="page >= pageNum && lastPage !== pageNum">
+				<a href="javascript:void(0)">...</a>
+			</li>
+			<li ng-click="sub(item)" ng-class="{active:item==page}" ng-repeat="item in pages">
+				<a href="javascript:void(0)">{{item}}</a>
+			</li>
+			<li ng-if="lastPage > pageNum && firstPage <= lastPage - pageNum">
+				<a href="javascript:void(0)">...</a>
+			</li>
+			<li ng-if="lastPage > pageNum && firstPage <= lastPage - pageNum" ng-click="sub(lastPage)" ng-class="{active:item==page}">
+				<a href="javascript:void(0)">{{lastPage}}</a>
+			</li>
+			<li ng-class="{disabled:page==lastPage}">
+				<a href="javascript:void(0)" aria-label="Next" ng-click="sub(page+1>lastPage?page:page+1)">
+					<span aria-hidden="true">下一页</span><!--&raquo;-->
+				</a>
+			</li>
+		</ul>
 	</div>
-	<div id="page"></div>
+	<!--<div id="page"></div>-->
+	<script type="text/javascript" src="../../js/angular.js"></script>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script type="text/javascript" src="strawsList.js"></script>
 </body>

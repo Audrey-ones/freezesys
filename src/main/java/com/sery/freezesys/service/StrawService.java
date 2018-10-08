@@ -12,7 +12,7 @@ public interface StrawService {
      * 获取所有的麦管记录
      * @return
      */
-    List<StrawDTO> getStrawList();
+    List<StrawDTO> getStrawByPage();
 
     /**
      * 新增一条麦管记录
@@ -70,4 +70,10 @@ public interface StrawService {
      * @return
      */
     List<StrawDTO> getAllThawRecord();
+
+    /**
+     * 模糊查询所有的麦管信息
+     * @return
+     */
+    List<StrawDTO> selectStrawsLike(String keyword);
 }

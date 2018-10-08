@@ -1,281 +1,276 @@
-layui.config({
-    base:"/js"
-}).use(["form","layer","jquery","laypage"],function(){
-    var form = layui.form(),
-        layer = parent.layer === undefined ? layui.layer : parent.layer,
-        laypage = layui.laypage,
-        $ = layui.jquery;
+//创建保存页码数组的函数
+function setPage(length, amount, num, first) {
+    //length数据总条数
+    //amount每页数据条数
+    //num保留的页码数
+    //first第一页的页码
+    var pages = []; //创建分页数组
+    var page = Math.ceil(length / amount);
+    if (page <= num) {
+        for (var i = 1; i <= page; i++) {
+            pages.push(i);
+        }
+    }
+    if (page > num) {
+        for (var i = first; i < first + num; i++) {
+            pages.push(i);
+        }
+    }
+    return pages;
+}
 
-    $(".reload").click(function () {
-        window.location.reload();
+var app=angular.module("patientApp",[]);
+app.controller("patientCtrl",["$scope","patientService",function ($scope,patientService) {
+    $scope.show=true;
+    $scope.tr_show=false;
+
+    //分割数组(将一个大数组分割)
+    function sliceArr(page,size,arr) {
+        var result = [];
+        for (var i=0; i<Math.ceil(arr.length/size);i++){
+            if (i == page){//当页数和i相同时，截取该页数的内容
+                var start = i*size;
+                var end = start+size;
+                result = arr.slice(start,end);
+            }
+        }
+        return result;
+    }
+
+    //分页
+    function pagination(length,data) {
+        $scope.firstPage = 1;
+        $scope.pageNum = 5;
+        $scope.page = 1;
+        var amount = length;//数据总条数
+        var each = 10;//每页显示的条数
+        $scope.sub = function(page) {
+            var list = sliceArr(page-1,each,data);
+            $scope.patientList = list;
+            $scope.lastPage = Math.ceil(amount / each);
+            if (page >= $scope.pageNum) {
+                $scope.firstPage = page - Math.floor($scope.pageNum / 2);
+            } else {
+                $scope.firstPage = 1;
+            }
+            if ($scope.firstPage > $scope.lastPage - $scope.pageNum) {
+                $scope.firstPage = $scope.lastPage - $scope.pageNum + 1;
+            }
+            $scope.pages = setPage(amount, each, $scope.pageNum, $scope.firstPage);
+            $scope.page = page;
+
+        };
+        $scope.sub(1);
+    }
+
+    //判断字符是否为空
+    function isEmpty(obj) {
+        if (typeof obj == "undefined" || obj == "null" || obj == ""){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    //加载页面病人信息
+    patientService.loadPatients(function (data) {
+        pagination(data.length,data);
     });
 
-    //获取保存在cookie里的用户
-    var user;
-    if (getCookie('user')){
-        user=JSON.parse(getCookie('user'));
 
-    }
-    //读取cookies
-    function getCookie(name) {
-        var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-        if (arr=document.cookie.match(reg)){
-            return arr[2];
-        }else {
-            return null;
+    layui.use(["form","layer","jquery"],function(){
+        var form = layui.form(),
+            layer = parent.layer === undefined ? layui.layer : parent.layer,
+            $ = layui.jquery;
+
+        //获取保存在cookie里的用户
+        var user;
+        if (getCookie('user')){
+            user=JSON.parse(getCookie('user'));
+
         }
-    }
-
-    var patientData = '';
-    loadPatients();
-    function loadPatients() {
-        $.get("/patients",function(data){
-            //正常加载病人信息
-            patientData = data;
-            //console.log(patientData)
-            if (window.sessionStorage.getItem("addPatient")){
-                var addPatient = window.sessionStorage.getItem("addPatient");
-                patientData = JSON.parse(addPatient).concat(patientData);
+        //读取cookies
+        function getCookie(name) {
+            var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+            if (arr=document.cookie.match(reg)){
+                return arr[2];
+            }else {
+                return null;
             }
-            //执行加载数据的方法
-            patientsList();
-        })
-    }
-
-    //根据病历号、男女方姓名、男女方身份证、住址、电话进行查询
-    $(".search_btn").click(function () {
-        var patientsArray = [];
-        if ($(".search_input").val() != ''){
-            var index = layer.msg('查询中，请稍后',{icon: 16, time: false, shade: 0.8});
-            setTimeout(function () {
-               $.ajax({
-                   url : "/patients",
-                   type : "get",
-                   dataType : "json",
-                   success : function (patientData) {
-                       for (var i=0; i<patientData.length; i++){
-                           var patientStr = patientData[i];
-                           var selectStr = $(".search_input").val();
-                           function changeStr(data) {
-                               var dataStr = '';
-                               var showNum = data.split(eval("/" + selectStr + "/ig")).length - 1;
-                               if (showNum > 1) {
-                                   for (var j = 0; j < showNum; j++) {
-                                       dataStr += data.split(eval("/" + selectStr + "/ig"))[j] + "<i style='color:#03c339;font-weight:bold;'>" + selectStr + "</i>";
-                                   }
-                                   dataStr += data.split(eval("/" + selectStr + "/ig"))[showNum];
-                                   return dataStr;
-                               } else {
-                                   dataStr = data.split(eval("/" + selectStr + "/ig"))[0] + "<i style='color: #03c339;font-weight: bold;'>" + selectStr + "</i>" + data.split(eval("/" + selectStr + "/ig"))[1];
-                                   return dataStr;
-                               }
-                           }
-                               //病历号
-                               if (patientStr.medicalRecord.indexOf(selectStr)>-1){
-                                   patientStr["medicalRecord"] = changeStr(patientStr.medicalRecord);
-                               }
-                               if (patientStr.femaleName.indexOf(selectStr)>-1){
-                                   patientStr["femaleName"] = changeStr(patientStr.femaleName);
-                               }
-                               if (patientStr.maleName.indexOf(selectStr)>-1){
-                                   patientStr["maleName"] = changeStr(patientStr.maleName);
-                               }
-                               if (patientStr.femaleIdNum.indexOf(selectStr)>-1){
-                                   patientStr["femaleIdNum"] = changeStr(patientStr.femaleIdNum);
-                               }
-                               if (patientStr.maleIdNum.indexOf(selectStr)>-1){
-                                   patientStr["maleIdNum"] = changeStr(patientStr.maleIdNum);
-                               }
-                               if (patientStr.address.indexOf(selectStr)>-1){
-                                   patientStr["address"] = changeStr(patientStr.address);
-                               }
-                               if (patientStr.phone.indexOf(selectStr)>-1){
-                                   patientStr["phone"] = changeStr(patientStr.phone);
-                               }
-                               if (patientStr.medicalRecord.indexOf(selectStr)>-1 || patientStr.femaleName.indexOf(selectStr)>-1
-                                   || patientStr.maleName.indexOf(selectStr)>-1 || patientStr.femaleIdNum.indexOf(selectStr)>-1
-                                   || patientStr.maleIdNum.indexOf(selectStr)>-1 || patientStr.address.indexOf(selectStr)>-1
-                                   || patientStr.phone.indexOf(selectStr)>-1){
-                                   patientsArray.push(patientStr);
-                               }
-                       }
-                       patientData = patientsArray;
-                       patientsList(patientData);
-                   }
-
-               })
-
-               layer.close(index);
-           },2000);
-        }else {
-            loadPatients();
         }
-    })
 
-
-    //添加病人信息
-    $(".patientAdd_btn").click(function () {
-        var index = layui.layer.open({
-            title : "添加病人信息",
-            type : 2,
-            content : "patientAdd.html",
-            success : function (layero,index) {
-
-            }
-        })
-        //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-        $(window).resize(function () {
-            layui.layer.full(index);
-        })
-        layui.layer.full(index);
-    })
-
-    //编辑病人信息
-    $("body").on("click",".patient_edit",function () {
-        var _this = $(this);
-        for(var i=0; i<patientData.length; i++){
-            if (patientData[i].patientId == _this.attr("data-id")){
-                //获取当前点击的病人ID
-                var patientId = patientData[i].patientId;
-                var index = layui.layer.open({
-                    title : "编辑病人信息",
-                    type : 2,
-                    content : "patientEdit.html",
-                    success : function (layero,index) {
-                        //获取子页面
-                        var body = layui.layer.getChildFrame('body', index);
-                        body.find("#patientId").val(patientId);
-                        $.ajax({
-                            url : "/patients/"+patientId,
-                            type : "get",
-                            dataType : "json",
-                            success : function (data) {
-                                body.find(".medicalRecord").val(data.medicalRecord);
-                                body.find(".femaleName").val(data.femaleName);
-                                body.find(".maleName").val(data.maleName);
-                                body.find(".femaleIdNum").val(data.femaleIdNum);
-                                body.find(".maleIdNum").val(data.maleIdNum);
-                                body.find(".address").val(data.address);
-                                body.find(".phone").val(data.phone);
-                                body.find(".remark").val(data.remark);
-                            }
-                        })
+        //模糊查询病人信息
+        $scope.likeSelect = function (keyword) {
+            if (!isEmpty(keyword)){
+                patientService.loadLikePatient(keyword,function (data) {
+                    if (data.length != 0){
+                        pagination(data.length,data);
+                        $scope.tr_show=false;
+                        $scope.show=true;
+                    }else {
+                        $scope.patientList=data;
+                        $scope.tr_show=true;
+                        $scope.show=false;
                     }
+
                 })
-                //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-                $(window).resize(function () {
-                    layui.layer.full(index);
-                })
+            }else {
+                layer.msg("请输入关键字");
+            }
+
+        };
+
+        //刷新页面
+        $(".reload").click(function () {
+            window.location.reload();
+        });
+
+
+
+        //添加病人信息
+        $scope.addPatient = function () {
+            var index = layui.layer.open({
+                title : "添加病人信息",
+                type : 2,
+                content : "patientAdd.html",
+                success : function (layero,index) {
+
+                }
+            });
+            //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+            $(window).resize(function () {
                 layui.layer.full(index);
-            }
-        }
-
-    })
-
-    //删除病人信息
-    $("body").on("click",".patient_del",function () {
-        var _this = $(this);
-        if (user.patientDel == "可操作"){
-            $.ajax({
-                url : "/patients/straws/" + _this.attr("data-id"),
-                type : "get",
-                dataType : "json",
-                success : function (data) {
-                    layer.confirm("该病人共有"+data+"条麦管记录，确认删除？将一并删除该病人的这"+data+"条麦管记录",{icon: 3,title:'提示信息'},function (index) {
-                        for (var i=0; i<patientData.length; i++){
-                            if (patientData[i].patientId == _this.attr("data-id")){
-                                $.ajax({
-                                    url : "/patients/" + patientData[i].patientId,
-                                    type : "post",
-                                    dataType : "json",
-                                    success : function (data) {
-                                        layer.msg("删除成功！");
-                                        setTimeout(function(){
-                                            //刷新父页面
-                                            parent.location.reload();
-                                        },2000);
-                                    }
-                                });
-                                patientData.splice(i,1);
-                                patientsList(patientData);
-                            }
-                        }
-                        layer.close(index);
-                    });
-                }
             })
+            layui.layer.full(index);
+        };
 
-            /*layer.confirm("确认删除该条病人记录？将一并删除该病人所有的麦管记录",{icon: 3,title:'提示信息'},function (index) {
-                for (var i=0; i<patientData.length; i++){
-                    if (patientData[i].patientId == _this.attr("data-id")){
-                        $.ajax({
-                            url : "/patients/" + patientData[i].patientId,
-                            type : "post",
-                            dataType : "json",
-                            success : function (data) {
-                                layer.msg("删除成功！");
-                            }
-                        });
-                        patientData.splice(i,1);
-                        patientsList(patientData);
-                    }
+        //编辑病人信息
+        $scope.editPatient = function (patient) {
+            console.log(patient);
+            var index = layui.layer.open({
+                title : "编辑病人信息",
+                type : 2,
+                content : "patientEdit.html",
+                success : function (layero,index) {
+                    //获取子页面
+                    var body = layui.layer.getChildFrame('body',index);
+                    body.find("#patientId").val(patient.patientId);
+                    body.find(".medicalRecord").val(patient.medicalRecord);
+                    body.find(".femaleName").val(patient.femaleName);
+                    body.find(".maleName").val(patient.maleName);
+                    body.find(".femaleIdNum").val(patient.femaleIdNum);
+                    body.find(".maleIdNum").val(patient.maleIdNum);
+                    body.find(".address").val(patient.address);
+                    body.find(".phone").val(patient.phone);
+                    body.find(".remark").val(patient.remark);
                 }
-                layer.close(index);
-            });*/
-        }else {
-            layer.msg("您没有删除病人信息的权限哦！");
+            });
+            //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+            $(window).resize(function () {
+                layui.layer.full(index);
+            })
+            layui.layer.full(index);
+
+        };
+
+        //删除病人信息
+        $scope.delPatient = function (key,patient) {
+            if (user.patientDel == "可操作"){
+                layer.confirm("确定删除我吗？删除我将一并删除我的所有麦管记录哦~请慎重考虑",{icon: 3,title :'温馨提示'},function (index) {
+                    patientService.deletePatient(patient.patientId,function (data) {
+                        layer.msg("删除成功！");
+                        $scope.patientList.splice(key,1);
+                    });
+                    layer.close(index);
+                });
+
+            }else {
+                layer.msg("您没有删除病人信息的权限哦！");
+            }
+
         }
+
 
     });
 
+}]);
 
-    //加载数据
-    function patientsList(that) {
-        //渲染数据
-        function renderData(data,curr) {
-            var dataHtml = '';
-            if (!that){
-                currData = patientData.concat().splice(curr*nums-nums, nums);
-            }else {
-                currData = that.concat().splice(curr*nums-nums, nums);
+app.service("patientService",["$http",function ($http) {
+    this.loadPatients = function (callback) {
+        $http({
+            method:'GET',
+            url:'/patients'
+        }).then(function(data){
+            if (callback) {
+                callback(data.data);
             }
-            if (currData.length != 0){
-                for (var i=0; i<currData.length; i++){
-                    dataHtml += '<tr>'
-                    /*+ '<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>>'*/
-                    + '<td>' + currData[i].medicalRecord + '</td>>'
-                    + '<td>' + currData[i].femaleName + '</td>'
-                    + '<td>' + currData[i].maleName + '</td>'
-                    + '<td>' + currData[i].femaleIdNum + '</td>'
-                    + '<td>' + currData[i].maleIdNum + '</td>'
-                    + '<td>' + currData[i].address + '</td>'
-                    + '<td>' + currData[i].phone + '</td>'
-                    + '<td>' + currData[i].remark + '</td>'
-                    + '<td>'
-                    +   '<a class="layui-btn layui-btn-mini patient_edit" data-id="'+currData[i].patientId+'"><i class="iconfont icon-edit patient_edit"></i>编辑 </a>'
-                    +   '<a class="layui-btn layui-btn-danger layui-btn-mini patient_del" data-id="'+currData[i].patientId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
-                    + '</td>'
-                    + '</tr>>';
-                }
-            }else {
-                dataHtml += '<tr><td colspan="12">暂无数据</td></tr>'
-            }
-            return dataHtml;
-        }
+        });
+    };
 
-        //分页
-        var nums = 10;//每页出现的数据量
-        if (that){
-            patientData = that;
-        }
-        laypage({
-            cont : "page",
-            pages : Math.ceil(patientData.length/nums),
-            jump : function (obj) {
-                $(".patient_content").html(renderData(patientData,obj.curr));
-                $('.patients_list thead input[type="checked"]').prop("checked",false);
-                form.render();
+    this.deletePatient = function (patientId,callback) {
+        $http({
+            method:'POST',
+            url:'/patients/'+patientId
+        }).then(function (value) {
+            if (callback){
+                callback(value.data);
+            }
+        })
+    };
+
+    this.loadLikePatient = function (keyword,callback) {
+        $http({
+            method:'GET',
+            url:'/patients/like',
+            params:{
+                keys : keyword
+            }
+        }).then(function (value) {
+            if (callback){
+                callback(value.data);
             }
         })
     }
-})
+
+}]);
+
+app.filter("strFilter",function () {
+    return function (value) {
+        var changed = value;
+        if (value == null || value == ""){
+            changed = "未填写";
+        }
+        return changed;
+    }
+});
+
+/*var a = (function () {
+    function shuchu() {
+        console.log("闭包可以输出啦~");
+    }
+    return {
+        s : shuchu
+    };
+})();
+
+a.s();*/
+
+/*var aaa = (function(){
+    var a = 1;
+    function bbb(){
+        a++;
+        alert(a);
+    }
+    function ccc(){
+        /!*a++;
+        alert(a);*!/
+        console.log("闭包可以输出啦~");
+    }
+    return {
+        b:bbb,             //json结构
+        c:ccc
+    }
+})();
+alert(aaa.a)//undefined
+aaa.b();     //2
+aaa.c()      //3*/

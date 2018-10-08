@@ -34,7 +34,7 @@ function checkIsRegister() {
                 $("#isRegister").css("display","block");
             }else{
                 $("#tip_flag").css("display","block");
-                $("#fpRegisterDiv").css("display","inline");
+                $("#fpRegisterDiv").css("display","block");
             }
         }
     })

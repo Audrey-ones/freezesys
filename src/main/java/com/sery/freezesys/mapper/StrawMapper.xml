@@ -41,8 +41,8 @@
         <result column="remark" property="remark" jdbcType="VARCHAR"></result>
     </resultMap>
 
-    <!--查询所有的麦管记录-->
-    <select id="selectAllStraw" resultMap="strawInfo" parameterType="java.util.Map">
+    <!--查询所有的麦管记录不分页-->
+    <select id="selectStrawByPage" resultMap="strawInfo">
         SELECT
         s.id,s.straw_num,s.freeze_num,s.barcode_num,p.medical_record,p.female_name,p.male_name,n.num,t.tub_num,d.divepipe_num,
         s.sample_type,s.sample_amount,s.sample_num,s.freeze_time,s.thaw_time,s.freeze_status,s.operator,s.remark
@@ -53,6 +53,31 @@
         AND n.id = t.nit_id
         AND t.id = d.tub_id
         ORDER BY id DESC
+    </select>
+
+    <select id="selectStrawsLike" resultMap="strawInfo" parameterType="java.lang.String">
+        SELECT
+        s.id,s.straw_num,s.freeze_num,s.barcode_num,p.medical_record,p.female_name,p.male_name,n.num,t.tub_num,d.divepipe_num,
+        s.sample_type,s.sample_amount,s.sample_num,s.freeze_time,s.thaw_time,s.freeze_status,s.operator,s.remark
+        FROM
+        tb_straw s, tb_nit n, tb_tub t, tb_divepipe d, tb_patient p
+        WHERE s.patient_id = p.id
+        AND s.divepipe_id = d.id
+        AND n.id = t.nit_id
+        AND t.id = d.tub_id
+        AND
+        s.straw_num LIKE CONCAT('%', #{keys}, '%')
+        OR s.freeze_num LIKE CONCAT('%', #{keys}, '%')
+        OR p.medical_record LIKE CONCAT('%', #{keys}, '%')
+        OR p.female_name LIKE CONCAT('%', #{keys}, '%')
+        OR n.num LIKE CONCAT('%', #{keys}, '%')
+        OR t.tub_num LIKE CONCAT('%', #{keys}, '%')
+        OR d.divepipe_num LIKE CONCAT('%', #{keys}, '%')
+        OR s.sample_type LIKE CONCAT('%', #{keys}, '%')
+        OR s.freeze_time LIKE CONCAT('%', #{keys}, '%')
+        OR s.freeze_status LIKE CONCAT('%', #{keys}, '%')
+        OR s.operator LIKE CONCAT('%', #{keys}, '%')
+        OR s.thaw_time LIKE CONCAT('%', #{keys}, '%')
     </select>
 
     <insert id="insertStraw" parameterType="com.sery.freezesys.model.Straw">

@@ -11,9 +11,18 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
     <link rel="stylesheet" href="../../css/font_eolqem241z66flxr.css" media="all" />
+    <link rel="stylesheet" href="../../font-awesome/css/font-awesome.min.css"/>
 </head>
 <body class="childrenBody">
 <form class="layui-form">
+    <div class="layui-form-item">
+        <div class="layui-inline" style="margin-left: 25px;">
+            <div class="layui-input-inline">
+                <input type="text" style="font-size: 14px;" ng-model="flagNum" placeholder="请输入病历号" class="layui-input search_input">
+            </div>
+            <a class="layui-btn search_btn" ng-click="findStraw()"><i class="fa fa-search fa-1g"></i></a>
+        </div>
+    </div>
     <div class="layui-form-item">
         <input type="hidden" id="divepipeId"/>
         <div class="layui-word-aux" style="margin-left: 20px">您选择的存储位置为：
@@ -27,41 +36,22 @@
             <span>个</span>
         </div>
     </div>
+
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">麦管编号</label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input strawNum" lay-verify="required" placeholder="请输入麦管编号">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">冷冻编号</label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input freezeNum" lay-verify="required" placeholder="请输入冷冻编号">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">冷冻时间&nbsp;&nbsp;</label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input freezeTime" placeholder="请输入冷冻时间">
-            </div>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">病历号&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <label class="layui-form-label">病&emsp;历&emsp;号</label>
             <div class="layui-input-inline">
                 <input type="text" class="layui-input medicalRecord" lay-verify="required" placeholder="请输入病历号">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">女方姓名</label>
+            <label class="layui-form-label">女&nbsp;&nbsp;方&nbsp;姓&nbsp;名</label>
             <div class="layui-input-inline">
                 <input type="text" class="layui-input femaleName" lay-verify="required" placeholder="请输入女方姓名">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label"> 男方姓名</label>
+            <label class="layui-form-label"> 男&nbsp;&nbsp;方&nbsp;姓&nbsp;名</label>
             <div class="layui-input-inline">
                 <input type="text" class="layui-input maleName" lay-verify="required" placeholder="请输入男方姓名">
             </div>
@@ -69,7 +59,28 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">样本类型&nbsp;&nbsp;</label>
+            <label class="layui-form-label">麦&nbsp;&nbsp;管&nbsp;编&nbsp;号</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input strawNum" lay-verify="required" placeholder="请输入麦管编号">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">冷&nbsp;&nbsp;冻&nbsp;编&nbsp;号</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input freezeNum" lay-verify="required" placeholder="请输入冷冻编号">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">冷&nbsp;&nbsp;冻&nbsp;时&nbsp;间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input freezeTime" placeholder="请输入冷冻时间">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">样&nbsp;&nbsp;本&nbsp;类&nbsp;型</label>
             <div class="layui-input-inline">
                 <select name="browseLook" class="sampleType" lay-filter="browseLook">
                     <option value="0">胚胎</option>
@@ -79,13 +90,13 @@
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">样本数量</label>
+            <label class="layui-form-label">样&nbsp;&nbsp;本&nbsp;数&nbsp;量</label>
             <div class="layui-input-inline">
                 <input type="text" class="layui-input sampleAmount" lay-verify="required" placeholder="请输入样本数量">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">样本编号</label>
+            <label class="layui-form-label">样&nbsp;&nbsp;本&nbsp;编&nbsp;号</label>
             <div class="layui-input-inline">
                 <input type="text" class="layui-input sampleNum" lay-verify="required" placeholder="请输入样本编号">
             </div>
@@ -94,8 +105,9 @@
 
     <div class="layui-form-item">
         <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" style="background-color:#269f42;text-decoration: none;">打&emsp;&emsp;印</button>
             <button class="layui-btn" lay-submit="" lay-filter="addStorage">保存并打印</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重&emsp;&emsp;置</button>
         </div>
     </div>
 </form>

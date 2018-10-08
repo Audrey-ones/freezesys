@@ -29,6 +29,19 @@
         ORDER BY id DESC
     </select>
 
+    <select id="selectPatientsLike" resultMap="patientInfo" parameterType="java.lang.String">
+        SELECT * FROM tb_patient
+        WHERE
+        medical_record LIKE CONCAT('%', #{keys}, '%')
+        OR female_name LIKE CONCAT('%', #{keys}, '%')
+        OR male_name LIKE CONCAT('%', #{keys}, '%')
+        OR female_id_num LIKE CONCAT('%', #{keys}, '%')
+        OR male_id_num LIKE CONCAT('%', #{keys}, '%')
+        OR address LIKE CONCAT('%', #{keys}, '%')
+        OR phone LIKE CONCAT('%', #{keys}, '%')
+        ORDER BY id DESC
+    </select>
+
     <!--根据病历号和女方姓名查找一条病人记录-->
     <select id="selectPatient" resultMap="patientInfo" parameterType="java.util.Map">
         SELECT *

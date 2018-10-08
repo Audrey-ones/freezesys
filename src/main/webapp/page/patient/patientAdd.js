@@ -1,6 +1,4 @@
-layui.config({
-    base : "js/"
-}).use(["form","layer","jquery","laydate"],function () {
+layui.use(["form","layer","jquery","laydate"],function () {
     var form = layui.form(),
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         $ = layui.jquery;
@@ -32,7 +30,7 @@ layui.config({
                     parent.location.reload();
                 },2000);
             }
-        })
+        });
 
         return false;
 

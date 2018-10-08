@@ -10,7 +10,7 @@ import java.util.Map;
 public interface NitService {
     /**
      * 获取所有的液氮罐
-     * @return list
+     * @return
      */
     List<Nit> getNitList();
 
@@ -92,5 +92,13 @@ public interface NitService {
      * @return
      */
     List<NitDTO> getDivepipeByTubId(int tubId);
+
+    /**
+     * 根据关键字模糊查询液氮罐信息
+     * @param keyword
+     * @return
+     */
+    List<Nit> getNitsLike(String keyword);
+
 
 }

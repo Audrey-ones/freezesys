@@ -26,8 +26,8 @@ public class StrawServiceImpl implements StrawService {
     private NitMapper nitMapper;
 
     @Override
-    public List<StrawDTO> getStrawList() {
-        List<StrawDTO> strawList = strawMapper.selectAllStraw();
+    public List<StrawDTO> getStrawByPage() {
+        List<StrawDTO> strawList = strawMapper.selectStrawByPage();
         return strawList;
     }
 
@@ -59,13 +59,21 @@ public class StrawServiceImpl implements StrawService {
         Divepipe divepipe = nitMapper.selectDivepipeId(nitMap);
         //查询套管位置是否满了
         if (divepipe.getFlagNum() > 0){
+            //使用时间戳，作为条形码编号
+            String barcodeNum = String.valueOf(System.currentTimeMillis());
+            //当addType为0时，为历史录入存储，不打印信息；当addType为1时，为冷冻存储，打印信息
+            if (addType == 1){
+                //打印信息，调用TscLibDllUtil的方法
+                String text1 = strawDTO.getMedicalRecord()+"  "+strawDTO.getFemaleName();
+                String text2 = strawDTO.getStrawNum()+"管"+strawDTO.getSampleAmount()+"枚"+strawDTO.getFreezeTime();
+                String[] str = text2.split(" ");
+                TscLibDllUtil.printBarcode(barcodeNum,text1,str[0]);
+            }
             //每次插入一条麦管信息，套管剩余位置少一个
             Map map = new HashMap();
             map.put("divepipeId",divepipe.getDivepipeId());
             map.put("flagNum",divepipe.getFlagNum()-1);
             nitMapper.updateFlagNum(map);
-            //使用时间戳，作为条形码编号
-            String barcodeNum = String.valueOf(System.currentTimeMillis());
             Straw straw = new Straw();
             straw.setStrawNum(strawDTO.getStrawNum());
             straw.setFreezeNum(strawDTO.getFreezeNum());
@@ -81,15 +89,9 @@ public class StrawServiceImpl implements StrawService {
             straw.setFreezeStatus(strawDTO.getFreezeStatus());
             straw.setOperator(strawDTO.getOperator());
             straw.setRemark(strawDTO.getRemark());
+            /*result = strawMapper.insertStraw(straw);*/
+
             result = strawMapper.insertStraw(straw);
-            //当addType为0时，为历史录入存储，不打印信息；当addType为1时，为冷冻存储，打印信息
-            if (addType == 1){
-                //打印信息，调用TscLibDllUtil的方法
-                String text1 = strawDTO.getMedicalRecord()+"  "+strawDTO.getFemaleName();
-                String text2 = strawDTO.getStrawNum()+"管"+strawDTO.getSampleAmount()+"枚"+strawDTO.getFreezeTime();
-                String[] str = text2.split(" ");
-                TscLibDllUtil.printBarcode(barcodeNum,text1,str[0]);
-            }
 
 
         }else {
@@ -239,5 +241,11 @@ public class StrawServiceImpl implements StrawService {
     public List<StrawDTO> getAllThawRecord() {
         List<StrawDTO> strawDTOList = strawMapper.getAllThawRecord();
         return strawDTOList;
+    }
+
+    @Override
+    public List<StrawDTO> selectStrawsLike(String keyword) {
+        List<StrawDTO> strawList = strawMapper.selectStrawsLike(keyword);
+        return strawList;
     }
 }

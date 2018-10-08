@@ -23,6 +23,13 @@ public interface NitMapper{
     List<Nit> selectNitsByStatus();
 
     /**
+     * 根据关键字模糊查询液氮罐信息
+     * @param keyword
+     * @return
+     */
+    List<Nit> selectNitsLike(String keyword);
+
+    /**
      * 根据ID查询一条液氮罐记录
      * @param id
      * @return

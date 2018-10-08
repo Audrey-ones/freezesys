@@ -60,4 +60,9 @@ public class PatientServiceTest {
         System.out.println(result);
     }
 
+    @Test
+    public void getPatientLike() {
+        List<Patient> patientList = patientService.getPatientLike("F");
+        System.out.println(patientList.size());
+    }
 }

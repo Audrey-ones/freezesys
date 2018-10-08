@@ -1582,51 +1582,6 @@ function removeItem(array, dx)
 }
 
 /**
- * 指纹验证
- * @author wenxin
- * @create 2013-06-21 11:09:20 am
- * @param title 页面标题国际化内容
- * @param isDriverInstall 是否安装了驱动
- * @param downloadPrompt 提示安装驱动国际化内容
- */
-function fpVerification(title, downloadPrompt, isDriverInstall,context)
-{
-	//安装驱动
-	if(isDriverInstall)
-	{
-		//支持html5
-		if(typeof(Worker) != "undefined")
-		{
-			//createWindow('base_baseFPVerify.do?random=' + getRandomNum() + '^0^0^465^320^'+title);
-			var comparisonDiv=document.getElementById("comparisonDiv");
-		    var bg=document.getElementById("bg");
-		    comparisonDiv.style.display="block";//显示内容层，显示覆盖层
-		    comparisonDiv.style.left=parseInt((document.documentElement.scrollWidth-comparisonDiv.offsetWidth)/2)+document.documentElement.scrollLeft+"px";
-		    comparisonDiv.style.top=Math.abs(parseInt((document.documentElement.clientHeight-comparisonDiv.offsetHeight)/2))+document.documentElement.scrollTop+"px"; //为内容层设置位置
-		 	bg.style.display="block";
-		 	bg.style.height=document.documentElement.scrollHeight+"px";
-		 	isComp= true;
-		 	//开始采集
-		 	//beginCapture(context);
-		 	dataInitComp();
-		    //关闭页面前，取消采集
-			//cancelCaptureBeforeClose("html5");
-		}
-		else
-		{
-			createWindow('base_baseFPVerifySimple.do?random=' + getRandomNum() + '^0^0^465^320^' + title);
-		    //关闭页面前，取消采集
-			//cancelCaptureBeforeClose("simple");
-		}
-	}
-	else
-	{
-		alert(downloadPrompt);
-		//messageBox({messageType: "alert", title: "提示", text: downloadPrompt});
-	}
-}
-
-/**
  * 画布文本自动换行
  * @author chenpf
  * @create 2015-03-10 16:56:31 pm
@@ -1728,6 +1683,51 @@ function formSubmit(id)
 		callBackFormSubmit(data);
 	});
 	$('#'+id).submit(); //表单提交。
+}
+
+/**
+ * 指纹验证
+ * @author wenxin
+ * @create 2013-06-21 11:09:20 am
+ * @param title 页面标题国际化内容
+ * @param isDriverInstall 是否安装了驱动
+ * @param downloadPrompt 提示安装驱动国际化内容
+ */
+function fpVerification(title, downloadPrompt, isDriverInstall,context)
+{
+    //安装驱动
+    if(isDriverInstall)
+    {
+        //支持html5
+        if(typeof(Worker) != "undefined")
+        {
+            //createWindow('base_baseFPVerify.do?random=' + getRandomNum() + '^0^0^465^320^'+title);
+            var comparisonDiv=document.getElementById("comparisonDiv");
+            var bg=document.getElementById("bg");
+            comparisonDiv.style.display="block";//显示内容层，显示覆盖层
+            comparisonDiv.style.left=parseInt((document.documentElement.scrollWidth-comparisonDiv.offsetWidth)/2)+document.documentElement.scrollLeft+"px";
+            comparisonDiv.style.top=Math.abs(parseInt((document.documentElement.clientHeight-comparisonDiv.offsetHeight)/2))+document.documentElement.scrollTop+"px"; //为内容层设置位置
+            bg.style.display="block";
+            bg.style.height=document.documentElement.scrollHeight+"px";
+            isComp= true;
+            //开始采集
+            //beginCapture(context);
+            dataInitComp();
+            //关闭页面前，取消采集
+            //cancelCaptureBeforeClose("html5");
+        }
+        else
+        {
+            createWindow('base_baseFPVerifySimple.do?random=' + getRandomNum() + '^0^0^465^320^' + title);
+            //关闭页面前，取消采集
+            //cancelCaptureBeforeClose("simple");
+        }
+    }
+    else
+    {
+        alert(downloadPrompt);
+        //messageBox({messageType: "alert", title: "提示", text: downloadPrompt});
+    }
 }
 
 /**

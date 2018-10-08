@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteUserById(int userId) {
+        userMapper.deleteFingerprintByUserId(userId);
         int result = userMapper.deleteUserById(userId);
         return result;
     }
@@ -112,6 +113,25 @@ public class UserServiceImpl implements UserService {
     public FingerPrint getFingerprintByUserId(int userId) {
         FingerPrint fingerPrint = userMapper.getFingerprintByUserId(userId);
         return fingerPrint;
+    }
+
+    @Override
+    public List<User> getUserByKeyword(String keyword) {
+        List<User> userList = userMapper.selectUserByKeyword(keyword);
+        return userList;
+    }
+
+    @Override
+    public int deleteFingerprintByUserId(int userId) {
+        int result;
+        FingerPrint fingerPrint = userMapper.getFingerprintByUserId(userId);
+        if (fingerPrint != null){
+            result = userMapper.deleteFingerprintByUserId(userId);
+        }else {
+            result = 0;
+        }
+
+        return result;
     }
 
 }

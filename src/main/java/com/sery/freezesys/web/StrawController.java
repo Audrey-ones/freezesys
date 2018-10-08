@@ -25,7 +25,7 @@ public class StrawController {
     @RequestMapping(value = "straws",method = RequestMethod.GET)
     public @ResponseBody
     List<StrawDTO> getStrawList(){
-        List<StrawDTO> strawList = strawService.getStrawList();
+        List<StrawDTO> strawList = strawService.getStrawByPage();
         return strawList;
     }
 
@@ -131,6 +131,11 @@ public class StrawController {
         return map;
     }
 
+    /**
+     * 根据条形码获取麦管记录
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "strawByBarcodeNum",method = RequestMethod.POST)
     public @ResponseBody Map getStrawByBarcodeNum(HttpServletRequest request){
         String barcodeNum = request.getParameter("barcodeNum");
@@ -138,6 +143,12 @@ public class StrawController {
         return map;
     }
 
+    /**
+     * 扫描解冻，并返回解冻后的信息
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "scanningThawing",method = RequestMethod.POST)
     public @ResponseBody StrawDTO getStrawByScanningThawing(HttpServletRequest request) throws Exception {
         int strawId = Integer.parseInt(request.getParameter("strawId"));
@@ -147,9 +158,19 @@ public class StrawController {
         return strawDTO;
     }
 
+    /**
+     * 获取所有解冻记录
+     * @return
+     */
     @RequestMapping(value = "allThawRecord",method = RequestMethod.GET)
     public @ResponseBody List<StrawDTO> getAllThawRecord(){
         List<StrawDTO> strawDTOList = strawService.getAllThawRecord();
         return strawDTOList;
+    }
+
+    @RequestMapping(value = "straws/like",method = RequestMethod.GET)
+    public @ResponseBody List<StrawDTO> getAllStraws(@RequestParam("keyword") String keyword){
+        List<StrawDTO> strawList = strawService.selectStrawsLike(keyword);
+        return strawList;
     }
 }

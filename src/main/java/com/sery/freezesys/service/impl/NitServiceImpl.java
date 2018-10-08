@@ -123,4 +123,11 @@ public class NitServiceImpl implements NitService {
         List<NitDTO> nitDTOList = nitMapper.selectDivepipeByTubId(tubId);
         return nitDTOList;
     }
+
+    @Override
+    public List<Nit> getNitsLike(String keyword) {
+        List<Nit> nitList = nitMapper.selectNitsLike(keyword);
+        return nitList;
+    }
+
 }

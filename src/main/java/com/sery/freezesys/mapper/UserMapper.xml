@@ -130,4 +130,19 @@
         user_id = #{userId,jdbcType=INTEGER}
     </select>
 
+    <select id="selectUserByKeyword" resultMap="userInfo" parameterType="java.lang.String">
+        SELECT * FROM tb_user
+        WHERE
+        role != '超级管理员' AND
+        account LIKE CONCAT('%', #{keyword}, '%')
+        OR nickname LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY id ASC
+    </select>
+
+    <delete id="deleteFingerprintByUserId" parameterType="java.lang.Integer">
+        DELETE FROM tb_fingerprint
+        WHERE
+        user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+
 </mapper>

@@ -12,109 +12,77 @@
     <link rel="stylesheet" href="../../layui/newVersion/layui.css" media="all" />
     <link rel="stylesheet" href="../../font-awesome/css/font-awesome.min.css"/>
 </head>
-<body>
+<body ng-app="app" ng-controller="storageCtrl">
 <blockquote class="layui-elem-quote" style="margin: 20px">
-    <span>所有液氮罐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <span><a class="layui-btn layui-btn-normal reload" style="background-color:#269f42">刷新&nbsp;<i class="fa fa-refresh" aria-hidden="true"></i></a></span>
+    <span style="font-size: 16px;color: #333">所有已启用的液氮罐&emsp;</span>
+    <span><a class="layui-btn layui-btn-normal reload" ng-click="reloadPage()" style="background-color:#269f42">刷新&nbsp;<i class="fa fa-refresh" aria-hidden="true"></i></a></span>
 </blockquote>
     <div class="layui-row nit_content" style="margin: 20px">
-        <div id="tub_content"></div>
-        <!--<div class="layui-col-xs12 layui-col-sm12 layui-col-md12" style="margin: 10px;border: 1px solid seagreen;padding: 10px">
-            <div style="margin: 10px"><i class="fa fa-hourglass-end" aria-hidden="true"></i> A号液氮罐</div>
-            <a class="layui-btn straws_edit" style="padding: 2px;margin: 5px"><span>1</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="padding: 2px;margin: 5px"> <span>2</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="padding: 2px;margin: 5px"><span>3</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="padding: 2px;margin: 5px"><span>4</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="padding: 2px;margin: 5px"> <span>5</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="padding: 2px;margin: 5px"> <span>6</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="padding: 2px;margin: 5px"><span>7</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="padding: 2px;margin: 5px"><span>8</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="padding: 2px;margin: 5px"><span>9</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="padding: 2px;margin: 5px"><span>10</span>号吊桶</a>
+        <div id="tub_content">
+            <div ng-repeat="data in dataList" class="layui-col-xs12 layui-col-sm12 layui-col-md12" style="margin: 0 auto;border: 1px dotted seagreen;padding: 10px;width: auto;">
+                <div style="margin: 10px">
+                    <i class="fa fa-hourglass-end" aria-hidden="true" style="color: #029587;">&emsp;{{data.nit.nitNum}}号液氮罐</i>
+                </div>
+                <a ng-repeat="tub in data.tubList" ng-click="tubClick(data.nit,tub)" class="layui-btn straws_edit" style="margin: 5px"><span>{{tub.tubNum}}</span>号吊桶</a>
+            </div>
         </div>
-        <div class="layui-col-xs12 layui-col-sm12 layui-col-md12" style="margin: 10px;border: 1px solid seagreen;padding: 10px">
-            <div style="margin: 10px"><i class="fa fa-hourglass-end" aria-hidden="true"></i> B号液氮罐</div>
-            <a class="layui-btn straws_edit" style="margin: 5px"><span>1</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="margin: 5px"> <span>2</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="margin: 5px"><span>3</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="margin: 5px"><span>4</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="margin: 5px"> <span>5</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="margin: 5px"> <span>6</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="margin: 5px"><span>7</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="margin: 5px"><span>8</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="margin: 5px"><span>9</span>号吊桶</a>
-            <a class="layui-btn straws_edit" style="margin: 5px"><span>10</span>号吊桶</a>
-        </div>-->
-    </div>
 
+    </div>
+<script type="text/javascript" src="../../js/angular.js"></script>
 <script type="text/javascript" src="../../layui/layui.js"></script>
 <script>
-    //JavaScript代码区域
-    layui.use(['layer','jquery'], function(){
-        var layer = layui.layer;
-        $ = layui.jquery;
+    var app = angular.module("app",[]);
+    app.controller("storageCtrl",["$scope","storageService",function ($scope,storageService) {
+        storageService.loadTubInfo(function (data) {
+            console.log(data);
+            $scope.dataList = data;
+        });
 
-        $(".reload").click(function () {
+        $scope.reloadPage = function () {
             window.location.reload();
-        });
+        };
 
-        var dataInfo = '';
-        $.get("/tubInfo", function(data){
-            dataInfo = data;
-            var dataHtml = '';
-            for (var i=0; i<data.length; i++){
-                dataHtml += '<div class="layui-col-xs12 layui-col-sm12 layui-col-md12" style="margin: 10px;border: 1px solid seagreen;padding: 10px">' +
-                    '<div style="margin: 10px"><i class="fa fa-hourglass-end" aria-hidden="true"></i> ' +
-                    '<span>'+data[i].nit.nitNum+'</span>号液氮罐</div>';
+        layui.use(['layer','jquery'],function () {
+            var layer = parent.layer === undefined ? layui.layer : parent.layer,
+            $ = layui.jquery;
 
-                for (var j=0; j<data[i].tubList.length;j++){
-                    dataHtml += '<a class="layui-btn tub_click" style="margin: 5px" data-id="'+data[i].tubList[j].tubId+'">' +
-                        '<span>'+data[i].tubList[j].tubNum+'</span>号吊桶</a>';
-                }
-                dataHtml += '</div>';
-            }
-
-            $(".nit_content").html(dataHtml);
-        });
-
-
-        //获取液氮罐下所有的信息
-        $("body").on("click",".tub_click",function () {
-            var _this = $(this);
-            for(var i=0; i<dataInfo.length; i++){
-                for (var j=0; j<dataInfo[i].tubList.length;j++){
-                    if (dataInfo[i].tubList[j].tubId == _this.attr("data-id")){
-                        //获取当前点击的病人ID
-                        var tubId = dataInfo[i].tubList[j].tubId;
-                        console.log(tubId)
-                        var index = layui.layer.open({
-                            title : "查看"+dataInfo[i].nit.nitNum+"号液氮罐"+dataInfo[i].tubList[j].tubNum+"号吊桶下的套管信息",
-                            type : 2,
-                            content : "divepipeStorage.html",
-                            success : function (layero,index) {
-                                //获取子页面
-                                var body = layui.layer.getChildFrame('body', index);
-                                body.find("#tubId").text(tubId);
-                                $.ajax({
-                                    url : "/divepipeByTubId/"+tubId,
-                                    type : "get",
-                                    dataType : "json",
-                                    success : function (data) {
-                                    }
-                                })
-                            }
-                        })
-                        //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-                        $(window).resize(function () {
-                            layui.layer.full(index);
-                        })
-                        layui.layer.full(index);
+            //获取液氮罐下所有的信息
+            $scope.tubClick = function (nit,tub) {
+                console.log(tub.tubId)
+                var index = layui.layer.open({
+                    title : "查看"+nit.nitNum+"号液氮罐"+tub.tubNum+"号吊桶下的套管信息",
+                    type : 2,
+                    content : "divepipeStorage.html",
+                    success : function (layero, index) {
+                        //获取子页面
+                        var body = layui.layer.getChildFrame('body',index);
+                        body.find("#tubId").val(tub.tubId);
                     }
-                }
+                });
+                //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+                $(window).resize(function () {
+                    layui.layer.full(index);
+                });
+                layui.layer.full(index);
             }
 
         })
-    });
+
+    }]);
+
+    app.service("storageService",["$http",function ($http) {
+        this.loadTubInfo = function (callback) {
+            $http({
+                url : '/tubInfo',
+                method : 'GET'
+            }).then(function (value) {
+                if (callback){
+                    callback(value.data);
+                }
+            })
+        }
+    }])
+
 </script>
 </body>
 </html>

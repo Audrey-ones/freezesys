@@ -14,7 +14,7 @@ public class PatientController {
     private PatientService patientService;
 
     /**
-     * 查找所有的病人信息
+     * 查找所有的病人信息(不分页)
      * @return
      */
     @RequestMapping(value = "patients",method = RequestMethod.GET)
@@ -92,4 +92,11 @@ public class PatientController {
         int count = patientService.getStrawCountByPatientId(patientId);
         return count;
     }
+
+    @RequestMapping(value = "patients/like",method = RequestMethod.GET)
+    public @ResponseBody List<Patient> getPatientLike(@RequestParam("keys") String keys){
+       List<Patient> patientList = patientService.getPatientLike(keys);
+        return patientList;
+    }
+
 }

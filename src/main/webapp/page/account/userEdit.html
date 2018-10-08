@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>会员添加--layui后台管理模板</title>
+	<title>编辑用户----液氮罐冷冻管理系统</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,22 +13,23 @@
 	<link rel="stylesheet" href="../../css/news.css" media="all" />
 </head>
 <body class="childrenBody">
-	<form style="width:80%;">
+<div style="width:50%;margin: 0 auto;padding-top: 3%;">
+	<form>
 		<input type="hidden" id="userId"/>
 		<div class="layui-form-item">
-			<label class="layui-form-label">用户名</label>
+			<label class="layui-form-label">用&emsp;户&emsp;名</label>
 			<div class="layui-input-block">
 				<input type="text" id="account" disabled class="layui-input layui-disabled" style="width: 50%;color: #1AA094">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">用户昵称</label>
+			<label class="layui-form-label">用&nbsp;&nbsp;户&nbsp;昵&nbsp;称</label>
 			<div class="layui-input-block">
 				<input type="text" class="layui-input nickname" lay-verify="required" placeholder="请输入用户昵称" style="width: 50%">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">用户密码</label>
+			<label class="layui-form-label">用&nbsp;&nbsp;户&nbsp;密&nbsp;码</label>
 			<div class="layui-input-block">
 				<input type="password" class="layui-input password" lay-verify="required" placeholder="请输入用户密码" style="width: 50%">
 			</div>
@@ -43,7 +44,7 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">麦管解冻</label>
+			<label class="layui-form-label">麦&nbsp;&nbsp;管&nbsp;解&nbsp;冻</label>
 			<div class="layui-input-block" >
 				<select class="strawDel" style="width: 40%">
 					<option value="不可操作">不可操作</option>
@@ -52,7 +53,7 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">病人删除</label>
+			<label class="layui-form-label">病&nbsp;&nbsp;人&nbsp;删&nbsp;除</label>
 			<div class="layui-input-block">
 				<select class="patientDel" style="width: 40%">
 					<option value="不可操作">不可操作</option>
@@ -64,10 +65,11 @@
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit="" lay-filter="editUser">立即提交</button>
-				<button class="layui-btn layui-btn-primary reset">重置</button>
+				<button class="layui-btn layui-btn-primary reset">重&emsp;&emsp;置</button>
 		    </div>
 		</div>
 	</form>
+</div>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script>
         layui.use(['layer', 'form','jquery'], function() {

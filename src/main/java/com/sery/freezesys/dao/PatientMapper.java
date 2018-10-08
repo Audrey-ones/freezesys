@@ -20,6 +20,13 @@ public interface PatientMapper {
     List<Patient> selectAllPatient();
 
     /**
+     * 根据关键字查询病人信息
+     * @param keys
+     * @return
+     */
+    List<Patient> selectPatientsLike(String keys);
+
+    /**
      * 根据病历号和女方姓名查找一条病人记录
      * @param map
      * @return

@@ -88,4 +88,18 @@ public interface UserService {
      */
     FingerPrint getFingerprintByUserId(int userId);
 
+    /**
+     * 根据关键字查询用户信息
+     * @param keyword
+     * @return
+     */
+    List<User> getUserByKeyword(String keyword);
+
+    /**
+     * 根据用户Id删除指纹信息
+     * @param userId
+     * @return
+     */
+    int deleteFingerprintByUserId(int userId);
+
 }

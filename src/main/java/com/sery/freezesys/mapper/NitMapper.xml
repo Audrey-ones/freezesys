@@ -57,6 +57,17 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </select>
 
+    <!--根据关键字模糊查询液氮罐信息-->
+    <select id="selectNitsLike" resultMap="nitInfo" parameterType="java.lang.String">
+        SELECT * FROM tb_nit
+        WHERE
+        num LIKE CONCAT('%',#{keyword},'%')
+        OR version LIKE CONCAT('%',#{keyword},'%')
+        OR antibody_type LIKE CONCAT('%',#{keyword},'%')
+        OR status LIKE CONCAT('%',#{keyword},'%')
+        ORDER BY id ASC
+    </select>
+
     <!--根据液氮罐编号查询和该液氮罐关联的所有吊桶-->
     <select id="selectAllTubsByNitId" parameterType="java.lang.Integer" resultMap="tubInfo">
         SELECT * FROM
@@ -192,7 +203,7 @@
         WHERE
         d.tub_id = t.id AND t.nit_id = n.id AND n.status = '已使用' AND
         d.flag_num >= #{flagNum,jdbcType=INTEGER}
-        ORDER BY flag_num ASC
+        ORDER BY flag_num ASC,d.id ASC
     </select>
 
     <select id="selectDivepipeByTubId" parameterType="java.lang.Integer" resultMap="nitDto">
