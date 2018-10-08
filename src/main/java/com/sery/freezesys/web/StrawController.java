@@ -37,6 +37,33 @@ public class StrawController {
      */
     @RequestMapping(value = "straw",method = RequestMethod.POST)
     public int addStraw(HttpServletRequest request) throws ParseException {
+        Straw straw = new Straw();
+        String medicalRecord=request.getParameter("medicalRecord");
+        String femaleName=request.getParameter("femaleName");
+        String maleName=request.getParameter("maleName");
+        straw.setSampleType(request.getParameter("sampleType"));
+        straw.setSampleAmount(Integer.parseInt(request.getParameter("sampleAmount")));
+        straw.setSampleNum(request.getParameter("sampleNum"));
+        straw.setFreezeNum(request.getParameter("freezeNum"));
+        //时间的处理
+        straw.setFreezeTime(request.getParameter("freezeTime"));
+        straw.setExpireTime(request.getParameter("expireTime"));
+        straw.setBarcodeNum(request.getParameter("barcodeNum"));
+        String nitNum=request.getParameter("nitNum");
+        String tubNum=request.getParameter("tubNum");
+        String divepipeNum=request.getParameter("divepipeNum");
+        straw.setThawTime(request.getParameter("thawTime"));
+        straw.setFreezeStatus(request.getParameter("freezeStatus"));
+        straw.setOperator(request.getParameter("operator"));
+        straw.setStrawNum(request.getParameter("strawNum"));
+        straw.setRemark(request.getParameter("remark"));
+        int addType = Integer.parseInt(request.getParameter("addType"));
+        int result = strawService.addStraw(straw,medicalRecord,femaleName,maleName,nitNum,tubNum,divepipeNum,addType);
+        return result;
+
+    }
+    /*@RequestMapping(value = "straw",method = RequestMethod.POST)
+    public int addStraw(HttpServletRequest request) throws ParseException {
         StrawDTO strawDTO = new StrawDTO();
         strawDTO.setMedicalRecord(request.getParameter("medicalRecord"));
         strawDTO.setFemaleName(request.getParameter("femaleName"));
@@ -61,7 +88,7 @@ public class StrawController {
         int result = strawService.addStraw(strawDTO,addType);
         return result;
 
-    }
+    }*/
 
     /**
      * 解冻一条麦管记录
@@ -73,7 +100,7 @@ public class StrawController {
         Straw straw = new Straw();
         straw.setStrawId(Integer.parseInt(request.getParameter("strawId")));
         straw.setFreezeStatus(request.getParameter("freezeStatus"));
-        straw.setThawTime(request.getParameter("thawTime"));
+        //straw.setThawTime(request.getParameter("thawTime"));
         straw.setOperator(request.getParameter("operator"));
         int result = strawService.updateFreezeStatus(straw);
         return result;
@@ -153,8 +180,8 @@ public class StrawController {
     public @ResponseBody StrawDTO getStrawByScanningThawing(HttpServletRequest request) throws Exception {
         int strawId = Integer.parseInt(request.getParameter("strawId"));
         String operator = request.getParameter("operator");
-        String thawTime = request.getParameter("thawTime");
-        StrawDTO strawDTO = strawService.getStrawBySanningThawing(strawId,operator,thawTime);
+        //String thawTime = request.getParameter("thawTime");
+        StrawDTO strawDTO = strawService.getStrawBySanningThawing(strawId,operator);
         return strawDTO;
     }
 

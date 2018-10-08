@@ -65,7 +65,7 @@ layui.config({
                                 data : {
                                     strawId : data.straw.strawId,
                                     operator : $("#operator").val(),
-                                    thawTime : new Date().toLocaleString()
+                                    /*thawTime : new Date().toLocaleString()*/
                                 },
                                 success : function (data) {
                                     layer.msg("解冻成功！");

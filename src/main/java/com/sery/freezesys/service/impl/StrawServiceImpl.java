@@ -12,6 +12,8 @@ import com.sery.freezesys.utils.TscLibDllUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +34,63 @@ public class StrawServiceImpl implements StrawService {
     }
 
     @Override
-    public int addStraw(StrawDTO strawDTO,int addType) {
+    public int addStraw(Straw straw,String medicalRecord,String femaleName,String maleName,String nitNum,String tubNum,String divepipeNum,int addType) {
+        int result;
+        //根据病历号，女方姓名获取病人Id
+        Map patientMap = new HashMap();
+        patientMap.put("medicalRecord",medicalRecord);
+        patientMap.put("femaleName",femaleName);
+        Patient patient = patientMapper.selectPatient(patientMap);
+        int patientId;
+        //根据病历号，姓名获取病人Id，如果存在，直接把病人Id插入麦管记录
+        if (patient != null){
+            patientId = patient.getPatientId();
+        }else {//否则新增一条病人记录，并返回病人Id
+            Patient patientAdd = new Patient();
+            patientAdd.setMedicalRecord(medicalRecord);
+            patientAdd.setFemaleName(femaleName);
+            patientAdd.setMaleName(maleName);
+            patientMapper.insertPatient(patientAdd);
+            patientId = patientAdd.getPatientId();
+        }
+        //根据液氮罐编号，吊桶编号，套管编号获取套管ID
+        Map nitMap = new HashMap();
+        nitMap.put("nitNum",nitNum);
+        nitMap.put("tubNum",tubNum);
+        nitMap.put("divepipeNum",divepipeNum);
+        Divepipe divepipe = nitMapper.selectDivepipeId(nitMap);
+        //查询套管位置是否满了
+        if (divepipe.getFlagNum() > 0){
+            //使用时间戳，作为条形码编号
+            String barcodeNum = String.valueOf(System.currentTimeMillis());
+            //当addType为0时，为历史录入存储，不打印信息；当addType为1时，为冷冻存储，打印信息
+            if (addType == 1){
+                //打印信息，调用TscLibDllUtil的方法
+                printStrawInfo(medicalRecord,femaleName,straw.getStrawNum(),straw.getSampleAmount(),straw.getFreezeTime(),barcodeNum);
+                /*String text1 = medicalRecord+"  "+femaleName;
+                String text2 = straw.getStrawNum()+"管"+straw.getSampleAmount()+"枚"+straw.getFreezeTime();
+                String[] str = text2.split(" ");
+                TscLibDllUtil.printBarcode(barcodeNum,text1,str[0]);*/
+            }
+            //每次插入一条麦管信息，套管剩余位置少一个
+            Map map = new HashMap();
+            map.put("divepipeId",divepipe.getDivepipeId());
+            map.put("flagNum",divepipe.getFlagNum()-1);
+            nitMapper.updateFlagNum(map);
+            straw.setBarcodeNum(barcodeNum);
+            straw.setPatientId(patientId);
+            straw.setDivepipeId(divepipe.getDivepipeId());
+
+            result = strawMapper.insertStraw(straw);
+
+
+        }else {
+            result = 0;
+        }
+
+        return result;
+    }
+    /*public int addStraw(StrawDTO strawDTO,int addType) {
         int result;
         //根据病历号，女方姓名获取病人Id
         Map patientMap = new HashMap();
@@ -89,7 +147,7 @@ public class StrawServiceImpl implements StrawService {
             straw.setFreezeStatus(strawDTO.getFreezeStatus());
             straw.setOperator(strawDTO.getOperator());
             straw.setRemark(strawDTO.getRemark());
-            /*result = strawMapper.insertStraw(straw);*/
+            *//*result = strawMapper.insertStraw(straw);*//*
 
             result = strawMapper.insertStraw(straw);
 
@@ -99,7 +157,7 @@ public class StrawServiceImpl implements StrawService {
         }
 
         return result;
-    }
+    }*/
 
     @Override
     public int updateFreezeStatus(Straw straw) throws Exception {
@@ -119,7 +177,8 @@ public class StrawServiceImpl implements StrawService {
                 Map updateMap = new HashMap();
                 updateMap.put("strawId",straw.getStrawId());
                 updateMap.put("freezeStatus",straw.getFreezeStatus());
-                updateMap.put("thawTime",straw.getThawTime());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                updateMap.put("thawTime",sdf.format(new Date()));
                 updateMap.put("operator",straw.getOperator());
                 result = strawMapper.updataFreezeStatus(updateMap);
             }else {
@@ -215,7 +274,7 @@ public class StrawServiceImpl implements StrawService {
     }
 
     @Override
-    public StrawDTO getStrawBySanningThawing(int strawId, String operator,String thawTime) throws Exception {
+    public StrawDTO getStrawBySanningThawing(int strawId, String operator) throws Exception {
         Straw straw = strawMapper.getStrawById(strawId);
         Divepipe divepipe = nitMapper.selectDivepipeById(straw.getDivepipeId());
         //当套管中麦管剩余位置小于7时，每次解冻，套管剩余位置+1；否者抛出异常
@@ -227,6 +286,8 @@ public class StrawServiceImpl implements StrawService {
             Map strawMap = new HashMap();
             strawMap.put("strawId",strawId);
             strawMap.put("freezeStatus","已解冻");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String thawTime = sdf.format(new Date());
             strawMap.put("thawTime",thawTime);
             strawMap.put("operator",operator);
             strawMapper.updataFreezeStatus(strawMap);
@@ -247,5 +308,14 @@ public class StrawServiceImpl implements StrawService {
     public List<StrawDTO> selectStrawsLike(String keyword) {
         List<StrawDTO> strawList = strawMapper.selectStrawsLike(keyword);
         return strawList;
+    }
+
+    @Override
+    public void printStrawInfo(String medicalRecord, String femaleName, String strawNum, int sampleAmount, String freezeTime,String barcodeNum) {
+        //打印信息，调用TscLibDllUtil的方法
+        String text1 = medicalRecord+"  "+femaleName;
+        String text2 = strawNum+"管"+sampleAmount+"枚"+freezeTime;
+        String[] str = text2.split(" ");
+        TscLibDllUtil.printBarcode(barcodeNum,text1,str[0]);
     }
 }

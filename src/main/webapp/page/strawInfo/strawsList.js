@@ -166,8 +166,8 @@ app.controller("strawCtrl",["$scope","strawService",function ($scope,strawServic
             if (user.strawDel == "可操作"){
                 if (straw.freezeStatus != "已解冻"){
                     layer.confirm('确定解冻这个麦管？解冻后不可恢复！',{icon:3, title:'温馨提示'},function (index) {
-                        var thawTime = new Date().toLocaleString();
-                        strawService.deleteStraw(straw.strawId,"已解冻",thawTime,user.nickname,function (data) {
+                        //var thawTime = new Date().toLocaleString();
+                        strawService.deleteStraw(straw.strawId,"已解冻",user.nickname,function (data) {
                             if (data == 1){
                                 layer.msg("解冻成功！");
                                 setTimeout(function(){
@@ -222,14 +222,13 @@ app.service("strawService",["$http",function ($http) {
             }
         })
     };
-    this.deleteStraw = function (strawId,freezeStatus,thawTime,operator,callback) {
+    this.deleteStraw = function (strawId,freezeStatus,operator,callback) {
         $http({
             url : '/updateFreezeStatus',
             method : 'POST',
             params : {
                 strawId : strawId,
                 freezeStatus : freezeStatus,
-                thawTime : thawTime,
                 operator : operator
             }
         }).then(function (value) {

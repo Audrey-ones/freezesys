@@ -16,10 +16,12 @@ public interface StrawService {
 
     /**
      * 新增一条麦管记录
-     * @param strawDTO
+     * @param straw
      * @return
      */
-    int addStraw(StrawDTO strawDTO,int addType);
+    int addStraw(Straw straw,String medicalRecord,String femaleName,String maleName,String nitNum,String tubNum,String divepipeNum,int addType);
+
+    //int addStraw(StrawDTO strawDTO,int addType);
 
     /**
      * 修改解冻状态
@@ -63,7 +65,7 @@ public interface StrawService {
      * @param operator
      * @return
      */
-    StrawDTO getStrawBySanningThawing(int strawId,String operator,String thawTime) throws Exception;
+    StrawDTO getStrawBySanningThawing(int strawId,String operator) throws Exception;
 
     /**
      * 获取所有解冻记录
@@ -76,4 +78,14 @@ public interface StrawService {
      * @return
      */
     List<StrawDTO> selectStrawsLike(String keyword);
+
+    /**
+     * 打印麦管信息
+     * @param medicalRecord
+     * @param femaleName
+     * @param strawNum
+     * @param sampleAmount
+     * @param freezeTime
+     */
+    void printStrawInfo(String medicalRecord,String femaleName,String strawNum,int sampleAmount,String freezeTime,String barcodeNum);
 }
