@@ -69,6 +69,7 @@ layui.config({
                 layer.closeAll("page");
             }else{
                 layer.msg("密码错误，请重新输入！");
+                $(this).siblings(".admin-header-lock-input").val("");
             }
 		}
 	});
@@ -94,7 +95,7 @@ layui.config({
 	$(".layui-nav .layui-nav-item a").on("click",function(){
 		addTab($(this));
 		$(this).parent("li").siblings().removeClass("layui-nav-itemed");
-	})
+	});
 
 	//公告层
 	function showNotice(){

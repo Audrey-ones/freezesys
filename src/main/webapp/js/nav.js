@@ -1,21 +1,21 @@
 var navs = [{
 	"title" : "首页",
-	"icon" : "icon-text",
+	"icon" : "&#xe615;",
 	"href" : "page/main.html",
 	"spread" : false
 },{
 	"title" : "麦管存储管理",
-	"icon" : "icon-text",
+	"icon" : "&#xe609;",
 	"href" : "page/strawInfo/strawsList.html",
 	"spread" : false
 },{
-	"title" : "液氮罐管理",
-	"icon" : "icon-text",
+	"title" : "液&nbsp;氮&nbsp;罐&nbsp;管&nbsp;理",
+	"icon" : "&#xe62e;",
 	"href" : "page/nit/nitsList.html",
 	"spread" : false
 },{
     "title" : "病人信息管理",
-    "icon" : "icon-text",
+    "icon" : "&#xe613;",
     "href" : "page/patient/patientsList.html",
     "spread" : false
 }/*,{
@@ -42,4 +42,4 @@ var navs = [{
 			"spread" : false
 		}
 	]
-}*/]
+}*/];
