@@ -35,7 +35,8 @@ public class StrawServiceImpl implements StrawService {
 
     @Override
     public int addStraw(Straw straw,String medicalRecord,String femaleName,String maleName,String nitNum,String tubNum,String divepipeNum,int addType) {
-        int result;
+        int result;//0为套管满了；1为保存打印麦管信息；2为打印不保存麦管信息
+
         //根据病历号，女方姓名获取病人Id
         Map patientMap = new HashMap();
         patientMap.put("medicalRecord",medicalRecord);
@@ -59,33 +60,50 @@ public class StrawServiceImpl implements StrawService {
         nitMap.put("tubNum",tubNum);
         nitMap.put("divepipeNum",divepipeNum);
         Divepipe divepipe = nitMapper.selectDivepipeId(nitMap);
-        //查询套管位置是否满了
-        if (divepipe.getFlagNum() > 0){
-            //使用时间戳，作为条形码编号
-            String barcodeNum = String.valueOf(System.currentTimeMillis());
-            //当addType为0时，为历史录入存储，不打印信息；当addType为1时，为冷冻存储，打印信息
+        //根据冷冻编号、病人ID、套管ID、麦管编号查询该麦管记录是否已存在
+        Map strawMap = new HashMap();
+        strawMap.put("patientId",patientId);
+        strawMap.put("divepipeId",divepipe.getDivepipeId());
+        strawMap.put("freezeNum",straw.getFreezeNum());
+        strawMap.put("strawNum",straw.getStrawNum());
+        Straw resultStraw = strawMapper.getStrawByMap(strawMap);
+        //当麦管记录存在时，结果返回值为2，表示不保存打印麦管信息
+        if (resultStraw != null){
+            result = 2;
             if (addType == 1){
-                //打印信息，调用TscLibDllUtil的方法
-                printStrawInfo(medicalRecord,femaleName,straw.getStrawNum(),straw.getSampleAmount(),straw.getFreezeTime(),barcodeNum);
+                printStrawInfo(medicalRecord,femaleName,resultStraw.getStrawNum(),resultStraw.getSampleAmount(),resultStraw.getFreezeTime(),resultStraw.getBarcodeNum());
+            }
+
+        }else {//当麦管记录不存在时，表示保存并打印麦管信息
+            //查询套管位置是否满了
+            if (divepipe.getFlagNum() > 0){
+                //使用时间戳，作为条形码编号
+                //SimpleDateFormat sdf = new SimpleDateFormat("yyyMMddHHmmss");
+                String barcodeNum = String.valueOf(System.currentTimeMillis());
+                //当addType为0时，为历史录入存储，不打印信息；当addType为1时，为冷冻存储，打印信息
+                if (addType == 1){
+                    //打印信息，调用TscLibDllUtil的方法
+                    printStrawInfo(medicalRecord,femaleName,straw.getStrawNum(),straw.getSampleAmount(),straw.getFreezeTime(),barcodeNum);
                 /*String text1 = medicalRecord+"  "+femaleName;
                 String text2 = straw.getStrawNum()+"管"+straw.getSampleAmount()+"枚"+straw.getFreezeTime();
                 String[] str = text2.split(" ");
                 TscLibDllUtil.printBarcode(barcodeNum,text1,str[0]);*/
+                }
+                //每次插入一条麦管信息，套管剩余位置少一个
+                Map map = new HashMap();
+                map.put("divepipeId",divepipe.getDivepipeId());
+                map.put("flagNum",divepipe.getFlagNum()-1);
+                nitMapper.updateFlagNum(map);
+                straw.setBarcodeNum(barcodeNum);
+                straw.setPatientId(patientId);
+                straw.setDivepipeId(divepipe.getDivepipeId());
+
+                result = strawMapper.insertStraw(straw);
+
+
+            }else {
+                result = 0;
             }
-            //每次插入一条麦管信息，套管剩余位置少一个
-            Map map = new HashMap();
-            map.put("divepipeId",divepipe.getDivepipeId());
-            map.put("flagNum",divepipe.getFlagNum()-1);
-            nitMapper.updateFlagNum(map);
-            straw.setBarcodeNum(barcodeNum);
-            straw.setPatientId(patientId);
-            straw.setDivepipeId(divepipe.getDivepipeId());
-
-            result = strawMapper.insertStraw(straw);
-
-
-        }else {
-            result = 0;
         }
 
         return result;

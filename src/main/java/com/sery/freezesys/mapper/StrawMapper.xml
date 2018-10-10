@@ -220,4 +220,15 @@
         ORDER BY s.id DESC
     </select>
 
+    <!--根据冷冻编号、病人ID、套管ID、麦管编号查询该麦管记录-->
+    <select id="getStrawByMap" parameterType="java.util.Map" resultMap="straw">
+        SELECT * FROM
+        tb_straw
+        WHERE
+        patient_id = #{patientId,jdbcType=INTEGER} AND
+        divepipe_id = #{divepipeId,jdbcType=INTEGER} AND
+        freeze_num = #{freezeNum,jdbcType=INTEGER} AND
+        straw_num = #{strawNum,jdbcType=INTEGER}
+    </select>
+
 </mapper>

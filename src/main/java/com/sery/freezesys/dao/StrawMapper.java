@@ -87,4 +87,11 @@ public interface StrawMapper{
      * @return
      */
     List<StrawDTO> getAllThawRecord();
+
+    /**
+     * 根据冷冻编号、病人ID、套管ID、麦管编号查询该麦管记录
+     * @param map
+     * @return
+     */
+    Straw getStrawByMap(Map map);
 }

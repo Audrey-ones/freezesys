@@ -27,7 +27,19 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public int addPatient(Patient patient) {
-        int result = patientMapper.insertPatient(patient);
+        //先判断是否存在该病人信息
+        Map patientMap = new HashMap();
+        patientMap.put("medicalRecord",patient.getMedicalRecord());
+        patientMap.put("femaleName",patient.getFemaleName());
+        Patient resultPatient = patientMapper.selectPatient(patientMap);
+        int result;
+        //当查询到的结果为空时，插入一条病人记录
+        if (resultPatient == null){
+            result = patientMapper.insertPatient(patient);
+        }else {//当查询结果不为空时，说明该病人记录已经存在，不需要再重复插入
+            result = 0;
+        }
+
         return result;
     }
 
