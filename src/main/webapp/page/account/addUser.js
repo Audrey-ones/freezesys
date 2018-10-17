@@ -15,7 +15,7 @@ layui.config({
 			data : {
 				"account" : $(".account").val(),
                 "nickname" : $(".nickname").val(),
-                "password" : "123456",
+                "password" : hex_md5("123456"),
 				"role" : "普通用户",
                 "nitDel" : $(".nitDel option").eq($(".nitDel").val()).text(),
                 "strawDel" : $(".strawDel option").eq($(".strawDel").val()).text(),

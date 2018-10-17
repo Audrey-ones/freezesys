@@ -63,7 +63,7 @@ layui.config({
 		if($(this).siblings(".admin-header-lock-input").val() == ''){
 			layer.msg("请输入解锁密码！");
 		}else{
-            if($(this).siblings(".admin-header-lock-input").val() == user.password){
+            if(hex_md5($(this).siblings(".admin-header-lock-input").val()) == user.password){
                 window.sessionStorage.setItem("lockcms",false);
                 $(this).siblings(".admin-header-lock-input").val('');
                 layer.closeAll("page");

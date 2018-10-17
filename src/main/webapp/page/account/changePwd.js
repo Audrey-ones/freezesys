@@ -27,7 +27,7 @@ layui.config({
     form.verify({
         oldPwd : function(value, item){
             if (getCookie('user')){
-                if(value != user.password){
+                if(hex_md5(value) != user.password){
                     return "密码错误，请重新输入！";
                 }
             }
@@ -50,13 +50,15 @@ layui.config({
 
     //修改密码
     form.on("submit(changePwd)",function(data){
+        //对新密码进行MD5加密验证
+        var newPwd = hex_md5($("#newPwd").val());
         $.ajax({
             url : "/changepwd",
             type : "post",
             dataType : "json",
             data : {
                 "userId" : user.userId,
-                "password" : $("#newPwd").val()
+                "password" : newPwd
             },
             success : function (data) {
                 var index = layer.msg('密码修改成功，请重新登录！',{icon:6,time:false,shade:0.8});

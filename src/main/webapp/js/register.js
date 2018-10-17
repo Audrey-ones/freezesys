@@ -32,7 +32,9 @@ layui.config({
     })
 
     form.on("submit(register)",function (data) {
-
+        //使用md5对密码进行加密，传到后台
+        var password = hex_md5($("#password").val());
+        console.log(password);
         $.ajax({
             url : "/user",
             type : "post",
@@ -40,7 +42,7 @@ layui.config({
             data : {
                 "account" : $("#account").val(),
                 "nickname" : $("#nickname").val(),
-                "password" : $("#password").val(),
+                "password" : password,
                 "role" : "普通用户",
                 "nitDel" : "不可操作",
                 "strawDel" : "不可操作",

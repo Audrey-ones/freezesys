@@ -55,6 +55,7 @@
 			<p>copyright @2018 南京西瑞科技有限公司</p>
 		</div>
 		<script type="text/javascript" src="layui/layui.js"></script>
+		<script type="text/javascript" src="js/md5.js"></script>
 		<script>
 			layui.use(['layer', 'form'], function() {
 				var layer = layui.layer,
@@ -62,13 +63,15 @@
 					form = layui.form();
 					
 				form.on('submit(login)',function(data){
+				    //使用MD5对密码进行加密
+					var password = hex_md5($("#password").val());
 				    $.ajax({
                         url : "/sigin",
                         type : "post",
                         dataType : "json",
 						data : {
 						    "account" : $("#account").val(),
-							"password" : $("#password").val()
+							"password" : password
 						},
 						success : function (data) {
                             if (data.user != null){

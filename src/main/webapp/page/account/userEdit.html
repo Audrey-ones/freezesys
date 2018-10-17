@@ -71,6 +71,7 @@
 	</form>
 </div>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript" src="../../js/md5.js"></script>
 	<script>
         layui.use(['layer', 'form','jquery'], function() {
             var layer = layui.layer,
@@ -85,7 +86,7 @@
 					data : {
 					    "userId" : $("#userId").val(),
 					    "nickname" : $(".nickname").val(),
-						"password" : $(".password").val(),
+						"password" : hex_md5($(".password").val()),
 						"nitDel" : $(".nitDel").val(),
                         "strawDel" : $(".strawDel").val(),
                         "patientDel" : $(".patientDel").val()
