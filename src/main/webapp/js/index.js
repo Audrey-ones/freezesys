@@ -31,14 +31,14 @@ layui.config({
     });*/
 
     //读取cookies
-    function getCookie(name) {
+    /*function getCookie(name) {
         var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
         if (arr=document.cookie.match(reg)){
             return arr[2];
         }else {
             return null;
         }
-    }
+    }*/
 
 	//锁屏
 	function lockPage(){

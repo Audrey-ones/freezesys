@@ -44,20 +44,20 @@ app.controller("userCtrl",["$scope","userService",function ($scope,userService) 
         var user;
         if (getCookie('user')){
             user=JSON.parse(getCookie('user'));
-            if (user.role != "超级管理员"){
-                $("#userPage").css("display","none");
+            if (user.role == "超级管理员"){
+                $("#userPage").css("display","block");
             }
 
         }
         //读取cookies
-        function getCookie(name) {
+        /*function getCookie(name) {
             var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
             if (arr=document.cookie.match(reg)){
                 return arr[2];
             }else {
                 return null;
             }
-        }
+        }*/
 
         //添加用户
 		$scope.addUser = function () {

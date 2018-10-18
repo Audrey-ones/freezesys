@@ -7,14 +7,14 @@ layui.config({
     var $form = $('form');
 
     //读取cookies
-    function getCookie(name) {
+    /*function getCookie(name) {
         var arr,reg=new RegExp("(^| )" + name + "=([^;]*)(;|$)");
         if (arr=document.cookie.match(reg)){
             return arr[2];
         }else {
             return null;
         }
-    }
+    }*/
 
     //获取用户登录存在cookie的信息
     if (getCookie('user')){

@@ -81,7 +81,7 @@ function fingerprintMatch(data,template) {
             }
         })
     }
-    console.log(fingerprint)
+    console.log(fingerprint);
     if (flag_ == true){
         $.ajax({
             url : "/fingerprint/user",
@@ -91,7 +91,7 @@ function fingerprintMatch(data,template) {
                 userId : fingerprint.userId
             },
             success : function (data) {
-                console.log(data)
+                console.log(data);
                 if (data.user != null){
                     setCookie("user",data.user);//用户基本信息计入cookie
                     setCookie("token",data.token);//令牌token计入cookie
