@@ -37,9 +37,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int changePwd(Map map) {
+    public User changePwd(Map map,int userId) {
         int result = userMapper.updatePassword(map);
-        return result;
+        User user = userMapper.getUserById(userId);
+        return user;
     }
 
     @Override
