@@ -13,10 +13,15 @@
     <link rel="stylesheet" href="../../font-awesome/css/font-awesome.min.css"/>
 </head>
 <body ng-app="app" ng-controller="storageCtrl">
-<blockquote class="layui-elem-quote" style="margin: 20px">
-    <span style="font-size: 16px;color: #333">所有已启用的液氮罐&emsp;</span>
-    <span><a class="layui-btn layui-btn-normal reload" ng-click="reloadPage()" style="background-color:#269f42">刷新&nbsp;<i class="fa fa-refresh" aria-hidden="true"></i></a></span>
-</blockquote>
+    <blockquote class="layui-elem-quote" style="margin: 20px">
+        <span style="font-size: 16px;color: #333">所有已启用的液氮罐&emsp;</span>
+        <span><a class="layui-btn layui-btn-normal reload" ng-click="reloadPage()" style="background-color:#269f42">刷新&nbsp;<i class="fa fa-refresh" aria-hidden="true"></i></a></span>
+    </blockquote>
+
+    <div ng-if="tipShow" style="text-align: center; padding: 0 0;">
+        <i class="fa fa-grav" style="line-height:20rem; font-size:12rem; color: #393D50;"></i>
+        <p style="font-size: 20px; font-weight: 300; color: #999;">喔噢，现在还没有液氮罐记录哦~</p>
+    </div>
     <div class="layui-row nit_content" style="margin: 20px">
         <div id="tub_content">
             <div ng-repeat="data in dataList" class="layui-col-xs12 layui-col-sm12 layui-col-md12" style="margin: 0 auto;border: 1px dotted seagreen;padding: 10px;width: auto;">
@@ -33,9 +38,16 @@
 <script>
     var app = angular.module("app",[]);
     app.controller("storageCtrl",["$scope","storageService",function ($scope,storageService) {
+        $scope.tipShow = false;
         storageService.loadTubInfo(function (data) {
             console.log(data);
-            $scope.dataList = data;
+            if (data.length == 0){
+                $scope.tipShow = true;
+            }else {
+                $scope.dataList = data;
+                $scope.tipShow = false;
+            }
+
         });
 
         $scope.reloadPage = function () {

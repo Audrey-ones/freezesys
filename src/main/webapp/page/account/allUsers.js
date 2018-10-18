@@ -1,7 +1,12 @@
 var app = angular.module("userApp",[]);
 app.controller("userCtrl",["$scope","userService",function ($scope,userService) {
 	userService.loadUserList(function (data) {
-		$scope.userList = data;
+        if (data.length == 0){
+            $scope.tr_show = true;
+        }else {
+            $scope.userList = data;
+            $scope.tr_show = false;
+        }
     });
 
     //根据关键字查询用户（用户名或用户昵称）

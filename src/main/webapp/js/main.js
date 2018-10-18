@@ -83,7 +83,15 @@ app.controller("mainCtrl",["$scope","mainService",function ($scope,mainService) 
 
     //加载数据显示
     mainService.loadDiveInfo(function (data) {
-        pagination(data.length,data);
+        if (data.length == 0){
+            $scope.tr_show = true;
+            $scope.show = false;
+        }else {
+            pagination(data.length,data);
+            $scope.tr_show = false;
+            $scope.show = true;
+        }
+
     });
 
     layui.use(['layer','jquery'],function () {

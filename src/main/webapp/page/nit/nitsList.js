@@ -79,7 +79,14 @@ app.controller("nitCtrl",["$scope","nitService",function ($scope,nitService) {
 
     //加载页面液氮罐信息
     nitService.loadNitList(function (data) {
-        pagination(data.length,data);
+        if (data.length == 0){
+            $scope.tr_show = true;
+            $scope.show = false;
+        }else {
+            pagination(data.length,data);
+            $scope.tr_show = false;
+            $scope.show = true;
+        }
     });
 
     layui.use(['form','layer','jquery'],function () {

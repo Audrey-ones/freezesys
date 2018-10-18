@@ -74,7 +74,14 @@ app.controller("patientCtrl",["$scope","patientService",function ($scope,patient
 
     //加载页面病人信息
     patientService.loadPatients(function (data) {
-        pagination(data.length,data);
+        if (data.length == 0){
+            $scope.tr_show = true;
+            $scope.show = false;
+        }else {
+            pagination(data.length,data);
+            $scope.tr_show = false;
+            $scope.show = true;
+        }
     });
 
 
