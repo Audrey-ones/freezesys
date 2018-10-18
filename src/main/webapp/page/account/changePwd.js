@@ -61,7 +61,13 @@ layui.config({
         var newPwd = hex_md5($("#newPwd").val());
         sendRequest(user.nickname,newPwd);
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-    })
+    });
+    
+    $(".cancel").click(function () {
+        $("#oldPwd").val("");
+        $("#newPwd").val("");
+        $("#newPwd2").val("");
+    });
 
     function sendRequest(nickname,password) {
         console.log(nickname);
