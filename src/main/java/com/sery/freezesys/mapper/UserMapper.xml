@@ -33,6 +33,9 @@
     <update id="updatePassword" parameterType="java.util.Map">
         UPDATE tb_user
         <set>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
             <if test="password != null">
                 password = #{password,jdbcType=VARCHAR}
             </if>

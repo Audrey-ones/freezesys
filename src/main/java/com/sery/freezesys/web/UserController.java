@@ -37,11 +37,13 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "changepwd",method = RequestMethod.POST)
-    public int changePwd(HttpServletRequest request){
+    public User changePwd(HttpServletRequest request){
         Map map = new HashMap();
-        map.put("userId",request.getParameter("userId"));
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        map.put("userId",userId);
+        map.put("nickname",request.getParameter("nickname"));
         map.put("password",request.getParameter("password"));
-        int result = userService.changePwd(map);
+        User result = userService.changePwd(map,userId);
         return result;
     }
 

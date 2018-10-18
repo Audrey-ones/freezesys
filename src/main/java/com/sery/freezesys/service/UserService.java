@@ -19,7 +19,7 @@ public interface UserService {
      * @param map
      * @return
      */
-    int changePwd(Map map);
+    User changePwd(Map map,int userId);
 
     /**
      * 用户注册

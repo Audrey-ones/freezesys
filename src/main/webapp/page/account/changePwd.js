@@ -48,28 +48,45 @@ layui.config({
         }
     })
 
+    //修改昵称
+    form.on("submit(changeNickname)",function(data){
+        var nickname = $("#nickname").val();
+        sendRequest(nickname,user.password);
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    })
+
     //修改密码
     form.on("submit(changePwd)",function(data){
         //对新密码进行MD5加密验证
         var newPwd = hex_md5($("#newPwd").val());
+        sendRequest(user.nickname,newPwd);
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    })
+
+    function sendRequest(nickname,password) {
+        console.log(nickname);
+        console.log(password);
+        console.log(user.userId);
         $.ajax({
             url : "/changepwd",
             type : "post",
             dataType : "json",
             data : {
                 "userId" : user.userId,
-                "password" : newPwd
+                "nickname" : nickname,
+                "password" : password
             },
             success : function (data) {
-                var index = layer.msg('密码修改成功，请重新登录！',{icon:6,time:false,shade:0.8});
+                var index = layer.msg('修改成功，请重新登录！',{icon:6,time:false,shade:0.8});
                 setTimeout(function(){
                     layer.close(index);
                     parent.location.href='../../login.html';
                     //$(".pwd").val('');
                 },2000);
+
             }
         })
-        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-    })
+    }
+
 
 })
